@@ -1,0 +1,16 @@
+---
+- hosts: all
+  tasks:
+  - name: Creates directory /u01/src
+    file: path=/u01/src state=directory
+
+  - name: Install icp-news
+    git:
+      repo: 'ssh://git@rl-dck.it.beloil.by:2201/museum/museum.git'
+      dest: /u01/src/museum
+
+  - name: Run in docker swarm
+    shell: /usr/local/bin/docker-compose config | docker stack deploy --with-registry-auth --compose-file - museum-sis
+    args:
+      chdir: /u01/src/museum
+    become: yes

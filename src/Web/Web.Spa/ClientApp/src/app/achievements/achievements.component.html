@@ -1,0 +1,60 @@
+<app-header title="Достижения" [links]="[{'key':'awards','value':'Награды'},{'key':'diploma','value':'Дипломы'},{'key':'cert','value':'Сертификаты'}]" navbackcolor='linear-gradient(to bottom,#294D8D,#4E73B5)' buttoncolor='#294D8D'>
+</app-header>
+<app-button backcolor='#294D8D' buttoncolor="#4E73B5"> </app-button>
+<div class="container-fluid">
+    <div class="row">
+        <div id="awards" class="col-md-12 awards  align-items-center">
+            <h2 class="title1 d-flex justify-content-center">Награды</h2>
+            <div class="content d-flex justify-content-center">
+                <img class="award-left align-self-start" src="/assets/images/achievements/awards-2.png">
+                <div class="align-self-start ">
+                    <p class="text">&nbsp;&nbsp;&nbsp;Лучший<br> разработчик<br> в Беларуси </p>
+                    <p class="year">2016</p>
+                </div>
+                <img class="award-right align-self-start" src="/assets/images/achievements/awards-1.png">
+                <img class="award-left align-self-center" src="/assets/images/achievements/awards-2.png">
+                <div class="award align-self-center justify-content-around">
+                    <p class="text">&nbsp;&nbsp;&nbsp;Лучший<br> разработчик<br> в Беларуси </p>
+                    <p class="year">2017</p>
+                </div>
+                <img class="award-right align-self-center" src="/assets/images/achievements/awards-1.png">
+                <img class="col-md-3 image-fluid" src="/assets/images/achievements/awards.png">
+                <img class=" award-left align-self-center" src="/assets/images/achievements/awards-2.png">
+                <div class="award align-self-center">
+                    <p class="text">&nbsp;&nbsp;&nbsp;Лучший<br> разработчик<br> в Беларуси </p>
+                    <p class="year">2018</p>
+                </div>
+                <img class=" award-right align-self-center" src="/assets/images/achievements/awards-1.png">
+                <img class=" award-left align-self-start" src="/assets/images/achievements/awards-2.png">
+                <div class="align-self-start">
+                    <p class="text">&nbsp;&nbsp;&nbsp;Лучший<br> разработчик<br> в Беларуси </p>
+                    <p class="year">2019</p>
+                </div>
+                <img class="award-right align-self-start" src="/assets/images/achievements/awards-1.png">
+            </div>
+        </div>
+        <div id="diploma" class="col-md-12 diploma align-items-center">
+            <h2 class="title2 d-flex justify-content-center">Дипломы</h2>
+            <div class="row d-flex justify-content-around">
+                <div class="col-md-3" *ngFor="let d of diplomas; ">
+                    <div>
+                        <img class="img-fluid" src="{{rewardsUrl}}/{{d.id}}/Image">
+                        <h4>{{d.name}}</h4>
+                        <p>{{d.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="cert" class="col-md-12 сert align-items-center">
+            <h2 class="title3 d-flex justify-content-center">Сертификаты</h2>
+            <div class="row d-flex justify-content-around">
+                <div class="col-md-3  d-flex justify-content-around" *ngFor="let c of certificates;">
+                    <div>
+                        <img class="img-fluid" src="{{rewardsUrl}}/{{c.id}}/Image">
+                        <h4>{{c.name}}</h4>
+                        <p>{{c.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

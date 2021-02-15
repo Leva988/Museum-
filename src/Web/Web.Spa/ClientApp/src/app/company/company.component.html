@@ -1,0 +1,23 @@
+<body>
+    <app-header id="header" title="О компании" [links]="[{'key':'bosses', 'value': 'Руководство'}, 
+              {'key':'departments', 'value': 'Структура'},             
+              {'key':'infografic', 'value':'Численность'},
+              {'key':'grafic', 'value':'Показатели'}]" navbackcolor='linear-gradient(to bottom,#00B5F9,#96D8E5)' buttoncolor='#00B5F9'>
+    </app-header>
+    <app-image backimage="url(/assets/images/company/company_header.png)" formcolor="#294D8D" formtext="<p>Производственное управление связи и информатики «Связьинформсервис». 
+              <br>Образовано в 2009 г. путем слияния Производственно-технического управления связи 
+            <br>и Производственного управления информационных технологий</p>" height="300px"></app-image>
+    <app-button backcolor='#00B5F9' buttoncolor="#96D8E5"> </app-button>
+    <div>
+        <app-company-bosses></app-company-bosses>
+    </div>
+    <div>
+        <app-company-departments></app-company-departments>
+    </div>
+    <div>
+        <app-company-indicators></app-company-indicators>
+    </div>
+    <div>
+        <app-grafic></app-grafic>
+    </div>
+</body>

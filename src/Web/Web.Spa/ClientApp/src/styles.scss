@@ -1,0 +1,175 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+.cssload-container {
+    display: block;
+    margin: 49px auto;
+    width: 150px;
+}
+
+.cssload-container *,
+.cssload-container *:before,
+.cssload-container *:after {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.cssload-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transition: all 230ms ease;
+    -o-transition: all 230ms ease;
+    -ms-transition: all 230ms ease;
+    -webkit-transition: all 230ms ease;
+    -moz-transition: all 230ms ease;
+}
+
+.cssload-circle:nth-child(1) {
+    z-index: 2;
+    background: rgb(231, 76, 60);
+    animation-name: cssload-explode;
+    -o-animation-name: cssload-explode;
+    -ms-animation-name: cssload-explode;
+    -webkit-animation-name: cssload-explode;
+    -moz-animation-name: cssload-explode;
+    animation-duration: 1.15s;
+    -o-animation-duration: 1.15s;
+    -ms-animation-duration: 1.15s;
+    -webkit-animation-duration: 1.15s;
+    -moz-animation-duration: 1.15s;
+    animation-timing-function: ease;
+    -o-animation-timing-function: ease;
+    -ms-animation-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+    -moz-animation-timing-function: ease;
+    animation-delay: 0;
+    -o-animation-delay: 0;
+    -ms-animation-delay: 0;
+    -webkit-animation-delay: 0;
+    -moz-animation-delay: 0;
+    animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+}
+
+.cssload-circle:nth-child(2) {
+    background: rgb(52, 73, 94);
+    animation-name: cssload-explode;
+    -o-animation-name: cssload-explode;
+    -ms-animation-name: cssload-explode;
+    -webkit-animation-name: cssload-explode;
+    -moz-animation-name: cssload-explode;
+    animation-duration: 1.15s;
+    -o-animation-duration: 1.15s;
+    -ms-animation-duration: 1.15s;
+    -webkit-animation-duration: 1.15s;
+    -moz-animation-duration: 1.15s;
+    animation-timing-function: ease;
+    -o-animation-timing-function: ease;
+    -ms-animation-timing-function: ease;
+    -webkit-animation-timing-function: ease;
+    -moz-animation-timing-function: ease;
+    animation-delay: 0.58s;
+    -o-animation-delay: 0.58s;
+    -ms-animation-delay: 0.58s;
+    -webkit-animation-delay: 0.58s;
+    -moz-animation-delay: 0.58s;
+    animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+}
+
+@keyframes cssload-explode {
+    0% {
+        width: 0;
+        height: 0;
+        z-index: 1;
+    }
+    50% {
+        width: 15em;
+        height: 15em;
+        z-index: 1;
+    }
+    100% {
+        display: none;
+    }
+}
+
+@-o-keyframes cssload-explode {
+    0% {
+        width: 0;
+        height: 0;
+        z-index: 1;
+    }
+    50% {
+        width: 15em;
+        height: 15em;
+        z-index: 1;
+    }
+    100% {
+        display: none;
+    }
+}
+
+@-ms-keyframes cssload-explode {
+    0% {
+        width: 0em;
+        height: 0em;
+        z-index: 1;
+    }
+    50% {
+        width: 15em;
+        height: 15em;
+        z-index: 1;
+    }
+    100% {
+        display: none;
+    }
+}
+
+@-webkit-keyframes cssload-explode {
+    0% {
+        width: 0em;
+        height: 0em;
+        z-index: 1;
+    }
+    50% {
+        width: 15em;
+        height: 15em;
+        z-index: 1;
+    }
+    100% {
+        display: none;
+    }
+}
+
+@-moz-keyframes cssload-explode {
+    0% {
+        width: 0;
+        height: 0;
+        z-index: 1;
+    }
+    50% {
+        width: 15em;
+        height: 15em;
+        z-index: 1;
+    }
+    100% {
+        display: none;
+    }
+}

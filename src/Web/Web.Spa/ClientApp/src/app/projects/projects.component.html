@@ -1,0 +1,35 @@
+<app-header title="Реализованные проекты" navbackcolor='linear-gradient(to bottom,#00B5F9,#96D8E5)' buttoncolor='#00B5F9'>
+</app-header>
+<app-button backcolor='#00B5F9' buttoncolor="#96D8E5"> </app-button>
+<div class="container-fluid">
+    <div class="service" *ngFor="let s of services">
+        <a #anchors id="{{s.id}}" class="servicename" *ngIf="s.projects.length!=0" class="servicename d-flex justify-content-center">
+                 {{s.name}}
+            </a>
+        <div class="row d-flex justify-content-around align-items-start">
+            <div class="col-md-4" *ngFor="let p of s.projects">
+                <div class="project d-flex align-items-end" data-toggle="modal" data-target="#Modal" (click)="title=p.name; description=p.description" class="project d-flex align-items-start justify-content-left " [ngStyle]="{'background-image':'url('+this.url + '/' + p.id + '/Image'+')'}"
+                    [style.background-color]="p.color ">
+                    <div class="title d-flex  align-items-end">
+                        <p class="name">{{p.name}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Modal" class="modal fade" role="dialog " aria-labelledby="modaltitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modaltitle">{{title}}</h2>
+                    <button type="button " class="close " data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                     </button>
+                </div>
+                <div class="modal-body">
+                    <p class="description" [innerHTML]="description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

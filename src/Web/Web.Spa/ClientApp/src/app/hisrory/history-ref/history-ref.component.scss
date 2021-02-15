@@ -1,0 +1,45 @@
+body {
+    overflow: hidden;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+::ng-deep h2 {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.text {
+    font-size: 10pt;
+}
+
+.ref {
+    margin-top: -100px;
+}
+
+.img {
+    cursor: zoom-in;
+    padding: 20px;
+}
+
+.refblock:nth-child(even) {
+    background-color: #294D8D;
+    color: white;
+}
+
+.refblock:nth-child(odd) h2 {
+    color: #294D8D;
+}
+
+.modal {
+    position: fixed;
+    padding: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: rgba(41, 77, 141, 0.9);
+}
+
+#img_mod {
+    width: 80%;
+}

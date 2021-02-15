@@ -1,0 +1,65 @@
+.container-fluid {
+    margin-top: 100px;
+}
+
+.service {
+    margin-bottom: 50px;
+}
+
+.servicename,
+.servicename:hover {
+    text-align: center;
+    color: #00B5F9;
+    font-weight: 700;
+    font-size: 16pt;
+    border-top: 55px solid transparent;
+    margin-top: -55px;
+    padding: 15px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+}
+
+.project {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100% 20%;
+    border-radius: 20px;
+    margin-top: 20px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.title {
+    height: 100%;
+    border-radius: 20px;
+    width: 100%;
+    background: transparent linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(01, 03, 07, 0.3) 33%, #020711 100%) 0% 0% no-repeat padding-box;
+}
+
+.name {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    color: white;
+    font-weight: 600;
+}
+
+.modal-title {
+    color: #00B5F9;
+}
+
+.close {
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+@keyframes hover {
+    from {
+        background-position: 100% 20%;
+    }
+    to {
+        background-position: 70% 20%;
+    }
+}

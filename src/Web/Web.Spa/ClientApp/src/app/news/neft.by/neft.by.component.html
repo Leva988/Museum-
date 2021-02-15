@@ -1,0 +1,35 @@
+<h2>АЗС</h2>
+<div class="row">
+    <a class="col-md-4" href="{{azs.link._text}}" *ngFor="let azs of azs_feeds; let i =index">
+        <div class="card d-flex justify-content-center" *ngIf="i<3">
+            <h4 class="card-title">{{azs.title._text}}</h4>
+            <div class="card-content" [innerHTML]="azs.description._cdata">
+            </div>
+            <p class="date">{{azs.pubDate._text|date:'medium' }}</p>
+        </div>
+    </a>
+</div>
+<h2>Нефть</h2>
+<div class="row">
+    <a class="col-md-4" href="{{neft.link._text}}" *ngFor="let neft of neft_feeds; let j =index">
+        <div class="card d-flex justify-content-center" *ngIf="j<3">
+            <h4 class="card-title">{{neft.title._text}}</h4>
+            <div class="card-content" [innerHTML]="neft.description._cdata">
+            </div>
+            <p class="date">{{neft.pubDate._text|date:'medium' }}</p>
+
+        </div>
+    </a>
+</div>
+<h2>Общество</h2>
+<div class="row">
+    <a class="col-md-4" href="{{social.link._text}}" *ngFor="let social of social_feeds; let j =index">
+        <div class="card d-flex justify-content-center" *ngIf="j<3">
+            <h4 class="card-title">{{social.title._text}}</h4>
+            <div class="card-content" [innerHTML]="social.description._cdata">
+            </div>
+            <p class="date">{{social.pubDate._text|date:'medium' }}</p>
+
+        </div>
+    </a>
+</div>

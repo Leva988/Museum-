@@ -1,0 +1,20 @@
+<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#294D8D,#4F74B7)' buttoncolor='#294D8D'>
+</app-header>
+<app-button backcolor='#294D8D' buttoncolor="#4F74B7"> </app-button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3" *ngFor="let v of veterans">
+            <span class="card">
+                  <img src="{{veteransUrl}}/{{v.id}}/Photo/{{v.photoId}}" class="card-img-top" alt="..." >
+                  <div class="card-body">
+                    <h4 class="card-title">{{v.name}}</h4>
+                    <div class="card-text">
+                      <p >{{v.position}}</p>
+                      <p>Дата рождения: {{v.birthDay}}</p>
+                      <p>Период работы с {{v.recruitDate}} по {{v.fireDate}} </p>
+                     </div>
+                  </div>                 
+               </span>
+        </div>
+    </div>
+</div>

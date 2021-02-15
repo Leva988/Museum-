@@ -1,0 +1,7 @@
+<div class="card">
+    <div *ngFor="let art of articles;let i=index;">
+        <h5 class="title">{{art.Title}}</h5>
+        <div class="content" [innerHTML]="art.Text"></div>
+        <hr>
+    </div>
+</div>

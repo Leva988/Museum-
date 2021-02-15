@@ -1,0 +1,38 @@
+stages:
+  - build
+  - deploy
+
+build-master:
+  stage: build
+  image: docker:18.09.8
+  services:
+    - name: docker:18.09.8-dind
+      command: ["--insecure-registry=rl-dck.it.beloil.by:5000", "--insecure-registry=rl-dck.it.beloil.by:5001"]
+  before_script:
+    - docker login -u "docker" -p "docker" $CI_REGISTRY
+    - docker login -u "docker" -p "docker" rl-dck.it.beloil.by:5001
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" . -f ./src/Web/Web.Spa/Dockerfile
+    - docker push "$CI_REGISTRY_IMAGE:latest"
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+  only:
+    - tags
+
+deploy-production:
+  stage: deploy
+  services:
+    - name: docker:18.09.8-dind
+      command: ["--insecure-registry=rl-dck.it.beloil.by:5000"]
+  image: rl-dck.it.beloil.by:5000/devops/ansible:latest
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ansible-playbook -i bl-dck-11.it.beloil.by, ansible-deploy.yml
+  only:
+    - master
+    - tags
+  when: manual

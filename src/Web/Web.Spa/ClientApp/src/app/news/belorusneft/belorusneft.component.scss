@@ -1,0 +1,57 @@
+.feed {
+    padding: 20px;
+    text-overflow: clip;
+}
+
+.title,
+.content {
+    animation: appear 0.7s normal forwards;
+    animation-timing-function: linear;
+}
+
+.card {
+    padding: 50px;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    margin-bottom: 50px;
+    overflow: hidden;
+    animation: expand 2s cubic-bezier(0.755, 0.05, 0.855, 0.06) 1 normal forwards;
+}
+
+h2 {
+    text-align: center;
+    color: #294D8D;
+    animation: appear 1s linear 2s normal backwards;
+}
+
+.title {
+    font-size: 14pt;
+    color: #294D8D;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.content {
+    font-size: 12pt;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes expand {
+    from {
+        height: 0%;
+    }
+    to {
+        height: 98%;
+    }
+}

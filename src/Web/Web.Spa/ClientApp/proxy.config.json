@@ -1,0 +1,18 @@
+{
+    "/newsbn": {
+        "target": "https://www.belorusneft.by",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/newsbn": ""
+        }
+    },
+    "/newsneftby": {
+        "target": "https://www.neft.by",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/newsneftby": ""
+        }
+    }
+}

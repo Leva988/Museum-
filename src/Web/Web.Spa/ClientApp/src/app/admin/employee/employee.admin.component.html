@@ -1,0 +1,178 @@
+<div class="get p-3">
+    <h3>Employee's Table</h3>
+</div>
+<table class="table table-striped table-bordered table-responsive">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>DepartmentId</th>
+            <th>Region</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let e of employees">
+            <td>{{e.id}}</td>
+            <td>{{e.name}}</td>
+            <td>{{e.position}}</td>
+            <td>{{e.departmentId}}</td>
+            <td>{{e.region}}</td>
+        </tr>
+    </tbody>
+</table>
+<form (ngSubmit)="getEmployees(number)">
+    <div class="form-group">
+        <label for="number">Максисмальное число сотрудников:</label>
+        <input id="number" class="p-2" type="text" name="number" [(ngModel)]="number" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Выбрать</button>
+</form>
+<div class="get p-3">
+    <h3>Get Employee (by Id)</h3>
+</div>
+<form (ngSubmit)="getEmployee(id)">
+    <div class="form-group">
+        <label for="employeeId">Введите ID:</label>
+        <input id="employeeId" class="form-control col-md-5" type="text" name="employeeId" [(ngModel)]="id" required />
+    </div>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Выбрать</button>
+</form>
+<div class="get p-3">
+    <h3>Get Employee (by DepartmentId)</h3>
+</div>
+<form (ngSubmit)="getbyDepId(depId)">
+    <div class="form-group">
+        <label for="departmentId">Введите DepartmentID:</label>
+        <input id="departmentId" class="form-control col-md-5" type="text" name="depId" [(ngModel)]="depId" required />
+    </div>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Выбрать</button>
+</form>
+<div class="post p-3">
+    <h3>Add Employee</h3>
+</div>
+<form (ngSubmit)="addEmployee(name, position, region, depIdPost, type)">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="name">Введите ФИО:</label>
+            <input id="name" class="form-control" type="text" name="name" [(ngModel)]="name" required />
+            <label for="position">Введите Должность:</label>
+            <input id="position" class="form-control" type="text" name="position" [(ngModel)]="position" required />
+        </div>
+        <div class="col-md-6">
+            <label for="depId1">Введите DepartmentID:</label>
+            <input id="depId1" class="form-control" type="text" name="depId1" [(ngModel)]="depIdPost" required />
+            <label for="type">Выберите тип:</label>
+            <select id="type" class="form-control" type="text" name="type" [(ngModel)]="type">
+                <option selected>Начальник отдела</option>
+                <option>Обычный сотрудник</option>
+              </select>
+            <label for="region">Выберите регион:</label>
+            <select id="region" class="form-control" type="text" name="region" [(ngModel)]="region">
+                <option selected>Брест</option>
+                <option>Витебск</option>
+                <option>Гомель</option>
+                <option>Гродно</option>
+                <option>Минск</option>
+                <option>Могилёв</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#modal">Добавить</button>
+</form>
+<div class="put p-3">
+    <h3>Edit Employee</h3>
+</div>
+<form (ngSubmit)="updateEmployee(editId, editName, editPosition, editRegion, editDepId, editType)">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="editId">Введите Id:</label>
+            <input id="editId" class="form-control" type="text" name="editId" [(ngModel)]="editId" required />
+            <label for="editName">Введите ФИО:</label>
+            <input id="editName" class="form-control" type="text" name="editName" [(ngModel)]="editName" required />
+            <label for="editPosition">Введите Должность:</label>
+            <input id="editPosition" class="form-control" type="text" name="editPosition" [(ngModel)]="editPosition" required />
+        </div>
+        <div class="col-md-6">
+            <label for="editDepId">Введите DepartmentID:</label>
+            <input id="editDepId" class="form-control" type="text" name="editDepId" [(ngModel)]="editDepId" required />
+            <label for="editType">Выберите тип:</label>
+            <select id="editType" class="form-control" type="text" name="editType" [(ngModel)]="editType">
+                <option selected>Начальник отдела</option>
+                <option>Обычный сотрудник</option>
+             </select>
+            <label for="editRegion">Выберите регион:</label>
+            <select id="editRegion" class="form-control" type="text" name="editRegion" [(ngModel)]="editRegion">
+                <option selected>Брест</option>
+                <option>Витебск</option>
+                <option>Гомель</option>
+                <option>Гродно</option>
+                <option>Минск</option>
+                <option>Могилёв</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" data-toggle="modal" data-target="#modal">Изменить</button>
+</form>
+<div class="delete p-3">
+    <h3>Delete Employee</h3>
+</div>
+<form (ngSubmit)="deleteEmployee(deleteId)">
+    <div class="form-group">
+        <label for="deleteId">Введите ID:</label>
+        <input id="deleteId" class="form-control col-md-5" type="text" name="deleteId" [(ngModel)]="deleteId" required />
+    </div>
+    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#modal">Удалить</button>
+</form>
+<div class="get p-3">
+    <h3>EmployeePhoto (by Employee Id)</h3>
+</div>
+<form (ngSubmit)="getPhoto(photoId)">
+    <div class="form-group">
+        <label for="photoId">Введите ID:</label>
+        <input id="photoId" class="form-control col-md-5" type="text" name="photoId" [(ngModel)]="photoId" required />
+
+    </div>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Выбрать</button>
+</form>
+<div class="post p-3">
+    <h3>Add Photo</h3>
+</div>
+<form (ngSubmit)="addPhoto(postPhotoId)">
+    <div class="form-group">
+        <label for="postPhotoId">Введите Id сотрудника:</label>
+        <input id="postPhotoId" class="form-control" type="text" name="postPhotoId" [(ngModel)]="postPhotoId" required />
+        <label for="file">Выберите фото:</label>
+        <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+    </div>
+    <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#modal">Добавить</button>
+</form>
+<div class="delete p-3">
+    <h3>Delete Photo</h3>
+</div>
+<form (ngSubmit)="deletePhoto(deletePhotoId)">
+    <div class="form-group">
+        <label for="deletePhotoId">Введите ID:</label>
+        <input id="deletePhotoId" class="form-control col-md-5" type="text" name="deletePhotoId" [(ngModel)]="deletePhotoId" required />
+    </div>
+    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#modal">Удалить</button>
+</form>
+<div class="modal fade" id="modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" [style.backgroundColor]="modalColor">
+                <h2 class="modal-title" id="title">{{modalTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <p>{{modalMessage}}</p>
+                <img *ngIf="photo" id="photo" class="img-fluid p-2" src="{{photo}}">
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary col-md-4" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

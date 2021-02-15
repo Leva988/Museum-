@@ -1,0 +1,18 @@
+<nav id="header" class="navbar  navbar-dark bg-light fixed-top nav-justified" [style.background]="navbackcolor">
+    <div class="row d-flex justify-content-center d-flex align-items-end">
+        <a class="btn btn-circle back" (click)="return()" role="button" [style.color]="buttoncolor">
+            <p>&#60;</p>
+        </a>
+        <a class="navbar-brand">{{title}}</a>
+        <ul class="nav nav-pills">
+            <li class="nav-item" *ngFor="let item of links">
+                <a *ngIf="item.value != null" class="nav-link" href="#{{item.key}}" (click)="scroll(item.key); ">{{item.value}}</a>
+            </li>
+            <li>
+                <button id="admin" class="btn btn-block btn-danger" routerLink="/admin">
+                    Admin
+                    </button>
+            </li>
+        </ul>
+    </div>
+</nav>

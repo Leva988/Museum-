@@ -1,0 +1,48 @@
+version: '3.4'
+x-logging:
+  &default-logging
+  options:
+    max-size: "10m"
+    max-file: "5"
+  driver: json-file
+services:
+  web-spa:
+    environment:
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString=mongodb://museum:museum1@bl-dck-21.it.beloil.by:27027/museum-sis
+      - Database=museum-sis
+      - IdentityUrl=https://dev.it.beloil.by/identity
+      - IdentityUrlExternal=https://dev.beloil.by/identity
+    volumes:
+      - /u02/rcp2/processing.api/logs:/logs
+    ports:
+      - 8079:80
+    logging: *default-logging
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=MUSEUM-SIS]
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0.3
+      placement:
+        constraints: [node.role == worker]

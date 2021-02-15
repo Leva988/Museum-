@@ -1,0 +1,33 @@
+.fixed-bottom {
+    z-index: 2;
+}
+
+svg {
+    float: right;
+    visibility: hidden;
+}
+
+.btn-circle {
+    visibility: hidden;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    font-size: 50px;
+    margin: 20px;
+    float: right;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.5s;
+}
+
+.btn-circle p {
+    transform: rotate(270deg);
+    position: relative;
+    bottom: 20%;
+    right: 10%;
+}
+
+.btn-circle:hover {
+    opacity: 0.8;
+}

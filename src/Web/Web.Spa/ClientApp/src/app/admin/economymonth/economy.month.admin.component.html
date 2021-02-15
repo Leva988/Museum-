@@ -1,0 +1,214 @@
+<div class="get p-3">
+    <h3>EconomyMonth's Table</h3>
+</div>
+<table class="table table-striped table-bordered table-responsive">
+    <thead class="thead-dark">
+        <tr align="center">
+            <th rowspan="2">ID</th>
+            <th rowspan="2">DepartmentId</th>
+            <th rowspan="2">Month</th>
+            <th rowspan="2">Inner Volume</th>
+            <th rowspan="2">Outer Volume</th>
+            <th rowspan="2">Service Price</th>
+            <th colspan="4"> Expenses</th>
+            <th colspan="2"> Financial Results</th>
+            <th colspan="2"> Salary</th>
+            <th colspan="2"> Work</th>
+        </tr>
+        <tr>
+            <th>Labor Costs</th>
+            <th>Amortization</th>
+            <th>Main Amortization</th>
+            <th>Other Services</th>
+            <th>Result</th>
+            <th>Rentability(%)</th>
+            <th>Salary(BYN)</th>
+            <th>Salary($)</th>
+            <th>Work(BYN)</th>
+            <th>Work($)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let e of economyMonths">
+            <td>{{e.id}}</td>
+            <td>{{e.departmentId}}</td>
+            <td>{{e.month}}</td>
+            <td>{{e.innerVolume}}</td>
+            <td>{{e.outerVolume}}</td>
+            <td>{{e.servicePrice}}</td>
+            <td>{{e.expenses.laborCosts}}</td>
+            <td>{{e.expenses.amortization}}</td>
+            <td>{{e.expenses.mainAmortization}}</td>
+            <td>{{e.expenses.otherServices}}</td>
+            <td>{{e.financialResults.result}}</td>
+            <td>{{e.financialResults.rentability}}</td>
+            <td>{{e.salary}}</td>
+            <td>{{e.salaryDollar}}</td>
+            <td>{{e.work}}</td>
+            <td>{{e.workDollar}}</td>
+        </tr>
+    </tbody>
+</table>
+<form (ngSubmit)="getMonths(number)">
+    <div class="form-group">
+        <label for="number">Максисмальное количество строк по показателям:</label>
+        <input id="number" class="p-2" type="text" name="number" [(ngModel)]="number" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Выбрать</button>
+</form>
+<div class="get p-3">
+    <h3>Get EconomyMonth (by Id)</h3>
+</div>
+<form (ngSubmit)="getMonth(id)">
+    <div class="form-group">
+        <label for="monthId">Введите ID:</label>
+        <input id="monthId" class="form-control col-md-5" type="text" name="monthId" [(ngModel)]="id" required />
+    </div>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Выбрать</button>
+</form>
+<div class="get p-3">
+    <h3>Get EconomyMonths (by DepartmentId)</h3>
+</div>
+<form (ngSubmit)="getbyDepId(depId)">
+    <div class="form-group">
+        <label for="departmentId">Введите DepartmentID:</label>
+        <input id="departmentId" class="form-control col-md-5" type="text" name="depId" [(ngModel)]="depId" required />
+    </div>
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modal">Выбрать</button>
+</form>
+<div class="post p-3">
+    <h3>Add EconomyMonth</h3>
+</div>
+<form (ngSubmit)="addEconomyMonth(month, departmentId, innerVolume, outerVolume, servicePrice,
+laborCosts, amortization, mainAmortization, otherServices, result, rentability,
+salary, salaryDollar, work, workDollar)">
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label for="month">Месяц:</label>
+            <input id="month" class="form-control" type="text" name="month" [(ngModel)]="month" required />
+        </div>
+        <div class="col-md-6">
+            <label for="departmentId">DepartmentId:</label>
+            <input id="departmentId" class="form-control" type="text" name="departmentId" [(ngModel)]="departmentId" required />
+        </div>
+        <div class="col-md-3">
+            <label for="innerVolume">Внутренний объём предприятия:</label>
+            <input id="innerVolume" class="form-control col-md-6" size="10px" type="number" name="innerVolume" [(ngModel)]="innerVolume" required />
+            <label for="outerVolume">Сторонний объём предприятия:</label>
+            <input id="outerVolume" class="form-control col-md-6" type="number" name="outerVolume" [(ngModel)]="outerVolume" required />
+            <label for="servicePrice"> Себестоимость реализованных работ и услуг(тыс.руб.):</label>
+            <input id="servicePrice" class="form-control col-md-6" type="number" name="servicePrice" [(ngModel)]="servicePrice" required />
+        </div>
+        <div class="col-md-3">
+            <label for="laborCosts"> Расходы на оплату труда(тыс. руб.):</label>
+            <input id="laborCosts" class="form-control col-md-6" type="number" name="laborCosts" [(ngModel)]="laborCosts" required />
+            <label for="amortization">Амортизация фондов, расходы материалов и т.д.(тыс. руб.):</label>
+            <input id="amortization" class="form-control col-md-6" type="number" name="amortization" [(ngModel)]="amortization" required />
+            <label for="mainAmortization">Амортизация основных фондов(тыс. руб.):</label>
+            <input id="mainAmortization" class="form-control col-md-6" type="number" name="mainAmortization" [(ngModel)]="mainAmortization" required />
+            <label for="otherServices">Услуги сторонних организаций(тыс. руб.):</label>
+            <input id="otherServices" class="form-control col-md-6" type="number" name="otherServices" [(ngModel)]="otherServices" required />
+        </div>
+        <div class="col-md-3">
+            <label for="result"> Финансовый результат от реализации и услуг(тыс.руб.):</label>
+            <input id="result" class="form-control col-md-6" type="number" name="result" [(ngModel)]="result" required />
+            <label for="rentability">Рентабельность(%)</label>
+            <input id="rentability" class="form-control col-md-6" type="number" name="rentability" [(ngModel)]="rentability" required />
+        </div>
+        <div class="col-md-3">
+            <label for="salary"> Средняя зарплата(руб.):</label>
+            <input id="salary" class="form-control col-md-6" type="number" name="salary" [(ngModel)]="salary" required />
+            <label for="salaryDollar">Средняя зарплата($)</label>
+            <input id="salaryDollar" class="form-control col-md-6" type="number" name="salaryDollar" [(ngModel)]="salaryDollar" required />
+            <label for="work"> Выполненный объём работ, услуг на 1 работника в месяц(собственными силами)(руб.):</label>
+            <input id="work" class="form-control col-md-6" type="number" name="work" [(ngModel)]="work" required />
+            <label for="workDollar"> Выполненный объём работ, услуг на 1 работника в месяц(собственными силами)($):</label>
+            <input id="workDollar" class="form-control col-md-6" type="number" name="workDollar" [(ngModel)]="workDollar" required />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#modal">Добавить</button>
+</form>
+<div class="put p-3">
+    <h3>Edit EconomyMonth</h3>
+</div>
+<form (ngSubmit)="updateEconomyMonth(editId, editMonth, editDepartmentId, editInnerVolume, editOuterVolume, 
+editServiceprice, editLaborCosts, editAmortization, editMainAmortization, editOtherServices, 
+editResult, editRentability, editSalary, editSalaryDollar, editWork, editWorkDollar)">
+    <div class="form-group row">
+        <div class="col-md-4">
+            <label for="editId">ID:</label>
+            <input id="editId" class="form-control" type="text" name="editId" [(ngModel)]="editId" required />
+        </div>
+        <div class="col-md-4">
+            <label for="editMonth">Месяц:</label>
+            <input id="editMonth" class="form-control" type="text" name="editMonth" [(ngModel)]="editMonth" required />
+        </div>
+        <div class="col-md-4">
+            <label for="editDepartmentId">DepartmentId:</label>
+            <input id="editDepartmentId" class="form-control" type="text" name="editDepartmentId" [(ngModel)]="editDepartmentId" required />
+        </div>
+        <div class="col-md-3">
+            <label for="editInnerVolume">Внутренний объём предприятия:</label>
+            <input id="editInnerVolume" class="form-control col-md-6" type="number" name="editInnerVolume" [(ngModel)]="editInnerVolume" required />
+            <label for="editOuterVolume">Сторонний объём предприятия:</label>
+            <input id="editOuterVolume" class="form-control col-md-6" type="number" name="editOuterVolume" [(ngModel)]="editOuterVolume" required />
+            <label for="editServiceprice"> Себестоимость реализованных работ и услуг(тыс.руб.):</label>
+            <input id="editServiceprice" class="form-control col-md-6" type="number" name="editServiceprice" [(ngModel)]="editServiceprice" required />
+        </div>
+        <div class="col-md-3">
+            <label for="editLaborCosts"> Расходы на оплату труда(тыс. руб.):</label>
+            <input id="editLaborCosts" class="form-control col-md-6" type="number" name="editLaborCosts" [(ngModel)]="editLaborCosts" required />
+            <label for="editAmortization">Амортизация фондов, расходы материалов и т.д.(тыс. руб.):</label>
+            <input id="editAmortization" class="form-control col-md-6" type="number" name="editAmortization" [(ngModel)]="editAmortization" required />
+            <label for="editMainAmortization">Амортизация основных фондов(тыс. руб.):</label>
+            <input id="editMainAmortization" class="form-control col-md-6" type="number" name="editMainAmortization" [(ngModel)]="editMainAmortization" required />
+            <label for="editOtherServices">Услуги сторонних организаций(тыс. руб.):</label>
+            <input id="editOtherServices" class="form-control col-md-6" type="number" name="editOtherServices" [(ngModel)]="editOtherServices" required />
+        </div>
+        <div class="col-md-3">
+            <label for="editResult"> Финансовый результат от реализации и услуг(тыс.руб.):</label>
+            <input id="editResult" class="form-control col-md-6" type="number" name="editResult" [(ngModel)]="editResult" required />
+            <label for="editRentability">Рентабельность(%)</label>
+            <input id="editRentability" class="form-control col-md-6" type="number" name="editRentability" [(ngModel)]="editRentability" required />
+        </div>
+        <div class="col-md-3">
+            <label for="editSalary"> Средняя зарплата(руб.):</label>
+            <input id="editSalary" class="form-control col-md-6" type="number" name="editSalary" [(ngModel)]="editSalary" required />
+            <label for="editSalaryDollar">Средняя зарплата($)</label>
+            <input id="editSalaryDollar" class="form-control col-md-6" type="number" name="editSalaryDollar" [(ngModel)]="editSalaryDollar" required />
+            <label for="editWork"> Выполненный объём работ, услуг на 1 работника в месяц(собственными силами)(руб.):</label>
+            <input id="editWork" class="form-control col-md-6" type="number" name="editWork" [(ngModel)]="editWork" required />
+            <label for="editWorkDollar"> Выполненный объём работ, услуг на 1 работника в месяц(собственными силами)($):</label>
+            <input id="editWorkDollar" class="form-control col-md-6" type="number" name="editWorkDollar" [(ngModel)]="editWorkDollar" required />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" data-toggle="modal" data-target="#modal">Изменить</button>
+</form>
+<div class="delete p-3">
+    <h3>Delete EconomyMonth</h3>
+</div>
+<form (ngSubmit)="deleteEconomyMonth(deleteId)">
+    <div class="form-group">
+        <label for="deleteId">Введите ID:</label>
+        <input id="deleteId" class="form-control col-md-5" type="text" name="deleteId" [(ngModel)]="deleteId" required />
+    </div>
+    <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#modal">Удалить</button>
+</form>
+<div class="modal fade" id="modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" [style.backgroundColor]="modalColor">
+                <h2 class="modal-title" id="title">{{modalTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <p>{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary col-md-4" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

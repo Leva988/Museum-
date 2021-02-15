@@ -1,0 +1,57 @@
+.btn-circle {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    margin-left: 20px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 60px;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    box-shadow: 5px 5px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-circle p {
+    font-family: monospace;
+    position: relative;
+    bottom: 55%;
+    right: 10%;
+}
+
+.btn-circle:hover {
+    opacity: 0.5;
+}
+
+@-moz-document url-prefix() {
+    .btn-circle p {
+        padding-top: 5px;
+        font-size: 60px;
+        font-family: monospace;
+        font-weight: 900;
+    }
+}
+
+.navbar-brand {
+    font-size: 25pt;
+    color: white;
+}
+
+.nav-pills {
+    margin-left: 50px;
+}
+
+.nav-link {
+    font-size: 15pt;
+    color: white;
+}
+
+.nav-link:hover {
+    color: white;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+#admin {
+    display: none;
+}

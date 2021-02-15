@@ -1,0 +1,82 @@
+<title>{{title}}</title>
+<div class="container-fluid flex-wrap fullframe">
+    <div class="row ">
+        <div class="col-md-4 order-first order-md-5 main-sis d-flex align-items-stretch">
+            <div class="container-fluid d-flex align-items-center justify-content-center">
+                <div class="logo"><img height="250px" src="/assets/images/logo.png"></div>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-1 main-news min-100 d-flex align-items-end">
+            <div class="title d-flex min-100 align-items-end">
+                <a href="/news" class="stretched-link title-link">
+                    <h1>Новости</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-2 main-company  d-flex align-items-end">
+            <div class="title d-flex  align-items-end">
+                <a routerLink="/company/0" class="stretched-link title-link">
+                    <h1>О компании</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-3 main-gallery min-100 d-flex align-items-end" id="main-gallery" (click)="galleryclick()">
+            <div class="title d-flex align-items-end">
+                <a href="/gallery" class="stretched-link title-link">
+                    <h1>Галерея</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-4 main-skills  d-flex align-items-end">
+            <div class="title d-flex align-items-end">
+                <a href="/service" class="stretched-link title-link">
+                    <h1>Направления деятельности</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-6 main-projects d-flex align-items-end">
+            <div class="title d-flex align-items-end">
+                <a href="/projects" class="stretched-link title-link">
+                    <h1>Реализованные проекты</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-7 main-achievements d-flex align-items-end">
+            <div class="title d-flex align-items-end">
+                <a href="/achievements" class="stretched-link title-link">
+                    <h1>Достижения</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-8 main-social d-flex align-items-end">
+            <div class="title d-flex align-items-end">
+                <a href="/social" class="stretched-link title-link">
+                    <h1>Социальная жизнь</h1>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 order-9 main-history d-flex align-items-end" id="main-history" (click)="historyclick()">
+            <div class="title d-flex align-items-end">
+                <h1 class="title-link">История</h1>
+            </div>
+            <div class="history-points d-flex align-items-center" [ngClass]="{invisible: hvisibility}">
+                <ul>
+                    <li *ngFor="let h of history">
+                        <a href="{{h.key}}" class="link">
+                            <h4>{{h.value}}</h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>

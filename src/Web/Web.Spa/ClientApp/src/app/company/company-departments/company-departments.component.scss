@@ -1,0 +1,102 @@
+.main {
+    background-color: #2AAC65;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.head {
+    color: white;
+    font-size: 10pt;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.district {
+    margin-top: 20px;
+    margin-left: 50px;
+    border: 3px solid;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-size: 7pt;
+    hyphens: auto;
+    word-wrap: break-word;
+    text-transform: uppercase;
+    background-color: white;
+}
+
+.sector {
+    padding: 5px;
+    margin-top: 20px;
+    border: 1px solid;
+    border-radius: 10px;
+    text-align: center;
+    word-wrap: break-word;
+    font-size: 6pt;
+}
+
+.structure0 .head {
+    background-color: #294D8D;
+    border-color: #294D8D;
+}
+
+.structure0 .district {
+    border-color: #294D8D;
+}
+
+.structure0 a {
+    color: #294D8D;
+}
+
+.structure1 .head {
+    background-color: #00B5F9;
+    border-color: #00B5F9;
+}
+
+.structure1 .district {
+    color: #00B5F9;
+    border-color: #00B5F9;
+}
+
+.structure1 a {
+    color: #00B5F9;
+}
+
+.structure2 .head {
+    background-color: #F99300;
+    border-color: #F99300;
+}
+
+.structure2 .district {
+    color: #F99300;
+    border-color: #F99300;
+}
+
+.structure2 a {
+    color: #F99300;
+}
+
+.sectors {
+    color: #6E7A8B;
+    border-color: #97A3B4;
+}
+
+.last-head {
+    font-size: 10pt;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #97A3B4;
+    border-color: #97A3B4;
+}
+
+.last-head a {
+    color: white;
+}

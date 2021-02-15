@@ -1,0 +1,19 @@
+<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#294D8D,#4F74B7)' buttoncolor='#294D8D'>
+</app-header>
+<app-button backcolor="#294D8D" buttoncolor="#4F74B7"> </app-button>
+
+<body>
+    <div class="row main d-flex justify-content-around align-content-center">
+        <div class="col-md-4" *ngFor='let d of dates'>
+            <h2>{{d.name}}</h2>
+            <ul>
+                <li *ngFor="let x of d.dates">
+                    <div class="row justify-content-around">
+                        <p class="col-md-2 year">{{x.sdate}}</p>
+                        <p class="col-md-9"> {{x.description}}</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>

@@ -1,0 +1,39 @@
+<div class="navbar navbar-inverse bg-info p-3 m-3">
+    <h1 class="navbar-brand">MUSEUM Admin</h1>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+            <button class="btn btn-danger btn-block" (click)="logout()">
+                Logout
+                </button>
+            <button id="employees" class="btn btn-primary btn-block" routerLink="/admin/main/employees" routerLinkActive="active">
+                Employees
+                </button>
+            <button id="projects" class="btn btn-primary btn-block" routerLink="/admin/main/projects">
+                Projects
+            </button>
+            <button id="years" class="btn btn-primary btn-block" routerLink="/admin/main/economyyears">
+                EconomyYears
+            </button>
+            <button id="months" class="btn btn-primary btn-block" routerLink="/admin/main/economymonths">
+                EconomyMonths
+            </button>
+            <button id="social" class="btn btn-primary btn-block" routerLink="/admin/main/socialcategories">
+                SocialCategories
+            </button>
+            <button id="gallery" class="btn btn-primary btn-block" routerLink="/admin/main/galleries">
+                Galleries
+            </button>
+            <button id="veterans" class="btn btn-primary btn-block" routerLink="/admin/main/veterans">
+                Veterans
+            </button>
+            <button id="services" class="btn btn-primary btn-block" routerLink="/admin/main/services">
+                ServiceCategories/Services
+            </button>
+        </div>
+        <div class="col-md-9">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
