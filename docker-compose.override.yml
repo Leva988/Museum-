@@ -12,20 +12,20 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString=mongodb://museum:museum1@bl-dck-21.it.beloil.by:27027/museum-sis
-      - Database=museum-sis
+      - ConnectionString=mongodb://museum-bgpz:museum-bgpz1@bl-dck-21.it.beloil.by:27027/museum-bgpz
+      - Database=museum-bgpz
       - IdentityUrl=https://dev.it.beloil.by/identity
       - IdentityUrlExternal=https://dev.beloil.by/identity
     volumes:
       - /u02/rcp2/processing.api/logs:/logs
     ports:
-      - 8079:80
+      - 8078:80
     logging: *default-logging
     restart: always
     deploy:
       mode: replicated
       replicas: 1
-      labels: [APP=MUSEUM-SIS]
+      labels: [APP=MUSEUM-BGPZ]
       resources:
         limits:
           cpus: '1'

@@ -6,11 +6,11 @@
 
   - name: Install icp-news
     git:
-      repo: 'ssh://git@rl-dck.it.beloil.by:2201/museum/museum.git'
-      dest: /u01/src/museum
+      repo: 'ssh://git@rl-dck.it.beloil.by:2201/museum/museum-bzpz.git'
+      dest: /u01/src/museum-bzpz
 
   - name: Run in docker swarm
-    shell: /usr/local/bin/docker-compose config | docker stack deploy --with-registry-auth --compose-file - museum-sis
+    shell: /usr/local/bin/docker-compose config | docker stack deploy --with-registry-auth --compose-file - museum-bgpz
     args:
-      chdir: /u01/src/museum
+      chdir: /u01/src/museum-bzpz
     become: yes
