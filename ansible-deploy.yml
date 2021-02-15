@@ -4,13 +4,13 @@
   - name: Creates directory /u01/src
     file: path=/u01/src state=directory
 
-  - name: Install icp-news
+  - name: Install musum bgpz
     git:
-      repo: 'ssh://git@rl-dck.it.beloil.by:2201/museum/museum-bzpz.git'
-      dest: /u01/src/museum-bzpz
+      repo: 'ssh://git@rl-dck.it.beloil.by:2201/museum/museum-bgpz.git'
+      dest: /u01/src/museum-bgpz
 
   - name: Run in docker swarm
     shell: /usr/local/bin/docker-compose config | docker stack deploy --with-registry-auth --compose-file - museum-bgpz
     args:
-      chdir: /u01/src/museum-bzpz
+      chdir: /u01/src/museum-bgpz
     become: yes
