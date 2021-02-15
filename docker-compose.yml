@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   web-spa:
-    image: ${DOCKERREGISTRY:-docker.it.beloil.by/}museum/museum:${TAG_WEBSPA:-latest}
+    image: ${DOCKERREGISTRY:-docker.it.beloil.by/}museum/museum-bgpz:${TAG_WEBSPA:-latest}
     build:
       context: .
       dockerfile: ./src/Web/Web.Spa/Dockerfile
