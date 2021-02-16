@@ -12,12 +12,11 @@ build-master:
     - docker login -u "docker" -p "docker" $CI_REGISTRY
     - docker login -u "docker" -p "docker" rl-dck.it.beloil.by:5001
   script:
-    - docker build --pull -t "$CI_REGISTRY_IMAGE" -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" . -f ./src/Web/Web.Spa/Dockerfile
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" . -f ./src/Web/Web.Spa/Dockerfile
     - docker push "$CI_REGISTRY_IMAGE:latest"
-    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
   only:
-    - tags
-
+    - master
+    
 deploy-production:
   stage: deploy
   services:
@@ -34,5 +33,3 @@ deploy-production:
     - ansible-playbook -i bl-dck-11.it.beloil.by, ansible-deploy.yml
   only:
     - master
-    - tags
-  when: manual
