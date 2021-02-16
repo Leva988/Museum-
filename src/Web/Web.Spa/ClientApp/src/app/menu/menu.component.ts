@@ -6,25 +6,22 @@ import { KeyValue } from '@angular/common';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-  title = 'Музей СИС';
+  title = 'Музей БГПЗ';
   history: KeyValue<string, string>[];
-  gallery: KeyValue<string, string>[];
   constructor() {
-    this.history = [{key: '/historyref', value: 'Историческая справка'},
-    {key: '/historydates', value: 'Важные даты'},
-    {key: '/historyveterans', value: 'Ветераны'}];
-   }
-  gvisibility = true;
-  hvisibility = true;
-  ngOnInit() {
-    // tslint:disable:variable-name
-    // tslint:disable:only-arrow-functions
+    this.history = [
+      {key: '/historyref', value: 'Историческая справка'},
+      {key: '/historydates', value: 'Важные даты'},
+      {key: '/historyveterans', value: 'Ветераны'},
+    ];
+  }
 
-    }
-  galleryclick() {
-    this.gvisibility = !this.gvisibility;
-   }
-   historyclick() {
+  hvisibility = true;
+
+  ngOnInit() {
+  }
+
+  historyclick() {
     this.hvisibility = !this.hvisibility;
-   }
+  }
 }
