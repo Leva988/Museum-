@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Belorusneft.Museum.Web.Spa.Infrastructure.Repositories;
@@ -11,10 +11,10 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class StructureController : ControllerBase
+    public class SubStructureController : ControllerBase
     {
         private readonly IRepository _repository;
-        public StructureController(IRepository repository)
+        public SubStructureController(IRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
@@ -24,16 +24,14 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetAllStructures()
         {
-            var item = await _repository.GetStructuresAsync();
-            var structures = item.ToArray();
-            foreach (Structure structure in structures)
+            var item = await _repository.GetSubStructuresAsync();
+            var subStructures = item.ToArray();
+            foreach (SubStructure sub in subStructures)
             {
-                var departments = await _repository.GetDepartmentsByStructureAsync(structure.Id);
-                var subs = await _repository.GetSubStructuresByStructureId(structure.Id);
-                structure.Departments = departments;
-                structure.SubStructures = subs;
+                var departments = await _repository.GetDepartmentsByStructureAsync(sub.Id);
+                sub.Departments = departments;
             }
-            return Ok(structures);
+            return Ok(subStructures);
         }
 
         //Get api/category id
@@ -41,10 +39,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetById(string id)
         {
-            var item = await _repository.GetStructureAsync(id);
+            var item = await _repository.GetSubStructureAsync(id);
             var departments = await _repository.GetDepartmentsByStructureAsync(item.Id);
-            var subs = await _repository.GetSubStructuresByStructureId(item.Id);
-            item.SubStructures = subs;
             item.Departments = departments;
             if (item == null)
             {
@@ -55,48 +51,50 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/project
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdateStructure([FromBody] StructureNew structNew)
+        public async Task<IActionResult> CreateorUpdateSubStructure([FromBody] SubStructureNew subNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values);
             }
-            var structure = MapStructure(structNew);
-            await _repository.InsertStructureAsync(structure);
-            return CreatedAtAction(nameof(GetById), new { id = structure.Id }, new { id = structure.Id });
+            var subStructure = MapSubStructure(subNew);
+            await _repository.InsertSubStructureAsync(subStructure);
+            return CreatedAtAction(nameof(GetById), new { id = subStructure.Id }, new { id = subStructure.Id });
         }
 
         // Put api/Employee
         [HttpPut("{id}")]
-        public async Task<ActionResult<Structure>> Put(string id, [FromBody] StructureNew structNew)
+        public async Task<ActionResult<Structure>> Put(string id, [FromBody] SubStructureNew structNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values);
             }
 
-            var structure = MapStructure(structNew);
-            structure.Id = id;
-            await _repository.UpdateStructureAsync(structure);
+            var sub = MapSubStructure(structNew);
+            sub.Id = id;
+            await _repository.UpdateSubStructureAsync(sub);
 
             return Ok();
         }
 
         //Delete api/category
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteStructure(string id)
+        public async Task<ActionResult> DeleteSubStructure(string id)
         {
-            if (await _repository.DeleteStructureAsync(id))
+            if (await _repository.DeleteSubStructureAsync(id))
             {
                 return Ok();
             }
             return NotFound();
         }
 
-        private Structure MapStructure(StructureNew structNew) =>
-        new Structure
+        private SubStructure MapSubStructure(SubStructureNew subStructNew) =>
+        new SubStructure
         {
-            BossPosition = structNew.BossPosition
+            Name = subStructNew.Name,
+            BossPosition = subStructNew.BossPosition,
+            StructureId = subStructNew.StructureId
         };
     }
 }

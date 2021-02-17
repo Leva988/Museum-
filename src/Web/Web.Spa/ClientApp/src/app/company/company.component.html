@@ -2,21 +2,23 @@
     <app-header id="header" title="О компании" [links]="[{'key':'bosses', 'value': 'Руководство'}, 
               {'key':'departments', 'value': 'Структура'},             
               {'key':'infografic', 'value':'Численность'},
-              {'key':'grafic', 'value':'Показатели'}]" navbackcolor='linear-gradient(to bottom,#00B5F9,#96D8E5)' buttoncolor='#00B5F9'>
+              {'key':'grafic', 'value':'Показатели'}]" navbackcolor='linear-gradient(to bottom,#13490a,#18b855)' buttoncolor='#13490a'>
     </app-header>
-    <app-image backimage="url(/assets/images/company/company_header.png)" formcolor="#294D8D" formtext="<p>Производственное управление связи и информатики «Связьинформсервис». 
-              <br>Образовано в 2009 г. путем слияния Производственно-технического управления связи 
-            <br>и Производственного управления информационных технологий</p>" height="300px"></app-image>
-    <app-button backcolor='#00B5F9' buttoncolor="#96D8E5"> </app-button>
+    <app-image backimage="url(/assets/images/company/company_header.png)" formcolor="#13490a" formtext="<p>«Белоруснефть» перерабатывает весь добываемый попутный нефтяной газ на 
+        собственном Белорусском газоперерабатывающем заводе (БГПЗ). Это единственное подобное производство
+         в Республике Беларусь.     БГПЗ – развивающееся предприятие по выпуску энергоносителей из углеводородного сырья.</p>" height="300px"></app-image>
+    <app-button backcolor='#13490a' buttoncolor="#18b855"> </app-button>
     <div>
         <app-company-bosses></app-company-bosses>
     </div>
     <div>
         <app-company-departments></app-company-departments>
     </div>
-    <div>
+    <!--
+        <div>
         <app-company-indicators></app-company-indicators>
     </div>
+    -->
     <div>
         <app-grafic></app-grafic>
     </div>

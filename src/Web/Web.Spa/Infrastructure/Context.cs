@@ -137,6 +137,9 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Structure> Structure =>
          _database.GetCollection<Structure>("Structures");
 
+        public IMongoCollection<SubStructure> SubStructure =>
+         _database.GetCollection<SubStructure>("SubStructures");
+
         public IMongoCollection<EconomyYear> EconomyYears =>
           _database.GetCollection<EconomyYear>("EconomyYears");
 
