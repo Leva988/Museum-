@@ -8,7 +8,7 @@
     <div class="row justify-content-around">
         <div class="col-md-3 structure{{i}}" *ngFor="let s of structures; let i=index">
             <div class="head">{{s.bossPosition}}</div>
-            <div class="row d-flex" *ngFor="let d of s.departments">
+            <div class="row d-flex" *ngFor="let d of s.substructures">
                 <div class="col-md-5 district">
                     <a href="/departments/{{d.id}}">{{d.name}}</a>
                 </div>

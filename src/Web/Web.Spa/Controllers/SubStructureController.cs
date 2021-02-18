@@ -10,7 +10,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    /*[Authorize] */
     public class SubStructureController : ControllerBase
     {
         private readonly IRepository _repository;
