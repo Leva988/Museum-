@@ -5,26 +5,38 @@
             <h4>Директор</h4>
         </div>
     </div>
-    <div class="row justify-content-around">
-        <div class="col-md-3 structure{{i}}" *ngFor="let s of structures; let i=index">
+    <div class="row d-flex justify-content-around">
+        <div id="structure{{i}}" class="structure" *ngFor="let s of structures; let i = index">
             <div class="head">{{s.bossPosition}}</div>
-            <div class="row d-flex" *ngFor="let d of s.substructures">
-                <div class="col-md-5 district">
-                    <a href="/departments/{{d.id}}">{{d.name}}</a>
+            <div class="row d-flex justify-content-around" *ngIf="i===0">
+                <div class="sub col-md-3" *ngFor="let sub of s.subStructures;">
+                    <div id="subBoss" *ngIf="sub.bossPosition">{{sub.bossPosition}}</div>
+                    <div class="subDistrict" *ngFor="let d of sub.departments">
+                        <div id="lastSub" class="district" [style.backgroundColor]="d.color">
+                            <a href="/departments/{{d.id}}">{{d.name}}</a>
+                            <div class="sector" *ngFor="let sect of d.sectors">
+                                {{sect}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="col-md-5 sectors">
-                    <div class="sector" *ngFor="let sect of d.sectors">
-                        {{sect}}
+            </div>
+            <div class="row d-flex justify-content-around" *ngIf="i===1">
+                <div class="sub col-md-11" *ngFor="let sub of s.subStructures;">
+                    <div class="subDistrict" *ngFor="let d of sub.departments">
+                        <div id="lastSub" class="district" [style.backgroundColor]="d.color">
+                            <a href="/departments/{{d.id}}">{{d.name}}</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div *ngFor="let s of laststruct">
-                <div class="last-head" *ngFor="let d of s.departments">
-                    <a href="/departments/{{d.id}}">{{d.name}}</a>
-                </div>
+        <div id="staff">
+            <div *ngFor="let dep of departments;">
+                <div id="last" class="district" [style.backgroundColor]="dep.color">
+                    <a href="/departments/{{dep.id}}">{{dep.name}}</a></div>
             </div>
         </div>
+
     </div>
+</div>

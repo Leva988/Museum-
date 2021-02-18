@@ -31,6 +31,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 var departments = await _repository.GetDepartmentsByStructureAsync(structure.Id);
                 var subs = await _repository.GetSubStructuresByStructureId(structure.Id);
                 structure.Departments = departments;
+                foreach (SubStructure sub in subs)
+                {
+                     var deps = await _repository.GetDepartmentsByStructureAsync(sub.Id);
+                     sub.Departments = deps;
+                }
                 structure.SubStructures = subs;
             }
             return Ok(structures);
@@ -44,6 +49,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             var item = await _repository.GetStructureAsync(id);
             var departments = await _repository.GetDepartmentsByStructureAsync(item.Id);
             var subs = await _repository.GetSubStructuresByStructureId(item.Id);
+            foreach (SubStructure sub in subs)
+            {
+                var deps = await _repository.GetDepartmentsByStructureAsync(sub.Id);
+                sub.Departments = deps;
+             }
             item.SubStructures = subs;
             item.Departments = departments;
             if (item == null)

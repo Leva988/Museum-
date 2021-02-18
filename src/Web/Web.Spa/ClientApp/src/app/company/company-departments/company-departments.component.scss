@@ -1,36 +1,76 @@
 .main {
     background-color: #18b855;
-    color: white;
+    color: black;
     text-align: center;
     border-radius: 20px;
     padding: 5px;
 }
 
 .head {
-    color: white;
+    color: black;
     font-size: 10pt;
-    text-transform: uppercase;
+    font-weight: 900;
     text-align: center;
     border-radius: 20px;
     padding: 10px;
     margin-top: 20px;
+    background-color: #d44646;
+    border: 3px solid #874444;
+}
+
+#structure0 {
+    width: 57%;
+}
+
+#structure1 {
+    width: 25%;
+}
+
+#staff {
+    width: 17%;
+}
+
+#last a {
+    font-size: 9pt;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: black;
+}
+
+#subBoss {
+    color: black;
+    font-size: 9pt;
+    font-weight: 900;
+    text-align: center;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #eda26f;
+    border: 3px solid;
 }
 
 .district {
     margin-top: 20px;
     margin-left: 50px;
-    border: 3px solid;
+    border: 2px solid;
+    font-weight: 700;
     border-radius: 10px;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
     font-size: 7pt;
     hyphens: auto;
     word-wrap: break-word;
     text-transform: uppercase;
-    background-color: white;
+}
+
+a {
+    color: #13490a;
+    text-transform: lowercase;
+    text-transform: capitalize;
 }
 
 .sector {
+    background-color: #18b855;
     padding: 5px;
     margin-top: 20px;
     border: 1px solid;
@@ -38,65 +78,4 @@
     text-align: center;
     word-wrap: break-word;
     font-size: 6pt;
-}
-
-.structure0 .head {
-    background-color: #294D8D;
-    border-color: #294D8D;
-}
-
-.structure0 .district {
-    border-color: #294D8D;
-}
-
-.structure0 a {
-    color: #294D8D;
-}
-
-.structure1 .head {
-    background-color: #00B5F9;
-    border-color: #00B5F9;
-}
-
-.structure1 .district {
-    color: #00B5F9;
-    border-color: #00B5F9;
-}
-
-.structure1 a {
-    color: #00B5F9;
-}
-
-.structure2 .head {
-    background-color: #F99300;
-    border-color: #F99300;
-}
-
-.structure2 .district {
-    color: #F99300;
-    border-color: #F99300;
-}
-
-.structure2 a {
-    color: #F99300;
-}
-
-.sectors {
-    color: #6E7A8B;
-    border-color: #97A3B4;
-}
-
-.last-head {
-    font-size: 10pt;
-    text-transform: uppercase;
-    text-align: center;
-    border-radius: 20px;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #97A3B4;
-    border-color: #97A3B4;
-}
-
-.last-head a {
-    color: white;
 }
