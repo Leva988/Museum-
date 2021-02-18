@@ -13,7 +13,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    /*[Authorize] */
     public class EmployeesController : ControllerBase
     {
         private readonly IRepository _repository;

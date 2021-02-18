@@ -193,7 +193,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<Department> GetDepartmentAsync(string id);
 
-        Task<IEnumerable<Department>> GetDepartmentsAsync(string structure);
+        Task<IEnumerable<Department>> GetDepartmentsByStructureAsync(string structure);
 
         Task AddDepartmentAsync(Department department);
 
@@ -219,6 +219,21 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task UpdateStructureAsync(Structure structure);
 
         Task<bool> DeleteStructureAsync(string id);
+        #endregion
+
+        #region SubStructures
+
+        Task<IEnumerable<SubStructure>> GetSubStructuresAsync();
+
+        Task<SubStructure> GetSubStructureAsync(string id);
+
+        Task<IEnumerable<SubStructure>> GetSubStructuresByStructureId(string structureId);
+
+        Task InsertSubStructureAsync(SubStructure subStructure);
+
+        Task UpdateSubStructureAsync(SubStructure subStructure);
+
+        Task<bool> DeleteSubStructureAsync(string id);
         #endregion
 
         #region EconomyYear

@@ -13,7 +13,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+     /*[Authorize] */
     public class DepartmentsController : ControllerBase
     {
 
@@ -57,7 +57,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetByStructure(string structureId)
         {
-            var items = await _repository.GetDepartmentsAsync(structureId);
+            var items = await _repository.GetDepartmentsByStructureAsync(structureId);
             if (items == null)
             {
                 return NotFound();

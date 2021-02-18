@@ -1,19 +1,20 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace Belorusneft.Museum.Web.Spa.Models
+namespace  Belorusneft.Museum.Web.Spa.Models
 {
-    public class Structure
+    public class SubStructure
     {
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        public string BossPosition { get; set; }
+        public string Name {get; set;}
 
-        public IEnumerable<SubStructure> SubStructures { get; set; } 
+        public string  BossPosition { get; set; }
+
+        public string StructureId {get; set;}
 
         public IEnumerable<Department> Departments { get; set; } 
 

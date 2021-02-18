@@ -46,6 +46,7 @@ namespace Belorusneft.Museum.Web.Spa
                     Title = "Museum API",
                     Version = "v1"
                 });
+                /*
                 options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.ApiKey,
@@ -62,7 +63,7 @@ namespace Belorusneft.Museum.Web.Spa
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer",
+                                Id = JwtBearerDefaults.AuthenticationScheme,
                             },
                             Scheme = "oauth2",
                             Name = "Bearer",
@@ -70,8 +71,9 @@ namespace Belorusneft.Museum.Web.Spa
                         },
                         new List<string>()
                     },
-                });
+                });*/
             });
+           
 
             services.Configure<Settings>(Configuration);
 
@@ -79,7 +81,7 @@ namespace Belorusneft.Museum.Web.Spa
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
-
+            /*
             services
                 .AddAuthorization()
                 .AddAuthentication(options =>
@@ -94,7 +96,7 @@ namespace Belorusneft.Museum.Web.Spa
                     options.Audience = "museum.sis";
                 });
 
-
+            */
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -144,15 +146,17 @@ namespace Belorusneft.Museum.Web.Spa
             });
 
             app.UseMiddleware<ReverseProxyMiddleware>();
+            /*
             app.UseAuthentication();
             app.UseAuthorization();
-
+            */
+            app.UseStatusCodePages();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                    endpoints.MapHealthChecks("/hc", new HealthCheckOptions
                 {
                     Predicate = _ => true,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse

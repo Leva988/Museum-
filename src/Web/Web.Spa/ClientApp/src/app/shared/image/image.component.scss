@@ -1,19 +1,20 @@
 .backimage {
     background-repeat: no-repeat;
     background-size: cover;
-    animation: 15s infinite linear alternate move;
+    position: relative;
+    animation-name: move;
+    animation-duration: 10s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
     animation-delay: 1s;
 }
 
 @keyframes move {
     from {
-        background-position: 70%;
+        background-position: top;
     }
     50% {
-        background-position: 100%;
-    }
-    to {
-        background-position: 70%;
+        background-position: 0% 50%;
     }
 }
 
