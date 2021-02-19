@@ -4,13 +4,15 @@
 }
 
 .logo {
-    padding-top: 5vh;
+    padding-top: 3vh;
     height: 50%;
 }
 
 .brand {
-    color: #18b855;
-    font-size: 2rem !important;
+    color: #009853;
+    text-transform: uppercase;
+    font-size: 1.4rem !important;
+    font-weight: 700;
     text-align: center;
     margin-left: 10;
     margin-right: 10;
@@ -125,7 +127,7 @@
     right: 0;
     bottom: 0;
     background: rgba(#294D8D, 0.5) no-repeat center/cover;
-    color: white; 
+    color: white;
 }
 
 a {
