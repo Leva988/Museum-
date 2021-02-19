@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { HistoryService } from '../historyservice/history-service.service';
 import { environment } from 'src/environments/environment';
 import { Veteran } from 'src/app/models/veteran';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-history-veterans',
@@ -28,11 +29,21 @@ export class HistoryVeteransComponent implements OnInit {
             const d = data[i];
             // BirthDay
             const birthDate = new Date(Date.parse(d.birthDay));
+            const recruitDate = new Date(Date.parse(d.recruitDate));
             const options = {  year: 'numeric', month: 'numeric', day: 'numeric' };
+            let dateEnd;
+            if (isNullOrUndefined(d.dateEnd)) {
+              d.dateEnd = 'н.в.';
+            } else {
+              dateEnd = new Date(Date.parse(d.dateEnd));
+              const localdateEnd = dateEnd.getFullYear().toString();
+              d.dateEnd = localdateEnd;
+            }
             const localbirthtdate = birthDate.toLocaleDateString(undefined, options);
+            const localrecruitdate = recruitDate.getFullYear().toString();
             d.birthDay = localbirthtdate;
+            d.recruitDate = localrecruitdate;
             this.veterans.push(d);
-            console.log(this.veterans);
             }
           },
         error => console.log(error));

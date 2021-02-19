@@ -1,6 +1,6 @@
-<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#294D8D,#4F74B7)' buttoncolor='#294D8D'>
+<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#55694a,#3eab02)' buttoncolor='#55694a'>
 </app-header>
-<app-button backcolor='#294D8D' buttoncolor="#4F74B7"> </app-button>
+<app-button backcolor='#55694a' buttoncolor="#3eab02"> </app-button>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-3" *ngFor="let v of veterans">
@@ -10,8 +10,8 @@
                     <h4 class="card-title">{{v.name}}</h4>
                     <div class="card-text">
                       <p >{{v.position}}</p>
-                      <p>Дата рождения: {{v.birthDay}}</p>
-                      <p>Период работы с {{v.recruitDate}} по {{v.fireDate}} </p>
+                      <p>Дата рождения: {{v.birthDay}}г. </p>
+                      <p>Период работы c {{v.recruitDate}} - {{v.dateEnd}} </p>
                      </div>
                   </div>                 
                </span>

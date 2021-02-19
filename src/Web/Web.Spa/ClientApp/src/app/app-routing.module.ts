@@ -28,7 +28,6 @@ const routes: Routes = [
    { path: 'news', component: NewsComponent},
    { path: 'gallery', component: GalleryComponent},
    { path: 'projects', component: ProjectsComponent},
-   { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
    { path: '**', component: NotfoundComponent }
 ];
 

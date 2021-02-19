@@ -10,5 +10,5 @@ export class Veteran {
 
     public recruitDate: string;
 
-    public fireDate: string;
+    public dateEnd: string;
 }

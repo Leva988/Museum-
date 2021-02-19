@@ -118,7 +118,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<Veteran>> GetVeteransAsync() =>
             await _context.Veterans
                 .Find(_ => true)
-                .SortBy(c => c.RecruitDate)
+                .SortBy(c => c.DateEnd)
                 .ToListAsync();
 
 

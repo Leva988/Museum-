@@ -114,7 +114,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post photo
         [HttpPost("{id}/Photo")]
-        public async Task<ActionResult> PostPhoto(string id,IFormFile image)
+        public async Task<ActionResult> PostPhoto(string id,[FromForm (Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
@@ -141,7 +141,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 Position = vetNew.Position,
                 BirthDay = vetNew.BirthDay,
                 RecruitDate = vetNew.RecruitDate,
-                FireDate = vetNew.FireDate
+                DateEnd = vetNew.DateEnd
             };
 
         private IEnumerable<Veteran> MapVeterans(IEnumerable<VeteranNew> vetsnew)
@@ -155,7 +155,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                     Position = vetsnew.ElementAt(i).Position,
                     BirthDay = vetsnew.ElementAt(i).BirthDay,
                     RecruitDate = vetsnew.ElementAt(i).RecruitDate,
-                    FireDate = vetsnew.ElementAt(i).FireDate
+                    DateEnd = vetsnew.ElementAt(i).DateEnd
                 };
                 veterans.Push(emp);
             }
