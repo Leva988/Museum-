@@ -28,16 +28,11 @@ export class HistoryVeteransComponent implements OnInit {
             const d = data[i];
             // BirthDay
             const birthDate = new Date(Date.parse(d.birthDay));
-            const recruitDate = new Date(Date.parse(d.recruitDate));
-            const fireDate = new Date(Date.parse(d.fireDate));
             const options = {  year: 'numeric', month: 'numeric', day: 'numeric' };
             const localbirthtdate = birthDate.toLocaleDateString(undefined, options);
-            const localrecruitdate = recruitDate.toLocaleDateString(undefined, options);
-            const localfiredate = fireDate.toLocaleDateString(undefined, options);
             d.birthDay = localbirthtdate;
-            d.recruitDate = localrecruitdate;
-            d.fireDate = localfiredate;
             this.veterans.push(d);
+            console.log(this.veterans);
             }
           },
         error => console.log(error));

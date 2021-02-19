@@ -18,9 +18,9 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public DateTime BirthDay { get; set; }
 
-        public DateTime RecruitDate { get; set; }
+        public string RecruitDate { get; set; }
 
-        public DateTime FireDate { get; set; }
+        public string FireDate { get; set; }
 
     }
 }
