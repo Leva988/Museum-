@@ -25,10 +25,6 @@ export class GalleryComponent implements OnInit {
       {
         key: 'БГПЗ - История(1976-2016)',
         value: 'https://ssl.belorusneft.by/cdn/bgpz/BGPZ_2016_1080_23.98p_SHORT.mp4'
-      },
-      {
-        key: 'БГПЗ - История(1976-2016) реж. версия',
-        value: 'https://ssl.belorusneft.by/cdn/bgpz/BGPZ_2016_1080_23.98p_WO_DIRECTOR.mp4'
       }
     ];
    }
