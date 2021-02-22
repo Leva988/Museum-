@@ -121,7 +121,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post item
         [HttpPost("{galleryId}/item")]
-        public async Task<ActionResult> Post(string galleryId, [FromForm(Name = "avatar")] IFormFile image)
+        public async Task<ActionResult> Post(string galleryId, IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

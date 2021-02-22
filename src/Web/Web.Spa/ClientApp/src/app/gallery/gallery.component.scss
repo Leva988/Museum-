@@ -2,56 +2,30 @@ body {
     overflow-x: hidden;
 }
 
-.galleries {
-    margin-top: 150px;
-}
-
-h2 {
-    color: #00B5F9;
-}
-
-.photos {
-    padding: 10px;
+.videos {
+    margin-top: 100px;
 }
 
 .card {
+    width: 400px;
+    margin: 20px;
+    position: relative;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
     transition: 0.3s;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 50px;
+    text-align: left;
+    overflow: hidden;
 }
 
 .card:hover {
+    -webkit-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    opacity: 0.7;
 }
 
 .card-title {
     padding: 10px;
-    background: rgba(206, 171, 107, 0.2);
     color: black;
-    font-size: 10pt;
-}
-
-.date {
-    margin-top: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 0 0 10px 10px;
-    font-size: 8pt;
-}
-
-.modal {
-    position: fixed;
-    padding: 100px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: rgba(41, 77, 141, 0.9);
-}
-
-.close {
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-    cursor: pointer;
+    font-size: 15pt;
 }
