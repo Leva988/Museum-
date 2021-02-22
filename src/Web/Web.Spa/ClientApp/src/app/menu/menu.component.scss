@@ -6,6 +6,7 @@
 .logo {
     padding-top: 3vh;
     height: 50%;
+    width: auto;
 }
 
 .brand {
@@ -14,6 +15,7 @@
     font-size: 1.4rem !important;
     font-weight: 700;
     text-align: center;
+    height: 50%;
     margin-left: 10;
     margin-right: 10;
 }
@@ -114,19 +116,18 @@
 
 .main-bgpz {
     background: transparent linear-gradient(241deg, #2f332e 0%, #000000 100%) 0% 0% no-repeat padding-box;
-    // padding-right: 0px !important;
-    // padding-left: 0px !important;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
     height: 34vh;
 }
 
-.history-points,
-.gallery-points {
+.history-points {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(#294D8D, 0.5) no-repeat center/cover;
+    background: rgba(#13490a, 0.5) no-repeat center/cover;
     color: white;
 }
 
