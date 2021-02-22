@@ -1,13 +1,12 @@
 <body>
-    <app-header [links]="[{'key':'communication', 'value': 'ПТУС'}, 
-    {'key':'info','value': 'Инфотех'},{'key':'sis', 'value':'СИС'}]" title="{{title}}" navbackcolor='linear-gradient(to bottom,#294D8D,#4F74B7) ' buttoncolor='#294D8D '>
+    <app-header [links]="[]" title="{{title}}" navbackcolor='linear-gradient(to bottom,#265222,#57a150)' buttoncolor='#265222'>
     </app-header>
-    <app-image backimage="url(/assets/images/history/history_ref_header.png)" formcolor="#294D8D" formtext="<p>Производственное управление связи и информатики РУП «Производственное объединение «Белоруснефть» (ПУ «Связьинформсервис») создано 1 августа 2009 г. 
+    <app-image backimage="url(/assets/images/history/history_ref_header.png)" formcolor="#265222" formtext="<p>Производственное управление связи и информатики РУП «Производственное объединение «Белоруснефть» (ПУ «Связьинформсервис») создано 1 августа 2009 г. 
             Приказом генерального директора РУП «Производственное объ-единение «Белоруснефть» 
             от 17.06.2009 г. №510 путем слияния двух обособленных подразделений 
             Производственно-технического управления связи 
             и Производственного управления информационных технологий.</p>" height="300px"></app-image>
-    <app-button buttoncolor='#4F74B7 ' backcolor="#294D8D"></app-button>
+    <app-button buttoncolor='#265222' backcolor="#57a150"></app-button>
 
     <div class="ref">
         <div id="{{r.id}}" class="refblock container-fluid" *ngFor="let r of refs">

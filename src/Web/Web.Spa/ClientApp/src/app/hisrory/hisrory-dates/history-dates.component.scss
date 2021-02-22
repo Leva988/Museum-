@@ -2,16 +2,15 @@ body {
     background-blend-mode: multiply;
     height: 100vh;
     z-index: 0;
-    background: url("/assets/images/history/history-13.png") 0% -50% no-repeat, url("/assets/images/history/history-8.png") 100% 100% no-repeat;
     background-size: 50%;
-    background-color: #294d8d;
+    background-color: #1f4f1b;
     overflow: hidden;
 }
 
 @supports (-ms-ime-align:auto) {
     body:after {
         content: '';
-        background: transparentize(darken(#294d8d, 8), .3);
+        background: transparentize(darken(#1f4f1b, 8), .3);
         position: absolute;
         top: 0;
         bottom: 0;
