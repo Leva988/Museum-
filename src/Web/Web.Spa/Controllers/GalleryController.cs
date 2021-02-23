@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Belorusneft.Museum.Web.Spa.Infrastructure.Repositories;
 using Belorusneft.Museum.Web.Spa.Models;
@@ -68,7 +69,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 return BadRequest(ModelState.Values);
             }
             var gallery = MapGallery(galleryNew);
-            await _repository.InserttGalleryAsync(gallery);
+            gallery.Items =  new List<string>();
+            await _repository.InsertGalleryAsync(gallery);
             return CreatedAtAction(nameof(GetById), new { id = gallery.Id }, new { id = gallery.Id });
         }
 

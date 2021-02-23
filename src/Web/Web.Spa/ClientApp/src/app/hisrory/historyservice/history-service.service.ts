@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { from } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class HistoryService {

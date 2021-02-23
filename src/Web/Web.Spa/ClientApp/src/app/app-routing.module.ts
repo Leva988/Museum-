@@ -5,9 +5,8 @@ import { CompanyComponent } from './company/company.component';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { ServiceComponent } from './service/service.component';
 import { DepartmentComponent } from './department/department.component';
-import { HistoryDatesComponent} from './hisrory/hisrory-dates/history-dates.component';
+import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
 import { HistoryVeteransComponent} from './hisrory/history-veterans/history-veterans.component';
-import { HistoryRefComponent } from './hisrory/history-ref/history-ref.component';
 import { SocialComponent } from './social/social.component';
 import {NewsComponent} from './news/news.component';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -21,9 +20,8 @@ const routes: Routes = [
    { path: 'achievements', component: AchievementsComponent},
    { path: 'service', component: ServiceComponent},
    { path: 'departments/:id', component: DepartmentComponent},
-   { path: 'historydates', component: HistoryDatesComponent},
+   { path: 'historymilestones', component: HistoryMilestonesComponent},
    { path: 'historyveterans', component: HistoryVeteransComponent},
-   { path: 'historyref', component: HistoryRefComponent},
    { path: 'social', component: SocialComponent},
    { path: 'news', component: NewsComponent},
    { path: 'gallery', component: GalleryComponent},

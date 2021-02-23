@@ -53,12 +53,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Service> Service =>
             _database.GetCollection<Service>("Services");
 
-        public IMongoCollection<HistoryDates> HistoryDates =>
-            _database.GetCollection<HistoryDates>("HistoryDates");
-
-        public IMongoCollection<HistoryRef> HistoryRef =>
-            _database.GetCollection<HistoryRef>("HistoryRefs");
-
         public GridFSBucket HistoryPhotos =>
             new GridFSBucket(
                 _database,
@@ -145,6 +139,9 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
 
         public IMongoCollection<EconomyMonth> EconomyMonths =>
                   _database.GetCollection<EconomyMonth>("EconomyMonths");
+
+        public IMongoCollection<HistoryMilestone> HistoryMileStones => 
+                _database.GetCollection<HistoryMilestone>("HistoryMileStones");
 
     }
 }

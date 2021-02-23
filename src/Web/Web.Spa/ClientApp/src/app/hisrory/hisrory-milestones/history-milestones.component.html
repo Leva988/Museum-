@@ -1,0 +1,26 @@
+<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#1f4f1b,#499e62)' buttoncolor='#1f4f1b'>
+</app-header>
+<app-button backcolor="#1f4f1b" buttoncolor="#499e62"> </app-button>
+
+<body>
+    <div class="container-fluid">
+        <div class="main d-flex justify-content-left  align-items-start" *ngFor='let d of dates'>
+            <div class="col-md-2">
+                <h2>{{d.dateStart}} - {{d.dateEnd}}</h2>
+            </div>
+            <div class="col-md-10 description">
+                <p [innerHTML]="d.description"></p>
+                <div class="row d-flex justify-content-around align-items-start">
+                    <div class="col-md-3" *ngFor="let i of d.items;">
+                        <img class="img-fluid img" src="{{url}}/{{d.id}}/item/{{i}}" (click)="photo=i;date = d" data-toggle="modal" data-target="#Modalimage">
+                    </div>
+                </div>
+                <div id="Modalimage" class="modal fade">
+                    <div class="modal-dialog  modal-lg">
+                        <img class="img-fluid" id="img_mod" src="{{url}}/{{date.id}}/item/{{photo}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

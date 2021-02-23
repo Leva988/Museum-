@@ -119,36 +119,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task DeleteAchievementImageAsync(string id);
         #endregion
 
-        #region HistoryDates
-        Task<IEnumerable<HistoryDates>> GetHistoryDatesAsync();
-        
-        Task<HistoryDates> GetHistoryDateAsync(string id);
-
-        Task InsertHistoryDateAsync(HistoryDates hist);
-
-        Task CreateOrUpdateHistoryDateAsync(HistoryDates date);
-
-        Task<bool> DeleteHistoryDateAsync(string id);
-        #endregion
-
-        #region HistoryRef
-        Task<IEnumerable<HistoryRef>> GetAllHistoryRefsAsync();
-
-        Task<HistoryRef> GetHistoryRefAsync(string id);
-
-        Task InsertHistoryRefAsync(HistoryRef historyRef);
-
-        Task CreateOrUpdateHistoryRefAsync(HistoryRef historyRef);
-
-        Task<bool> DeleteHistoryRef(string id);
-
-        Task<FileStreamResult> GetHistoryPhotosAsync(string historyRefId, string itemId);
-
-        Task<string> AddHistoryPhotoAsync(Stream stream, string historyRefId, string contentType);
-
-        Task DeleteHistoryPhoto(string historyRefId, string itemId);
-        #endregion
-
         #region Gallery
         Task<IEnumerable<Gallery>> GetGalleriesAsync();
 
@@ -156,7 +126,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<Gallery> GetGalleryAsync(string galleryId);
 
-        Task InserttGalleryAsync(Gallery gallery);
+        Task InsertGalleryAsync(Gallery gallery);
 
         Task CreateOrUpdateGalleryAsync(Gallery gallery);
 
@@ -167,6 +137,24 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType);
 
         Task DeleteGalleryItemAsync(string galleryId, string itemId);
+        #endregion
+
+        #region HistoryMilestones
+        Task<IEnumerable<HistoryMilestone>> GetHistoryMilestones();
+
+        Task<HistoryMilestone> GetHistoryMilestoneAsync(string id);
+
+        Task InsertHistoryMilestoneAsync(HistoryMilestone mile);
+
+        Task CreateOrUpdateMilestoneAsync(HistoryMilestone milestone);
+
+        Task<bool> DeleteHistoryMilestoneAsync(string id);
+
+        Task<FileStreamResult> GetHistoryItemAsync(string id, string itemId);
+
+        Task<string> AddHistoryItemAsync(Stream stream, string id, string contentType);
+
+        Task DeleteHistoryItemAsync(string id, string itemId);
         #endregion
 
         #region SocialCategory

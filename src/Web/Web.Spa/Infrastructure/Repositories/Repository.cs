@@ -451,120 +451,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
-        #region HistoryDates
-        public async Task<IEnumerable<HistoryDates>> GetHistoryDatesAsync() =>
-            await _context.HistoryDates
-                .Find(_ => true)
-                .SortBy(c => c.Id)
-                .ToListAsync();
-
-        public async Task InsertHistoryDateAsync(HistoryDates hist) =>
-               await _context.HistoryDates
-                     .InsertOneAsync(hist);
-
-        public async Task CreateOrUpdateHistoryDateAsync(HistoryDates historyDates) =>
-            await _context.HistoryDates.ReplaceOneAsync(x => x.Id == historyDates.Id,
-                historyDates,
-                new ReplaceOptions
-                {
-                    IsUpsert = true,
-                });
-
-        public async Task<HistoryDates> GetHistoryDateAsync(string id) =>
-            await _context.HistoryDates
-                .Find(x => x.Id == id)
-                .FirstOrDefaultAsync(); 
-
-        public async Task<bool> DeleteHistoryDateAsync(string id)
-        {
-            var actionResult = await _context.HistoryDates
-                .DeleteOneAsync(p => p.Id == id);
-
-            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
-        }
-        #endregion
-
-        #region HistoryRefs
-        public async Task<IEnumerable<HistoryRef>> GetAllHistoryRefsAsync() =>
-            await _context.HistoryRef.Find(_ => true)
-                .SortBy(c => c.Id)
-                .ToListAsync();
-
-        public async Task InsertHistoryRefAsync(HistoryRef hist) =>
-            await _context.HistoryRef
-                  .InsertOneAsync(hist);
-
-        public async Task CreateOrUpdateHistoryRefAsync(HistoryRef historyRef) =>
-            await _context.HistoryRef.ReplaceOneAsync(x => x.Id == historyRef.Id,
-                historyRef,
-                new ReplaceOptions
-                {
-                    IsUpsert = true,
-                });
-
-        public async Task<HistoryRef> GetHistoryRefAsync(string id) =>
-            await _context.HistoryRef
-                .Find(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
-        public async Task<bool> DeleteHistoryRef(string id)
-        {
-            var actionResult = await _context.HistoryRef
-                .DeleteOneAsync(p => p.Id == id);
-            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
-        }
-
-        public async Task<FileStreamResult> GetHistoryPhotosAsync(string historyId, string itemId)
-        {
-            var info = await _context.HistoryPhotos
-                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-
-            var stream = new MemoryStream();
-            await _context.HistoryPhotos.DownloadToStreamAsync(info.Id, stream);
-            stream.Position = 0;
-
-            var contentType = info.Metadata.GetValue("Content-Type").ToString();
-            return new FileStreamResult(stream, contentType);
-        }
-
-        public async Task<string> AddHistoryPhotoAsync(Stream stream, string historyId, string contentType)
-        {
-            var history = await GetHistoryRefAsync(historyId);
-            if (history == null)
-            {
-                return null;
-            }
-
-            var itemId = await _context.HistoryPhotos
-                .UploadFromStreamAsync(
-                    historyId,
-                    stream,
-                    new GridFSUploadOptions
-                    {
-                        Metadata = new BsonDocument
-                        {
-                            {"Content-Type", contentType},
-                        },
-                    }
-                );
-
-            var update = Builders<HistoryRef>.Update.AddToSet(x => x.Items, itemId.ToString());
-            await _context.HistoryRef.UpdateOneAsync(x => x.Id == historyId, update);
-
-            return itemId.ToString();
-        }
-
-        public async Task DeleteHistoryPhoto(string historyId,string itemId)
-        {
-            var gall = await GetHistoryRefAsync(historyId);
-            var items = gall.Items.Where(el => el != itemId);
-            var update = Builders<HistoryRef>.Update.Set(x => x.Items, items);
-            await _context.HistoryRef.UpdateOneAsync(x => x.Id == historyId, update);
-            await _context.HistoryPhotos.DeleteAsync(ObjectId.Parse(itemId));
-        }
-        #endregion
-
         #region Gallery
         public async Task<IEnumerable<Gallery>> GetGalleriesAsync() =>
             await _context.Galleries.Find(_ => true)
@@ -576,7 +462,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                .SortBy(c => c.Date)
                .ToListAsync();
 
-        public async Task InserttGalleryAsync(Gallery gallery) =>
+        public async Task InsertGalleryAsync(Gallery gallery) =>
             await _context.Galleries
                 .InsertOneAsync(gallery);
 
@@ -603,10 +489,13 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<bool> DeleteGalleryAsync(string id)
         {
             var gallery = await GetGalleryAsync(id);
+            if (gallery != null && gallery.Items.Count() > 0){
             foreach (var i in gallery.Items)
-            {
-                await DeleteGalleryItemAsync(id, i);
+                {
+                    await DeleteGalleryItemAsync(id, i);
+                }
             }
+            
             var actionResult = await _context.Galleries
                 .DeleteOneAsync(p => p.Id == id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
@@ -660,6 +549,102 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var update = Builders<Gallery>.Update.Set(x => x.Items, items);
             await _context.Galleries.UpdateOneAsync(x => x.Id == galleryId, update);
             await _context.GalleryContent.DeleteAsync(ObjectId.Parse(itemId));
+        }
+        #endregion
+
+        #region HistoryMilestone
+        public async Task<IEnumerable<HistoryMilestone>> GetHistoryMilestones() =>
+            await _context.HistoryMileStones.Find(_ => true)
+                .SortBy(c => c.DateEnd)
+                .ToListAsync();
+
+        public async Task InsertHistoryMilestoneAsync(HistoryMilestone hist) =>
+            await _context.HistoryMileStones
+                .InsertOneAsync(hist);
+
+        public async Task CreateOrUpdateMilestoneAsync(HistoryMilestone hist) {
+            var filter = Builders<HistoryMilestone>.Filter.Eq(x => x.Id, hist.Id);
+            var update = Builders<HistoryMilestone>.Update
+                .Set(x => x.DateStart, hist.DateStart)
+                .Set(x => x.DateEnd, hist.DateEnd)
+                .Set(x => x.Description, hist.Description);            
+            await _context.HistoryMileStones.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
+                {
+                    IsUpsert = true
+                });
+        }
+
+        public async Task<HistoryMilestone> GetHistoryMilestoneAsync(string id) =>
+            await _context.HistoryMileStones
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteHistoryMilestoneAsync(string id)
+        {
+            var history = await GetHistoryMilestoneAsync(id);
+            if (history != null && history.Items.Count() > 0) 
+            {
+                foreach (var i in history.Items)
+                {
+                    await DeleteHistoryItemAsync(id, i);
+                }
+            }         
+            var actionResult = await _context.HistoryMileStones
+                .DeleteOneAsync(p => p.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<FileStreamResult> GetHistoryItemAsync(string histId, string itemId)
+        {
+            var info = await _context.HistoryPhotos
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
+
+            var stream = new MemoryStream();
+            await _context.HistoryPhotos.DownloadToStreamAsync(info.Id, stream);
+            stream.Position = 0;
+
+            var contentType = info.Metadata.GetValue("Content-Type").ToString();
+            return new FileStreamResult(stream, contentType);
+        }
+
+        public async Task<string> AddHistoryItemAsync(Stream stream, string histId, string contentType)
+        {
+            var history = await GetHistoryMilestoneAsync(histId);
+            if (history == null)
+            {
+                return null;
+            }
+
+            var itemId = await _context.HistoryPhotos
+                .UploadFromStreamAsync(
+                    histId,
+                    stream,
+                    new GridFSUploadOptions
+                    {
+                        Metadata = new BsonDocument
+                        {
+                            {"Content-Type", contentType}
+                        },
+                    }
+                );
+
+            var update = Builders<HistoryMilestone>.Update.AddToSet(x => x.Items, itemId.ToString());
+            await _context.HistoryMileStones.UpdateOneAsync(x => x.Id == histId, update);
+
+            return itemId.ToString();
+        }
+
+        public async Task DeleteHistoryItemAsync(string histId, string itemId)
+        {
+            var hist = await GetHistoryMilestoneAsync(histId);
+            var items = hist.Items.Where(el => el != itemId);
+            var update = Builders<HistoryMilestone>.Update.Set(x => x.Items, items);
+            await _context.HistoryMileStones.UpdateOneAsync(x => x.Id == histId, update);
+            await _context.HistoryPhotos.DeleteAsync(ObjectId.Parse(itemId));
         }
         #endregion
 

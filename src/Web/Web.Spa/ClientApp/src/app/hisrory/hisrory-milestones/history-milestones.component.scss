@@ -1,0 +1,32 @@
+body {
+    background-blend-mode: multiply;
+    height: 100vh;
+    background-color: #1f211e;
+    overflow-x: hidden;
+}
+
+.container-fluid {
+    margin-bottom: 100px;
+    margin-top: 200px;
+}
+
+h2 {
+    position: relative;
+    text-transform: uppercase;
+    color: #499e62;
+    font-size: 20pt;
+    font-weight: 700;
+    border-right: 20px solid #499e62;
+    padding-bottom: 20px;
+    padding-right: 5px;
+}
+
+.description {
+    font-size: 12pt;
+    font-weight: 600;
+    color: white;
+}
+
+.img {
+    margin: 20px;
+}

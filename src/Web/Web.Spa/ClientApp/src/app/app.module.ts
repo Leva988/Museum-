@@ -18,9 +18,8 @@ import { ServiceComponent } from './service/service.component';
 import { ImageComponent } from './shared/image/image.component';
 import { DepartmentComponent } from './department/department.component';
 import { ButtonComponent } from './shared/button/button.component';
-import { HistoryDatesComponent} from './hisrory/hisrory-dates/history-dates.component';
+import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
 import { HistoryVeteransComponent} from './hisrory/history-veterans/history-veterans.component';
-import { HistoryRefComponent } from './hisrory/history-ref/history-ref.component';
 import { SocialComponent } from './social/social.component';
 import { NewsComponent } from './news/news.component';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -46,9 +45,8 @@ import { GraficComponent } from './department/grafic/grafic.component';
     ImageComponent,
     DepartmentComponent,
     ButtonComponent,
-    HistoryDatesComponent,
+    HistoryMilestonesComponent,
     HistoryVeteransComponent,
-    HistoryRefComponent,
     SocialComponent,
     NewsComponent,
     GalleryComponent,

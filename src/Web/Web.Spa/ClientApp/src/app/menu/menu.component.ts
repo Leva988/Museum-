@@ -10,8 +10,7 @@ export class MenuComponent implements OnInit {
   history: KeyValue<string, string>[];
   constructor() {
     this.history = [
-      // {key: '/historyref', value: 'Историческая справка'},
-      // {key: '/historydates', value: 'Важные даты'},
+      {key: '/historymilestones', value: 'Вехи истории'},
       {key: '/historyveterans', value: 'Ветераны'},
     ];
   }
