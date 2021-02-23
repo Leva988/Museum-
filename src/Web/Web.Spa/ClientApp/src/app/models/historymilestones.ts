@@ -1,5 +1,7 @@
 export class HistoryMilestone {
 
+    public id: string;
+
     public name: string;
 
     public dateStart: string;

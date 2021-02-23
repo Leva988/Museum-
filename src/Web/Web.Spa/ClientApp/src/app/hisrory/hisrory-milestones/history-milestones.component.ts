@@ -13,7 +13,7 @@ export class HistoryMilestonesComponent implements OnInit {
   title = 'Вехи истории';
   dates: HistoryMilestone[] = [];
   photo = '';
-  date: any;
+  date: HistoryMilestone = new HistoryMilestone();
   url = environment.backendUrl + '/HistoryMilestones';
 
   constructor(private historyService: HistoryService) {
