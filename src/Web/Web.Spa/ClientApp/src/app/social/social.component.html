@@ -7,7 +7,7 @@
             <h2>{{c.name}} </h2>
             <ul class="description" [innerHTML]="c.description" style="list-style-type: square;">
             </ul>
-            <div class="images d-flex justify-content-around">
+            <div class="row images d-flex justify-content-around">
                 <div class="col-md-4" *ngFor="let i of c.items">
                     <img class="img-fluid" src="{{socialUrl}}/{{c.id}}/Photo/{{i}}" data-toggle="modal" data-target="#Modalimage" (click)="photo=i;cat=c">
                 </div>
