@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
   constructor() {
     this.history = [
       {key: '/historymilestones', value: 'Вехи истории'},
-      {key: '/historyveterans', value: 'Ветераны'},
+      {key: '/historyveterans', value: 'Награжденные ведомственными и государственными наградами'},
     ];
   }
 

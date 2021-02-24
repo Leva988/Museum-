@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Belorusneft.Museum.Web.Spa.Infrastructure.Repositories;
 using Belorusneft.Museum.Web.Spa.Models;
@@ -28,13 +28,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         public async Task<ActionResult> Get()
         {
             var item = await _repository.GetSocialCategoriesAsync();
-            var categories = item.ToArray();
-            foreach (SocialCategory cat in categories)
+            if (item == null)
             {
-                var galleries = await _repository.GetGalleriesByCategoryAsync(cat.Id);
-                cat.Galleries = galleries;
+                return NotFound();
             }
-            return Ok(categories);
+
+            return Ok(item);
         }
 
         //Get api/Event
@@ -43,8 +42,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         public async Task<ActionResult> GetById(string id)
         {
             var item = await _repository.GetSocialCategoryAsync(id);
-            var galleries = await _repository.GetGalleriesByCategoryAsync(item.Id);
-            item.Galleries = galleries;
             if (item == null)
             {
                 return NotFound();
@@ -61,6 +58,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 return BadRequest(ModelState.Values);
             }
             var social = MapSocial(socialNew);
+            social.Items = new List<string>();
             await _repository.InsertSocialCategoryAsync(social);
             return CreatedAtAction(nameof(GetById), new { id = social.Id }, new { id = social.Id });
         }
@@ -92,11 +90,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //GET photo
-        [HttpGet("{socialcategoryId}/Photo")]
+        [HttpGet("{id}/Photo/{photoId}")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetPhoto(string socialcategoryId)
+        public async Task<ActionResult> GetPhoto(string id, string photoId)
         {
-            var item = await _repository.GetSocialCategoryPhotoAsync(socialcategoryId);
+            var item = await _repository.GetSocialCategoryPhotoAsync(id, photoId);
             if (item == null)
             {
                 return NotFound();
@@ -105,12 +103,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //Post photo
-        [HttpPost("{socialcategoryId}/Photo")]
-        public async Task<ActionResult> PostPhoto(string socialcategoryId,[FromForm(Name = "avatar")] IFormFile image)
+        [HttpPost("{id}/Photo")]
+        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
-            var itemId = await _repository.AddSocialCategoryPhotoAsync(input, socialcategoryId, image.ContentType);
+            var itemId = await _repository.AddSocialCategoryPhotoAsync(input, id, image.ContentType);
             if (itemId == null)
             {
                 return BadRequest();
@@ -119,10 +117,10 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //Delete photo
-        [HttpDelete("{socialcategoryId}/Photo")]
-        public async Task<ActionResult> DeletePhoto(string socialcategoryId)
+        [HttpDelete("{id}/Photo/{photoId}")]
+        public async Task<ActionResult> DeletePhoto(string id, string photoId)
         {
-            await _repository.DeleteSocialCategoryPhotoAsync(socialcategoryId);
+            await _repository.DeleteSocialCategoryPhotoAsync(id, photoId);
             return Ok();
         }
 

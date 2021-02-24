@@ -168,11 +168,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<bool> DeleteSocialCategoryAsync(string id);
 
-        Task<FileStreamResult> GetSocialCategoryPhotoAsync(string socialcategoryId);
+        Task<FileStreamResult> GetSocialCategoryPhotoAsync(string socialcategoryId, string itemId);
 
         Task<string> AddSocialCategoryPhotoAsync(Stream stream, string socialcategoryId, string contentType);
 
-        Task DeleteSocialCategoryPhotoAsync(string socialCategoryId);
+        Task DeleteSocialCategoryPhotoAsync(string socialcategoryId, string itemId);
         #endregion
 
         #region Departments      

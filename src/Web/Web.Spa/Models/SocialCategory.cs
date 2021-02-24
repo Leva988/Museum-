@@ -16,6 +16,6 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public string Description { get; set; }
 
-        public IEnumerable<Gallery> Galleries { get; set; }
+        public IEnumerable<string> Items { get; set; }
     }
 }

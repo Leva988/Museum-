@@ -11,7 +11,7 @@ import { isNullOrUndefined } from 'util';
   providers: [HistoryService]
 })
 export class HistoryVeteransComponent implements OnInit {
-  title = 'История/Ветераны';
+  title = 'Награжденные ведомственными и государственными наградами';
   veterans: Veteran[] = [];
   veteransUrl = environment.backendUrl + '/Veterans';
   constructor(private historyService: HistoryService) {

@@ -1,59 +1,36 @@
 body {
+    height: 100vh;
     overflow-x: hidden;
+    background: url(/assets/images/corp-life.jpg) 50% 50% no-repeat;
 }
 
 h2 {
-    color: #00B5F9;
+    color: #3492d9;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.description {
+    font-weight: 600;
+    font-size: 12pt;
+    color: #8ab8db;
 }
 
 .category {
     margin-top: 100px;
 }
 
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    border-radius: 20px;
-    cursor: pointer;
-    margin-bottom: 50px;
+ul {
+    border: 5px solid #3492d9;
+    padding: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    opacity: 0.7;
+li {
+    list-style-type: square;
 }
 
-.card-title {
-    padding: 10px;
-    background: rgba(206, 171, 107, 0.2);
-    color: black;
-    font-size: 10pt;
-}
-
-.date {
-    margin-top: 0;
-    padding: 0 0 10px 10px;
-    font-size: 8pt;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-}
-
-.modal {
-    //display: none;
-    position: fixed;
-    padding: 100px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: rgba(41, 77, 141, 0.9);
-}
-
-.close {
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-.photos {
-    padding: 10px;
+.images {
+    margin-bottom: 100px;
 }

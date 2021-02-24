@@ -685,11 +685,10 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
         
-        public async Task<FileStreamResult> GetSocialCategoryPhotoAsync(string name)
+        public async Task<FileStreamResult> GetSocialCategoryPhotoAsync(string id, string itemId)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
-            var info = await _context.SocialCategoryPhotos
-                .Find(filter)
+           var info = await _context.SocialCategoryPhotos
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
                 .FirstAsync();
 
             var stream = new MemoryStream();
@@ -697,9 +696,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             stream.Position = 0;
 
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
-
             return new FileStreamResult(stream, contentType);
-
         }
 
         public async Task<string> AddSocialCategoryPhotoAsync(Stream stream, string socialCategoryId, string contentType)
@@ -721,18 +718,20 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                             {"Content-Type", contentType},
                         },
                     }
-                );
+                ); 
+            var update = Builders<SocialCategory>.Update.AddToSet(x => x.Items, itemId.ToString());
+            await _context.SocialCategories.UpdateOneAsync(x => x.Id == socialCategoryId, update);
+
             return itemId.ToString();
         }
 
-        public async Task DeleteSocialCategoryPhotoAsync(string name)
+        public async Task DeleteSocialCategoryPhotoAsync(string id, string itemId)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
-            var info = _context.SocialCategoryPhotos
-                .Find(filter)
-                .FirstOrDefault();
-            await _context.SocialCategoryPhotos.DeleteAsync(info.Id);
-
+            var cat = await GetSocialCategoryAsync(id);
+            var items = cat.Items.Where(el => el != itemId);
+            var update = Builders<SocialCategory>.Update.Set(x => x.Items, items);
+            await _context.SocialCategories.UpdateOneAsync(x => x.Id == id, update);
+            await _context.SocialCategoryPhotos.DeleteAsync(ObjectId.Parse(itemId));
         }
         #endregion
 

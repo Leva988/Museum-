@@ -1,45 +1,23 @@
 <body>
-    <app-header id="header" title="Социальная жизнь" [links]="links" navbackcolor='linear-gradient(to bottom,#15750e,#2edb21)' buttoncolor='#15750e'>
+    <app-header id="header" title="{{title}}" navbackcolor='linear-gradient(to bottom,#3492d9,#366a91)' buttoncolor='#366a91'>
     </app-header>
-    <app-button backcolor='#15750e' buttoncolor="#2edb21"> </app-button>
+    <app-button backcolor='#366a91' buttoncolor="#3492d9"> </app-button>
     <div class="category">
-        <div id="block{{i}}" *ngFor="let c of categories; let i = index">
-            <h2 class="d-flex justify-content-center">{{c.name}} </h2>
-            <app-image backimage="url({{socialUrl}}/{{c.id}}/Photo)" formcolor="#294D8D" formtext="{{c.description}}" height="400px"></app-image>
-            <div class="row galleries d-flex justify-content-around">
-                <div class="col-md-2" *ngFor="let g of c.galleries">
-                    <div class="card cards" data-toggle="modal" data-target="#Modal" (click)="checkFiles(g.items, g.id);gallery=g">
-                        <img class="img-fluid card-image " src="{{galleryUrl}}/{{g.id}}/item/{{g.items[0]}} " alt="... ">
-                        <p class="card-title ">{{g.name}}</p>
-                        <pre class="date">{{g.date}}        <fa-icon [icon]="faphoto"></fa-icon> {{g.items.length}}</pre>
+        <div *ngFor="let c of categories;" class="container-fluid">
+            <h2>{{c.name}} </h2>
+            <ul class="description" [innerHTML]="c.description" style="list-style-type: square;">
+            </ul>
+            <div class="images d-flex justify-content-around">
+                <div class="col-md-4" *ngFor="let i of c.items">
+                    <img class="img-fluid" src="{{socialUrl}}/{{c.id}}/Photo/{{i}}" data-toggle="modal" data-target="#Modalimage" (click)="photo=i;cat=c">
+                </div>
+                <div id="Modalimage" class="modal fade">
+                    <div class="modal-dialog  modal-lg">
+                        <img class="img-fluid" id="img_mod" src="{{socialUrl}}/{{cat.id}}/Photo/{{photo}}">
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <app-button backcolor='#00B5F9' buttoncolor="#96D8E5"> </app-button>
-    <div id="Modal" class="modal fade" role="dialog" aria-labelledby="modaltitle" aria-hidden="true ">
-        <div class="modal-dialog modal-lg " role="document ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="modaltitle">{{gallery.name}}</h2>
-                    <button type="button " class="close " data-dismiss="modal" aria-label="Close">
-                               <span aria-hidden="true">&times;</span>
-                             </button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <div class="row d-flex justify-content-around" *ngFor="let i of imagesId">
-                            <img class="img-fluid photos" src="{{galleryUrl}}/{{gallery.id}}/item/{{i}}" alt="... ">
-                        </div>
-                        <div class="row d-flex justify-content-around" *ngFor="let v of videosId">
-                            <video class="col-md-12" controls type="video/mp4">
-                                        <source  src="{{galleryUrl}}/{{gallery.id}}/item/{{v}}" >    
-                                    </video>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </body>
