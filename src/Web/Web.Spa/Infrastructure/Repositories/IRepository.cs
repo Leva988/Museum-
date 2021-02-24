@@ -122,8 +122,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         #region Gallery
         Task<IEnumerable<Gallery>> GetGalleriesAsync();
 
-        Task<IEnumerable<Gallery>> GetGalleriesByCategoryAsync(string categoryId);
-
         Task<Gallery> GetGalleryAsync(string galleryId);
 
         Task InsertGalleryAsync(Gallery gallery);

@@ -457,11 +457,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                 .SortBy(c => c.Date)
                 .ToListAsync();
 
-        public async Task<IEnumerable<Gallery>> GetGalleriesByCategoryAsync(string categoryId) =>
-           await _context.Galleries.Find(x => x.CategoryId == categoryId)
-               .SortBy(c => c.Date)
-               .ToListAsync();
-
         public async Task InsertGalleryAsync(Gallery gallery) =>
             await _context.Galleries
                 .InsertOneAsync(gallery);
@@ -470,8 +465,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<Gallery>.Filter.Eq(x => x.Id, gallery.Id);
             var update = Builders<Gallery>.Update
                 .Set(x => x.Name, gallery.Name)
-                .Set(x => x.Date, gallery.Date)
-                .Set(x => x.CategoryId, gallery.CategoryId);               
+                .Set(x => x.Date, gallery.Date);             
             await _context.Galleries.UpdateOneAsync(
                 filter,
                 update,

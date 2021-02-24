@@ -9,8 +9,5 @@ namespace Belorusneft.Museum.Web.Spa.Models
         public string Name { get; set; }
 
         public DateTime Date { get; set; }
-
-        public string CategoryId { get; set; }
-
     }
 }

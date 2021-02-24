@@ -8,8 +8,9 @@ import { DepartmentComponent } from './department/department.component';
 import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
 import { HistoryVeteransComponent} from './hisrory/history-veterans/history-veterans.component';
 import { SocialComponent } from './social/social.component';
-import {NewsComponent} from './news/news.component';
-import { GalleryComponent } from './gallery/gallery.component';
+import { NewsComponent } from './news/news.component';
+import { GalleryVideoComponent } from './gallery/gallery-videos/gallery-video.component';
+import { GalleryPhotoComponent } from './gallery/gallery-photos/gallery-photo.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 
@@ -24,7 +25,8 @@ const routes: Routes = [
    { path: 'historyveterans', component: HistoryVeteransComponent},
    { path: 'social', component: SocialComponent},
    { path: 'news', component: NewsComponent},
-   { path: 'gallery', component: GalleryComponent},
+   { path: 'galleryvideos', component: GalleryVideoComponent},
+   { path: 'galleryphotos', component: GalleryPhotoComponent},
    { path: 'projects', component: ProjectsComponent},
    { path: '**', component: NotfoundComponent }
 ];

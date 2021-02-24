@@ -45,21 +45,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
             return Ok(item);
         }
-
-        [HttpGet("SocialCategory/{catId}")]
-        [AllowAnonymous]
-        public async Task<ActionResult> GetByCategory(string catId)
-        {
-            var item = await _repository.GetGalleriesByCategoryAsync(catId);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
-
+    
         // POST api/Gallery
         [HttpPost]
         public async Task<IActionResult> CreateorUpdate([FromBody] GalleryNew galleryNew)
@@ -93,8 +79,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             new Gallery
             {
                 Date = galleryNew.Date,
-                Name = galleryNew.Name,
-                CategoryId = galleryNew.CategoryId
+                Name = galleryNew.Name
             };
 
         // DELETE api/Gallery

@@ -1,0 +1,35 @@
+<body>
+    <app-header title="Галерея/Фото" [links]="[]" navbackcolor='linear-gradient(to bottom,#029e1b,#46f062)' buttoncolor='#029e1b'>
+    </app-header>
+    <app-button backcolor="#029e1b" buttoncolor="#46f062"> </app-button>
+    <div class="container-fluid">
+        <div id="Modal" class="modal fade" role="dialog" aria-labelledby="modaltitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="modaltitle">{{gallery.name}}</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                         </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="row d-flex justify-content-around" *ngFor="let i of imagesId">
+                                <img class="img-fluid photos" src="{{galleryUrl}}/{{gallery.id}}/item/{{i}}" alt="... ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row galleries d-flex justify-content-around ">
+            <div class="col-md-2 " *ngFor="let g of galleries ">
+                <div class="card cards" data-toggle="modal" data-target="#Modal" (click)="gallery=g;fetchImgs();">
+                    <img class="img-fluid card-image" src="{{galleryUrl}}/{{g.id}}/item/{{g.items[0]}} " alt="... ">
+                    <p class="card-title ">{{g.name}}</p>
+                    <pre class="date">{{g.date}}        <fa-icon [icon]="faphoto"></fa-icon> {{g.items.length}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
