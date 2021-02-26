@@ -203,6 +203,134 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
+        #region RewardedEmployee
+        public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesAsync() =>
+            await _context.RewardedEmployees
+                .Find(_ => true)
+                .SortBy(c => c.DateReward)
+                .ToListAsync();
+
+        public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesByRewardAsync(string rewardId) =>
+            await _context.RewardedEmployees
+                .Find(r => r.RewardId == rewardId)
+                .SortBy(c => c.DateReward)
+                .ToListAsync();
+
+
+        public async Task InsertRewardedEmployeeAsync(RewardedEmployee emp) =>
+                await _context.RewardedEmployees
+                      .InsertOneAsync(emp);
+
+        public async Task InsertManyRewardedEmployees(IEnumerable<RewardedEmployee> emps) =>
+            await _context.RewardedEmployees
+            .InsertManyAsync(emps);
+
+        public async Task CreateOrUpdateRewardedEmployeeAsync(RewardedEmployee emp) =>
+            await _context.RewardedEmployees
+                .ReplaceOneAsync(x => x.Id == emp.Id,
+                emp,
+                new ReplaceOptions
+                {
+                    IsUpsert = true,
+                }
+            );
+
+        public async Task<RewardedEmployee> GetRewardedEmployeeAsync(string id) =>
+            await _context.RewardedEmployees
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteRewardedEmployeeAsync(string id)
+        {
+            var actionResult = await _context.Veterans
+                .DeleteOneAsync(b => b.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<FileStreamResult> GetRewardedEmployeePhotoAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = await _context.VeteranPhotos
+                .Find(filter)
+                .FirstAsync();
+
+            var stream = new MemoryStream();
+            await _context.RewardedPhotos.DownloadToStreamAsync(info.Id, stream);
+            stream.Position = 0;
+
+            var contentType = info.Metadata.GetValue("Content-Type").ToString();
+
+            return new FileStreamResult(stream, contentType);
+
+        }
+
+        public async Task<string> AddRewardedEmployeePhotoAsync(Stream stream, string id, string contentType)
+        {
+            var vet = await GetRewardedEmployeeAsync(id);
+            if (vet == null)
+            {
+                return null;
+            }
+
+            var itemId = await _context.RewardedPhotos
+                .UploadFromStreamAsync(
+                    id,
+                    stream,
+                    new GridFSUploadOptions
+                    {
+                        Metadata = new BsonDocument
+                        {
+                            {"Content-Type", contentType},
+                        },
+                    }
+                );
+            return itemId.ToString();
+        }
+
+        public async Task DeleteRewardedEmployeePhotoAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = _context.VeteranPhotos
+                .Find(filter)
+                .FirstOrDefault();
+            await _context.RewardedPhotos.DeleteAsync(info.Id);
+
+        }
+        #endregion
+
+        #region Rewards
+        
+        public async Task<IEnumerable<Reward>> GetAllRewardsAsync() =>
+              await _context.Rewards
+                  .Find(_ => true)
+                  .SortBy(c => c.Id)
+                  .ToListAsync();
+        public async Task<Reward> GetRewardAsync(string id) =>
+            await _context.Rewards
+             .Find(x => x.Id == id)
+             .FirstOrDefaultAsync();
+
+        public async Task AddRewardAsync(Reward reward) =>
+          await _context.Rewards.InsertOneAsync(reward);
+
+        public async Task UpdateRewardAsync(Reward reward) =>
+           await _context.Rewards
+              .ReplaceOneAsync(x => x.Id == reward.Id,
+              reward,
+              new ReplaceOptions
+              {
+                  IsUpsert = true,
+              });
+
+        public async Task<bool> DeleteRewardAsync(string id)
+        {
+            var actionResult = await _context.Rewards
+                .DeleteOneAsync(p => p.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        #endregion
+
         #region Projects
         public async Task<IEnumerable<Project>> GetProjectsAsync() =>
             await _context.Projects

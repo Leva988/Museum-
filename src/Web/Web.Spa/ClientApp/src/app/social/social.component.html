@@ -12,7 +12,7 @@
                     <img class="img-fluid" src="{{socialUrl}}/{{c.id}}/Photo/{{i}}" data-toggle="modal" data-target="#Modalimage" (click)="photo=i;cat=c">
                 </div>
                 <div id="Modalimage" class="modal fade">
-                    <div class="modal-dialog  modal-lg">
+                    <div class="modal-dialog  modal-lg d-flex justify-content-center align-items-center">
                         <img class="img-fluid" id="img_mod" src="{{socialUrl}}/{{cat.id}}/Photo/{{photo}}">
                     </div>
                 </div>
