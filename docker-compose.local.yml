@@ -11,8 +11,16 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString=mongodb://localhost/museum-bgpz
+      - ConnectionString=mongodb://mongo/museum-bgpz
       - Database=museum-bgpz
     ports:
       - 80:80
     logging: *default-logging
+  mongo:
+    image: mongo
+    logging: *default-logging
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+volumes:
+  mongo_data:
