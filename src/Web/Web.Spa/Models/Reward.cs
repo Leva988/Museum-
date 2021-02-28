@@ -1,12 +1,11 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
-    public class Gallery
+    public class Reward
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -15,8 +14,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
         [Required(ErrorMessage = "Name is not assigned")]
         public string Name { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public IEnumerable<string> Items { get; set; }
+        public IEnumerable<RewardedEmployee> RewardedEmployees  { get; set; }
     }
 }
+

@@ -1,13 +1,14 @@
-using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
-    public class GalleryNew
+    public class RewardNew
     {
+        
         [Required(ErrorMessage = "Name is not assigned")]
         public string Name { get; set; }
 
-        public DateTime Date { get; set; }
+
     }
 }

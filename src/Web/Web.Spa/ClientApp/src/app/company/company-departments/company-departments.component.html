@@ -13,7 +13,7 @@
                     <div id="subBoss" *ngIf="sub.bossPosition">{{sub.bossPosition}}</div>
                     <div class="subDistrict" *ngFor="let d of sub.departments">
                         <div id="lastSub" class="district" [style.backgroundColor]="d.color">
-                            <a href="/departments/{{d.id}}">{{d.name}}</a>
+                            <a>{{d.name}}</a>
                             <div class="sector" *ngFor="let sect of d.sectors">
                                 {{sect}}
                             </div>
@@ -25,7 +25,7 @@
                 <div class="sub col-md-11" *ngFor="let sub of s.subStructures;">
                     <div class="subDistrict" *ngFor="let d of sub.departments">
                         <div id="lastSub" class="district" [style.backgroundColor]="d.color">
-                            <a href="/departments/{{d.id}}">{{d.name}}</a>
+                            <a>{{d.name}}</a>
                         </div>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
         <div id="staff">
             <div *ngFor="let dep of departments;">
                 <div id="last" class="district" [style.backgroundColor]="dep.color">
-                    <a href="/departments/{{dep.id}}">{{dep.name}}</a></div>
+                    <a>{{dep.name}}</a></div>
             </div>
         </div>
 

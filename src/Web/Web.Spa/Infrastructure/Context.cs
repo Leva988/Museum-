@@ -27,6 +27,12 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Veteran> Veterans =>
              _database.GetCollection<Veteran>("Veterans");
 
+        public IMongoCollection<RewardedEmployee> RewardedEmployees =>
+             _database.GetCollection<RewardedEmployee>("RewardedEmployees");
+
+        public IMongoCollection<Reward> Rewards =>
+             _database.GetCollection<Reward>("Rewards");
+
         public GridFSBucket EmployeePhotos =>
             new GridFSBucket(
                 _database,
@@ -43,6 +49,16 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                new GridFSBucketOptions
                {
                    BucketName = "veteran-photos",
+                   ChunkSizeBytes = _deafultChunkSize,
+               }
+           );
+        
+        public GridFSBucket RewardedPhotos =>
+           new GridFSBucket(
+               _database,
+               new GridFSBucketOptions
+               {
+                   BucketName = "rewarded-photos",
                    ChunkSizeBytes = _deafultChunkSize,
                }
            );

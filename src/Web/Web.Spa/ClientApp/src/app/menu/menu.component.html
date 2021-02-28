@@ -25,11 +25,20 @@
             </div>
         </div>
 
-        <div class="col-md-4 order-3 main-gallery min-100 d-flex align-items-end" id="main-gallery">
+        <div class="col-md-4 order-3 main-gallery min-100 d-flex align-items-end" id="main-gallery" (click)="galleryclick()">
             <div class="title d-flex align-items-end">
-                <a href="/gallery" class="stretched-link title-link">
+                <h1 class="title-link">
                     <h1>Галерея</h1>
-                </a>
+                </h1>
+            </div>
+            <div class="gallery-points d-flex align-items-center" [ngClass]="{invisible: gvisibility}">
+                <ul>
+                    <li *ngFor="let g of gallery">
+                        <a href="{{g.key}}" class="link">
+                            <h4>{{g.value}}</h4>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
 

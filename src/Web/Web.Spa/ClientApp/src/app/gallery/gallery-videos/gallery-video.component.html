@@ -1,6 +1,7 @@
 <body>
-    <app-header title="Галерея" [links]="[]" navbackcolor='linear-gradient(to bottom,#029e1b,#46f062)' buttoncolor='#029e1b'>
+    <app-header title="Галерея/Видео" [links]="[]" navbackcolor='linear-gradient(to bottom,#029e1b,#46f062)' buttoncolor='#029e1b'>
     </app-header>
+    <app-button backcolor="#029e1b" buttoncolor="#46f062"> </app-button>
     <div class="container-fluid videos">
         <div class="row d-flex justify-content-around align-items-center">
             <div class="col-md-5" *ngFor="let v of videoUrls">
@@ -15,8 +16,6 @@
                         {{v.key}}
                     </h5>
                 </div>
-
-
             </div>
         </div>
     </div>

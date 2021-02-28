@@ -1,21 +1,18 @@
 import { Component, KeyValueDiffers, OnInit } from '@angular/core';
-import { GalleryService } from './galleryservice/gallery-service.service';
-import { environment } from 'src/environments/environment';
-import { faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
+import { GalleryService } from '../galleryservice/gallery-service.service';
 import { FaConfig,  FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { Gallery } from '../models/gallery';
 import { KeyValue } from '@angular/common';
 
 declare var $: any;
 
 @Component({
-  selector: 'app-gallery',
-  templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.scss'],
-  providers: [GalleryService, FaConfig, FaIconLibrary]
+  selector: 'app-gallery-video',
+  templateUrl: './gallery-video.component.html',
+  styleUrls: ['./gallery-video.component.scss'],
+  providers: [GalleryService]
 })
 
-export class GalleryComponent implements OnInit {
+export class GalleryVideoComponent implements OnInit {
 
   videoUrls: KeyValue<string, string>[] = [];
   constructor() {

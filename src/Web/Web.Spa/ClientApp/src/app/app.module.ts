@@ -22,7 +22,8 @@ import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-
 import { HistoryVeteransComponent} from './hisrory/history-veterans/history-veterans.component';
 import { SocialComponent } from './social/social.component';
 import { NewsComponent } from './news/news.component';
-import { GalleryComponent } from './gallery/gallery.component';
+import { GalleryVideoComponent } from './gallery/gallery-videos/gallery-video.component';
+import { GalleryPhotoComponent } from './gallery/gallery-photos/gallery-photo.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { NeftByComponent } from './news/neft.by/neft.by.component';
 import { NotfoundComponent } from './notfound/notfound.component';
@@ -49,7 +50,8 @@ import { GraficComponent } from './department/grafic/grafic.component';
     HistoryVeteransComponent,
     SocialComponent,
     NewsComponent,
-    GalleryComponent,
+    GalleryVideoComponent,
+    GalleryPhotoComponent,
     ProjectsComponent,
     NeftByComponent,
     NotfoundComponent,

@@ -50,6 +50,40 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<string> AddVeteranPhotoAsync(Stream stream, string veteranId, string contentType);
         #endregion
 
+        #region RewardedEmployee
+        Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesAsync();
+
+        Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesByRewardAsync(string rewardId);
+
+        Task<RewardedEmployee> GetRewardedEmployeeAsync(string id);     
+
+        Task InsertRewardedEmployeeAsync(RewardedEmployee emp);
+
+        Task InsertManyRewardedEmployees(IEnumerable<RewardedEmployee> emps);
+
+        Task CreateOrUpdateRewardedEmployeeAsync(RewardedEmployee emp);
+
+        Task<bool> DeleteRewardedEmployeeAsync(string id);
+
+        Task<FileStreamResult> GetRewardedEmployeePhotoAsync(string id);
+
+        Task DeleteRewardedEmployeePhotoAsync(string id);
+
+        Task<string> AddRewardedEmployeePhotoAsync(Stream stream, string id, string contentType);
+        #endregion
+
+        #region  Rewards
+        Task<IEnumerable<Reward>> GetAllRewardsAsync();
+
+        Task<Reward> GetRewardAsync(string id);
+
+        Task AddRewardAsync(Reward reward);
+
+        Task UpdateRewardAsync(Reward reward);
+        
+        Task<bool> DeleteRewardAsync(string id);
+        #endregion      
+
         #region Project
         Task<IEnumerable<Project>> GetProjectsAsync();
 
@@ -121,8 +155,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         #region Gallery
         Task<IEnumerable<Gallery>> GetGalleriesAsync();
-
-        Task<IEnumerable<Gallery>> GetGalleriesByCategoryAsync(string categoryId);
 
         Task<Gallery> GetGalleryAsync(string galleryId);
 
