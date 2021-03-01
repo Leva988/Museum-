@@ -2,6 +2,7 @@ ARG REGISTRY=mcr.microsoft.com/
 FROM ${REGISTRY}dotnet/aspnet:5.0.2 AS base
 WORKDIR /app
 EXPOSE 80
+VOLUME [ "/app/wwwroot" ]
 
 FROM node:14 as node-build
 WORKDIR /web
