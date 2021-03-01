@@ -6,7 +6,7 @@ import { AchievementsComponent } from './achievements/achievements.component';
 import { ServiceComponent } from './service/service.component';
 import { DepartmentComponent } from './department/department.component';
 import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
-import { HistoryVeteransComponent} from './hisrory/history-veterans/history-veterans.component';
+import { HistoryRewardedComponent} from './hisrory/history-veterans/history-rewarded.component';
 import { SocialComponent } from './social/social.component';
 import { NewsComponent } from './news/news.component';
 import { GalleryVideoComponent } from './gallery/gallery-videos/gallery-video.component';
@@ -22,7 +22,7 @@ const routes: Routes = [
    { path: 'service', component: ServiceComponent},
    { path: 'departments/:id', component: DepartmentComponent},
    { path: 'historymilestones', component: HistoryMilestonesComponent},
-   { path: 'historyveterans', component: HistoryVeteransComponent},
+   { path: 'historyrewarded', component: HistoryRewardedComponent},
    { path: 'social', component: SocialComponent},
    { path: 'news', component: NewsComponent},
    { path: 'galleryvideos', component: GalleryVideoComponent},

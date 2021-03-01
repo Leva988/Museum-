@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HistoryVeteransComponent } from './history-veterans.component';
+import { HistoryRewardedComponent } from './history-rewarded.component';
 
-describe('Polygraphy', () => {
-  let component: HistoryVeteransComponent;
-  let fixture: ComponentFixture<HistoryVeteransComponent>;
+describe('HistoryRewardedComponent', () => {
+  let component: HistoryRewardedComponent;
+  let fixture: ComponentFixture<HistoryRewardedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistoryVeteransComponent ]
+      declarations: [ HistoryRewardedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HistoryVeteransComponent);
+    fixture = TestBed.createComponent(HistoryRewardedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

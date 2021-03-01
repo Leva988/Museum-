@@ -1,0 +1,26 @@
+<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#55694a,#3eab02)' buttoncolor='#55694a'>
+</app-header>
+<app-button backcolor='#55694a' buttoncolor="#3eab02"> </app-button>
+<div class="container-fluid" *ngFor="let r of rewards">
+    <div class="rewards" *ngIf="r.rewardedEmployees">
+        <h2>{{r.name}}</h2>
+        <div class="row d-flex justify-content-around">
+            <div class="col-md-3" *ngFor="let emp of r.rewardedEmployees">
+                <span class="card">
+                      <img src="{{employeeUrl}}/{{emp.id}}/Photo" class="card-img-top" alt="..." >
+                      <div class="card-body">
+                        <h4 class="card-title">{{emp.name}}</h4>
+                        <div class="card-text">
+                          <p >{{emp.position}}</p>
+                          <p>Дата рождения: {{emp.dateBirth}}г. </p>
+                          <p>Период работы c {{emp.dateStart}} - {{emp.dateEnd}} </p>
+                          <div *ngFor="let rew of emp.rewards" >
+                               <p *ngIf="rew.rewardId === r.id">Год награждения: {{rew.dateReward}}</p>
+                          </div>
+                        </div>
+                      </div>                 
+                   </span>
+            </div>
+        </div>
+    </div>
+</div>
