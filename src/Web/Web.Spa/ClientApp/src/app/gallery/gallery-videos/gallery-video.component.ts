@@ -16,18 +16,18 @@ export class GalleryVideoComponent implements OnInit {
 
   videoUrls: KeyValue<string, string>[] = [];
   constructor() {
-    this.videoUrls = [{
-      key: 'БГПЗ - История(1976-2016) полная версия',
-      value: 'https://ssl.belorusneft.by/cdn/bgpz/BGPZ_2016_1080_23.98p.mp4'},
+    this.videoUrls = [
+      {
+        key: 'БГПЗ - История(1976-2016) полная версия',
+        value: '/BGPZ_2016_1080_23.98p.mp4'
+      },
       {
         key: 'БГПЗ - История(1976-2016)',
-        value: 'https://ssl.belorusneft.by/cdn/bgpz/BGPZ_2016_1080_23.98p_SHORT.mp4'
+        value: '/BGPZ_2016_1080_23.98p_SHORT.mp4'
       }
     ];
    }
 
   ngOnInit() {
-
   }
-
 }
