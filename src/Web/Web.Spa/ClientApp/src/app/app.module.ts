@@ -19,7 +19,7 @@ import { ImageComponent } from './shared/image/image.component';
 import { DepartmentComponent } from './department/department.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
-import { HistoryVeteransComponent} from './hisrory/history-veterans/history-veterans.component';
+import { HistoryRewardedComponent} from './hisrory/history-veterans/history-rewarded.component';
 import { SocialComponent } from './social/social.component';
 import { NewsComponent } from './news/news.component';
 import { GalleryVideoComponent } from './gallery/gallery-videos/gallery-video.component';
@@ -47,7 +47,7 @@ import { GraficComponent } from './department/grafic/grafic.component';
     DepartmentComponent,
     ButtonComponent,
     HistoryMilestonesComponent,
-    HistoryVeteransComponent,
+    HistoryRewardedComponent,
     SocialComponent,
     NewsComponent,
     GalleryVideoComponent,

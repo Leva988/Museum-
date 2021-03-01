@@ -29,7 +29,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             foreach (Reward award in awards)
             {
                 var emps = await _repository.GetRewardedEmployeesByRewardAsync(award.Id);
-                if(emps! == null) {
+                if(emps.Count() != 0) {
                     award.RewardedEmployees = emps;
                 }
                 
@@ -44,7 +44,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var award = await _repository.GetRewardAsync(id);
             var emps = await _repository.GetRewardedEmployeesByRewardAsync(award.Id);
-                if(emps! == null) {
+                if(emps.Count() != 0) {
                     award.RewardedEmployees = emps;
                 }
             return Ok(award);

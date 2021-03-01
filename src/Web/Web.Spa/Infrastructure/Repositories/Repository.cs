@@ -207,16 +207,16 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesAsync() =>
             await _context.RewardedEmployees
                 .Find(_ => true)
-                .SortBy(c => c.DateReward)
+                .SortBy(c => c.DateEnd)
                 .ToListAsync();
 
         public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesByRewardAsync(string rewardId) =>
             await _context.RewardedEmployees
-                .Find(r => r.RewardId == rewardId)
-                .SortBy(c => c.DateReward)
+                .Aggregate()
+                .Match(Builders<RewardedEmployee>.Filter.ElemMatch(r => r.Rewards, a => a.RewardId == rewardId))
+                .SortBy(c => c.DateEnd)
                 .ToListAsync();
-
-
+       
         public async Task InsertRewardedEmployeeAsync(RewardedEmployee emp) =>
                 await _context.RewardedEmployees
                       .InsertOneAsync(emp);
@@ -242,7 +242,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         public async Task<bool> DeleteRewardedEmployeeAsync(string id)
         {
-            var actionResult = await _context.Veterans
+            var actionResult = await _context.RewardedEmployees
                 .DeleteOneAsync(b => b.Id == id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
@@ -250,7 +250,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<FileStreamResult> GetRewardedEmployeePhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
-            var info = await _context.VeteranPhotos
+            var info = await _context.RewardedPhotos
                 .Find(filter)
                 .FirstAsync();
 
@@ -290,7 +290,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task DeleteRewardedEmployeePhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
-            var info = _context.VeteranPhotos
+            var info = _context.RewardedPhotos
                 .Find(filter)
                 .FirstOrDefault();
             await _context.RewardedPhotos.DeleteAsync(info.Id);
