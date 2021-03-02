@@ -1,15 +1,10 @@
 body {
     overflow-x: hidden;
-    background: url(/assets/images/corp-life.jpg) 50% 50% no-repeat;
+    background: url(/assets/images/corp-life.jpg) center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    image-rendering: crisp-edges;
-    image-rendering: -moz-crisp-edges;
-    /* Firefox */
-    image-rendering: -o-crisp-edges;
-    /* Opera */
-    image-rendering: -webkit-optimize-contrast;
-    /* Webkit (non-standard naming)*/
-    -ms-interpolation-mode: nearest-neighbor;
 }
 
 h2 {
