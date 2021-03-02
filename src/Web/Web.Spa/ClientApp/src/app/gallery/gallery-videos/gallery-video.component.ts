@@ -14,20 +14,20 @@ declare var $: any;
 
 export class GalleryVideoComponent implements OnInit {
 
-  videoUrls: KeyValue<string, SafeUrl>[] = [];
-  constructor(private sanitization: DomSanitizer) {
-    this.videoUrls = [{
-      key: 'БГПЗ - История(1976-2016) полная версия',
-      value: 'file:///C:/src/video/BGPZ_2016_1080_23.98p.mpeg'
-    },
+  videoUrls: KeyValue<string, string>[] = [];
+  constructor() {
+    this.videoUrls = [
+      {
+        key: 'БГПЗ - История(1976-2016) полная версия',
+        value: '/BGPZ_2016_1080_23.98p.mp4'
+      },
       {
         key: 'БГПЗ - История(1976-2016)',
-        value: 'file:///C:/src/video/BGPZ_2016_1080_23.98p_SHORT.mpeg'
+        value: '/BGPZ_2016_1080_23.98p_SHORT.mp4'
       }
     ];
    }
 
   ngOnInit() {
   }
-
 }
