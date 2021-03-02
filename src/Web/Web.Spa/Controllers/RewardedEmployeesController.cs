@@ -60,16 +60,16 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/rewardedemployees
         [HttpPost]
-        public async Task<IActionResult> PostMany([FromBody] IEnumerable<RewardedEmployee> rewNew)
+        public async Task<IActionResult> PostMany([FromBody] IEnumerable<RewardedEmployeeNew> rewNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values);
             }
-            //var rews = MapEmps(rewNew);
-            await _repository.InsertManyRewardedEmployees(rewNew);
+            var rews = MapEmps(rewNew);
+            await _repository.InsertManyRewardedEmployees(rews);
 
-            return CreatedAtAction(nameof(Get), rewNew);
+            return CreatedAtAction(nameof(Get), rews);
         }
 
         // Put api/rewardedemployee
