@@ -72,7 +72,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<string> AddRewardedEmployeePhotoAsync(Stream stream, string id, string contentType);
         #endregion
 
-        #region  Rewards
+        #region Rewards
         Task<IEnumerable<Reward>> GetAllRewardsAsync();
 
         Task<Reward> GetRewardAsync(string id);
@@ -184,7 +184,9 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetHistoryItemAsync(string id, string itemId);
 
-        Task<string> AddHistoryItemAsync(Stream stream, string id, string contentType);
+        Task<string> GetHistoryItemDescriptionAsync(string id, string itemId);
+
+        Task<string> AddHistoryItemAsync(Stream stream, string id, string contentType, string filename);
 
         Task DeleteHistoryItemAsync(string id, string itemId);
         #endregion

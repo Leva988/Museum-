@@ -107,13 +107,27 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return item;
         }
 
+        
+        //GET item
+        [HttpGet("{id}/itemDescription/{itemId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetItemDescription(string id, string itemId)
+        {
+            var item = await _repository.GetHistoryItemDescriptionAsync(id, itemId);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
         //Post item
         [HttpPost("{id}/item")]
         public async Task<ActionResult> Post(string id, IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
-            var itemId = await _repository.AddHistoryItemAsync(input, id, image.ContentType);
+            var itemId = await _repository.AddHistoryItemAsync(input, id, image.ContentType, image.FileName);
            return CreatedAtAction(nameof(GetItem), new { id = itemId, }, new { id = itemId, });
         }
 

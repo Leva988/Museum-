@@ -728,22 +728,31 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var stream = new MemoryStream();
             await _context.HistoryPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
-
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
             return new FileStreamResult(stream, contentType);
         }
 
-        public async Task<string> AddHistoryItemAsync(Stream stream, string histId, string contentType)
+        public async Task<string> GetHistoryItemDescriptionAsync(string histId, string itemId)
+        {
+            var info = await _context.HistoryPhotos
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
+            var name = info.Filename;
+            return name;
+        }
+
+        public async Task<string> AddHistoryItemAsync(Stream stream, string histId, string contentType, string filename)
         {
             var history = await GetHistoryMilestoneAsync(histId);
             if (history == null)
             {
                 return null;
             }
-
+            string extension = System.IO.Path.GetExtension(filename);
+            string name =  filename.Substring(0, filename.Length - extension.Length);
             var itemId = await _context.HistoryPhotos
                 .UploadFromStreamAsync(
-                    histId,
+                    name,
                     stream,
                     new GridFSUploadOptions
                     {
