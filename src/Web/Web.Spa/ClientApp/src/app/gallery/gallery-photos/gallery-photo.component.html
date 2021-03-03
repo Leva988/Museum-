@@ -3,7 +3,7 @@
     </app-header>
     <app-button backcolor="#029e1b" buttoncolor="#46f062"> </app-button>
     <div class="container-fluid">
-        <div id="Modal" class="modal fade" role="dialog" aria-labelledby="modaltitle" aria-hidden="true">
+        <div id="Modal" class="modal fade" role="dialog" aria-labelledby="modaltitle" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -13,11 +13,31 @@
                          </button>
                     </div>
                     <div class="modal-body">
+                        <div id="galleryCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" *ngFor="let img of imagesId; let i = index" [attr.data-slide-to]="i"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item" *ngFor="let img of imagesId; let i = index" [ngClass]="{'active': i == 0 }">
+                                    <img src="{{galleryUrl}}/{{gallery.id}}/item/{{img}}" class="d-block w-100 img-fluid">
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon fontIcon"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#galleryCarousel" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon fontIcon"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                        <!--
                         <div>
                             <div class="row d-flex justify-content-around" *ngFor="let i of imagesId">
                                 <img class="img-fluid photos" src="{{galleryUrl}}/{{gallery.id}}/item/{{i}}" alt="... ">
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
             </div>
