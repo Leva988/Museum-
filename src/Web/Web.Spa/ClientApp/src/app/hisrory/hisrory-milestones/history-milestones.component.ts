@@ -18,6 +18,7 @@ export class HistoryMilestonesComponent implements OnInit {
   dates: HistoryMilestone[] = [];
   photo = '';
   photos: string[] = [];
+  active: number;
   descriptions: string[] = [];
   date: HistoryMilestone = new HistoryMilestone();
   url = environment.backendUrl + '/HistoryMilestones';

@@ -1,9 +1,6 @@
 import { Component,  OnInit } from '@angular/core';
 import { GalleryService } from '../galleryservice/gallery-service.service';
 import { KeyValue } from '@angular/common';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
-declare var $: any;
 
 @Component({
   selector: 'app-gallery-video',
