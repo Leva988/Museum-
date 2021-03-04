@@ -11,20 +11,36 @@
             <div class="col-md-10 description">
                 <p [innerHTML]="d.description"></p>
                 <div class="row d-flex justify-content-around align-items-start">
-                    <div class="col-md-3" *ngFor="let i of d.items;">
-                        <img class="img-fluid img" src="{{url}}/{{d.id}}/item/{{i}}" (click)="photo=i;date = d; getDescription(date.id, photo)" data-toggle="modal" data-target="#Modalimage">
+                    <div class="col-md-3" *ngFor="let photo of d.items;let i = index;">
+                        <img class="img-fluid img" src="{{url}}/{{d.id}}/item/{{photo}}" (click)="date = d; j = i; photos = d.items;getDescription(d.id, photos)">
                     </div>
                 </div>
-                <div id="Modalimage" class="modal fade">
-                    <div class="modal-dialog  modal-lg d-flex justify-content-center align-items-center">
-                        <div class="modal-image">
-                            <img class="img-fluid" id="img_mod" src="{{url}}/{{date.id}}/item/{{photo}}">
+                <div id="ModalImage" class="modal fade">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content d-flex justify-content-center align-items-center">
+                            <div id="historyCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li *ngFor="let item of photos; let i = index" [attr.data-slide-to]="i"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item" *ngFor="let item of photos;let u = index;" [ngClass]="{'active':  j === u}">
+                                        <img src="{{url}}/{{date.id}}/item/{{item}}" class="d-block w-100 img-fluid">
+                                        <div class="carousel-caption">
+                                            <h5>{{descriptions[u]}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#historyCarousel" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon fontIcon"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#historyCarousel" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon fontIcon"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-text d-flex justify-content-center">
-                        <div id="caption" class="col-md-8" innerText="{{description}}"></div>
-                    </div>
-
                 </div>
             </div>
         </div>

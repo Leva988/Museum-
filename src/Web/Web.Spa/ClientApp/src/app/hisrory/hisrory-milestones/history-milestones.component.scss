@@ -33,7 +33,8 @@ h2 {
     cursor: pointer;
 }
 
-#Modalimage {
+#ModalImage {
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
@@ -43,4 +44,52 @@ h2 {
     color: white;
     padding-bottom: 20px;
     font-size: 15pt;
+}
+
+.carousel-indicators li,
+.carousel-indicators li.active {
+    float: left;
+    height: 5px;
+    margin: 2px;
+    border-radius: 0;
+    border: 0;
+    opacity: 0.7;
+}
+
+.carousel-indicators li.active {
+    background: #029e1b;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    height: 10vh;
+    top: 40%;
+    border-radius: 10vh;
+    width: 10vh;
+    background: black;
+    align-items: center;
+    opacity: 0.4;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 0.8;
+}
+
+.fontIcon {
+    height: 5vh;
+    width: 5vh;
+}
+
+.carousel-caption {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
 }

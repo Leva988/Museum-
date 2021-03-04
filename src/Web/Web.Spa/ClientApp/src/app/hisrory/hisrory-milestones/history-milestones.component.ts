@@ -3,6 +3,9 @@ import { HistoryService } from '../historyservice/history-service.service';
 import { environment } from 'src/environments/environment';
 import { HistoryMilestone } from 'src/app/models/historymilestones';
 import { HttpClient } from '@angular/common/http';
+import { KeyValue } from '@angular/common';
+
+declare var $: any;
 
 @Component({
   selector: 'app-history-dates',
@@ -14,7 +17,8 @@ export class HistoryMilestonesComponent implements OnInit {
   title = 'Вехи истории';
   dates: HistoryMilestone[] = [];
   photo = '';
-  description: string;
+  photos: string[] = [];
+  descriptions: string[] = [];
   date: HistoryMilestone = new HistoryMilestone();
   url = environment.backendUrl + '/HistoryMilestones';
 
@@ -23,7 +27,10 @@ export class HistoryMilestonesComponent implements OnInit {
     }
 
   ngOnInit() {
-
+      $(document).on('hide.bs.modal', '#ModalImage', () => {
+        this.photos = [];
+        this.descriptions = [];
+      });
   }
 
   getDates() {
@@ -44,11 +51,14 @@ export class HistoryMilestonesComponent implements OnInit {
         error => console.log(error));
   }
 
-  getDescription(id: string, itemId: string) {
-      this.http.get(this.url + '/' + id + '/itemDescription/' + itemId, {responseType: 'text'}).subscribe(
+  getDescription(id: string, itemIds: string[]) {
+    $('#ModalImage').modal('show');
+    itemIds.forEach( item => {
+      this.http.get(this.url + '/' + id + '/itemDescription/' + item, {responseType: 'text'}).subscribe(
         (data: any) => {
-          this.description = data;
+          this.descriptions.push(data);
         },
         error => console.log(error));
+    });
   }
 }

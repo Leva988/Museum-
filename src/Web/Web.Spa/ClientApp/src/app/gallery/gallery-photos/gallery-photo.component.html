@@ -15,7 +15,7 @@
                     <div class="modal-body">
                         <div id="galleryCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
                             <ol class="carousel-indicators">
-                                <li data-target="#carouselExampleIndicators" *ngFor="let img of imagesId; let i = index" [attr.data-slide-to]="i"></li>
+                                <li *ngFor="let img of imagesId; let i = index" [attr.data-slide-to]="i"></li>
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item" *ngFor="let img of imagesId; let i = index" [ngClass]="{'active': i == 0 }">
@@ -31,13 +31,6 @@
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-                        <!--
-                        <div>
-                            <div class="row d-flex justify-content-around" *ngFor="let i of imagesId">
-                                <img class="img-fluid photos" src="{{galleryUrl}}/{{gallery.id}}/item/{{i}}" alt="... ">
-                            </div>
-                        </div>
-                        -->
                     </div>
                 </div>
             </div>
