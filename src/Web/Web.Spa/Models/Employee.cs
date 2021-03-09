@@ -16,6 +16,8 @@ namespace Belorusneft.Museum.Web.Spa.Models
         public string Position { get; set; }
 
         public string DepartmentId { get; set; }
+
+        public string Department { get; set; }
         
         public EmployeeType Type { get; set; }
 

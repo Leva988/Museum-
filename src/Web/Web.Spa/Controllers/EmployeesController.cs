@@ -22,41 +22,54 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        //Get api/all employees
+         //Get api/all employees
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult> Get() =>
-            Ok(await _repository.GetEmployeesAsync());
+        public async Task<ActionResult> Get() 
+        {
+            var emps = await _repository.GetEmployeesAsync();
+            foreach (Employee emp in emps) {
+                if(!String.IsNullOrEmpty(emp.DepartmentId)) { 
+                    var department = await _repository.GetDepartmentAsync(emp.DepartmentId);
+                    emp.Department = department.Name;
+                }                 
+            }
+            return Ok(emps);
+        }
 
         //Get api/employee
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult> GetById(string id)
         {
+            var emp = await _repository.GetEmployeeAsync(id);
 
-            var item = await _repository.GetEmployeeAsync(id);
-
-            if (item == null)
+            if (emp == null)
             {
                 return NotFound();
             }
-
-            return Ok(item);
+            var department = await _repository.GetDepartmentAsync(emp.DepartmentId);
+            emp.Department = department.Name;
+            return Ok(emp);
         }
 
         //Get api/by department
         [HttpGet("Department/{depId}")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetByDepartement(string depId)
+        public async Task<ActionResult> GetByDepartment(string depId)
         {
-
-            var item = await _repository.GetEmployeeByDepartment(depId);
-            if (item == null)
+            var emps = await _repository.GetEmployeeByDepartment(depId);
+            if (emps == null)
             {
                 return NotFound();
             }
-
-            return Ok(item);
+            foreach(Employee emp in emps)
+            {
+                var department = await _repository.GetDepartmentAsync(depId);
+                emp.Department = department.Name;                
+            }
+           
+            return Ok(emps);
         }
 
         // POST api/employee

@@ -44,10 +44,6 @@ export class AdminComponent implements ComponentCanDeactivate  {
       return  this.http.get(this.baseUrl + '/Employees' + '/' + id, {responseType: 'json'});
   }
 
-  getEmployeesbyDepartment(depId: string) {
-      return  this.http.get(this.baseUrl + '/Employees/Department' + '/' + depId);
-  }
-
   addEmployee(emp: Employee) {
       return this.http.post(this.baseUrl + '/Employees/Employee', emp,
       {

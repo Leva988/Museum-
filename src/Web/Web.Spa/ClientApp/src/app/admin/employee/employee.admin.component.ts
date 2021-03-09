@@ -133,7 +133,6 @@ export class EmployeeAdminComponent implements OnInit {
         if (isNullOrUndefined(this.editEmployee.departmentId)) {
             this.editEmployee.departmentId = '';
         }
-        console.log(this.editEmployee);
         if (this.editEmployee.name === undefined || this.editEmployee.type === undefined) {
             this.modalMessage = 'Введите данные!';
             this.modalColor = '#f20800';
@@ -141,7 +140,7 @@ export class EmployeeAdminComponent implements OnInit {
         } else {
         if (this.isNewRecord) {
             this.repository.addEmployee(this.editEmployee).subscribe(
-                (data: any) => {
+                () => {
                     this.modalColor = '#2fc900';
                     this.modalMessage = `Сотрудник добавлен`;
                     this.getEmployees();
@@ -154,7 +153,7 @@ export class EmployeeAdminComponent implements OnInit {
                  });
             } else {
                 this.repository.updateEmployee(this.editID, this.editEmployee).subscribe(
-                    (data: any) => {
+                    () => {
                         this.modalColor = '#2fc900';
                         this.modalMessage = `Данные по сотруднику обновлены`;
                         this.getEmployees();
@@ -218,12 +217,12 @@ export class EmployeeAdminComponent implements OnInit {
     }
 
     addPhoto() {
-        if (this.fileToUpload === undefined || this.fileToUpload === null) {
+        if (isNullOrUndefined(this.fileToUpload)) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
         } else {
         this.repository.addEmployeePhoto(this.editID, this.fileToUpload).subscribe(
-            (response: any) => {
+            () => {
                 this.modalColor = '#2fc900';
                 this.modalMessage = 'Фото добавлено';
                 this.photo = environment.backendUrl + '/Employees/' + this.editID + '/Photo';
