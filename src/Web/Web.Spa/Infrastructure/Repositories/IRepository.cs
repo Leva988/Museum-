@@ -158,6 +158,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<Gallery> GetGalleryAsync(string galleryId);
 
+        Task<IEnumerable<Gallery>> GetGalleriesByCategoryAsync(string id);
+
         Task InsertGalleryAsync(Gallery gallery);
 
         Task CreateOrUpdateGalleryAsync(Gallery gallery);
@@ -169,6 +171,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType);
 
         Task DeleteGalleryItemAsync(string galleryId, string itemId);
+        #endregion
+
+        #region GalleryCategory
+        Task<IEnumerable<GalleryCategory>> GetGalleryCategories();
+
+        Task<GalleryCategory> GetGalleryCategoryAsync(string galleryId);
+
+        Task InsertGalleryCategoryAsync(GalleryCategory cat);
+
+        Task CreateOrUpdateGalleryCategoryAsync(GalleryCategory cat);
+
+        Task<bool> DeleteGalleryCategoryAsync(string catId);
         #endregion
 
         #region HistoryMilestones

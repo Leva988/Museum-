@@ -108,6 +108,10 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Gallery> Galleries =>
             _database.GetCollection<Gallery>("Galleries");
 
+         public IMongoCollection<GalleryCategory> GalleryCategories =>
+            _database.GetCollection<GalleryCategory>("GalleryCategories");
+
+
         public GridFSBucket GalleryContent =>
             new GridFSBucket(
                 _database,

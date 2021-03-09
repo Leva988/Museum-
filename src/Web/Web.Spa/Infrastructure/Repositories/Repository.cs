@@ -607,6 +607,12 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             await _context.Galleries
                 .Find(x => x.Id == id)
                 .FirstOrDefaultAsync();
+        
+         public async Task<IEnumerable<Gallery>> GetGalleriesByCategoryAsync(string category) =>
+            await _context.Galleries
+                .Find(x => x.CategoryId == category)
+                .SortBy(x => x.Date)
+                .ToListAsync();
 
         public async Task<bool> DeleteGalleryAsync(string id)
         {
@@ -671,6 +677,42 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var update = Builders<Gallery>.Update.Set(x => x.Items, items);
             await _context.Galleries.UpdateOneAsync(x => x.Id == galleryId, update);
             await _context.GalleryContent.DeleteAsync(ObjectId.Parse(itemId));
+        }
+        #endregion
+
+        #region GalleryCategory
+        public async Task<IEnumerable<GalleryCategory>> GetGalleryCategories() =>
+            await _context.GalleryCategories.Find(_ => true)
+                .ToListAsync();
+
+        public async Task InsertGalleryCategoryAsync(GalleryCategory cat) =>
+            await _context.GalleryCategories
+                .InsertOneAsync(cat);
+
+        public async Task CreateOrUpdateGalleryCategoryAsync(GalleryCategory cat) {
+            var filter = Builders<GalleryCategory>.Filter.Eq(x => x.Id, cat.Id);
+            var update = Builders<GalleryCategory>.Update
+                .Set(x => x.Name, cat.Name);            
+            await _context.GalleryCategories.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
+                {
+                    IsUpsert = true
+                });
+        }
+
+        public async Task<GalleryCategory> GetGalleryCategoryAsync(string id) =>
+            await _context.GalleryCategories
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteGalleryCategoryAsync(string id)
+        {
+            var cat = await GetGalleryCategoryAsync(id);
+           var actionResult = await _context.GalleryCategories
+                .DeleteOneAsync(p => p.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
         #endregion
 
