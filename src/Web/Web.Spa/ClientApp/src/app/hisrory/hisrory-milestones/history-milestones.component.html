@@ -11,8 +11,8 @@
             <div class="col-md-10 description">
                 <p [innerHTML]="d.description"></p>
                 <div class="row d-flex justify-content-around align-items-start">
-                    <div class="col-md-3" *ngFor="let photo of d.items;let i = index;">
-                        <img class="img-fluid img" src="{{url}}/{{d.id}}/item/{{photo}}" (click)="date = d; active = i; photos = d.items;getDescription(d.id, photos)">
+                    <div class="col-md-3" *ngFor="let hist of d.items;let i = index;">
+                        <img class="img-fluid img" src="{{url}}/{{d.id}}/item/{{hist}}" (click)="date = d; active = i; getDescription(d.id,  d.items)" data-toggle="modal" data-target="#ModalImage">
                     </div>
                 </div>
                 <div id="ModalImage" class="modal fade">
@@ -20,13 +20,13 @@
                         <div class="modal-content d-flex justify-content-center align-items-center">
                             <div id="historyCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li *ngFor="let item of photos; let i = index" [attr.data-slide-to]="i" [ngClass]="{'active':  i === active }"></li>
+                                    <li *ngFor="let item of photos; let i = index" [attr.data-slide-to]="active" [ngClass]="{'active':  i === active }"></li>
                                 </ol>
                                 <div class="carousel-inner">
                                     <div class="carousel-item" *ngFor="let item of photos;let u = index;" [ngClass]="{'active':  u === active}">
-                                        <img src="{{url}}/{{date.id}}/item/{{item}}" class="d-block w-100 img-fluid">
+                                        <img src="{{url}}/{{date.id}}/item/{{item.key}}" class="d-block w-100 img-fluid">
                                         <div class="carousel-caption">
-                                            <h5>{{descriptions[u]}}</h5>
+                                            <h5>{{item.value}}</h5>
                                         </div>
                                     </div>
                                 </div>

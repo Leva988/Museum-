@@ -16,10 +16,8 @@ declare var $: any;
 export class HistoryMilestonesComponent implements OnInit {
   title = 'Вехи истории';
   dates: HistoryMilestone[] = [];
-  photo = '';
-  photos: string[] = [];
+  photos: KeyValue<string, string>[] = [];
   active: number;
-  descriptions: string[] = [];
   date: HistoryMilestone = new HistoryMilestone();
   url = environment.backendUrl + '/HistoryMilestones';
 
@@ -30,7 +28,6 @@ export class HistoryMilestonesComponent implements OnInit {
   ngOnInit() {
       $(document).on('hide.bs.modal', '#ModalImage', () => {
         this.photos = [];
-        this.descriptions = [];
       });
   }
 
@@ -53,13 +50,12 @@ export class HistoryMilestonesComponent implements OnInit {
   }
 
   getDescription(id: string, itemIds: string[]) {
-    $('#ModalImage').modal('show');
-    itemIds.forEach( item => {
-      this.http.get(this.url + '/' + id + '/itemDescription/' + item, {responseType: 'text'}).subscribe(
+    for (const photo of itemIds) {
+      this.http.get(this.url + '/' + id + '/itemDescription/' + photo, {responseType: 'text'}).subscribe(
         (data: any) => {
-          this.descriptions.push(data);
+          this.photos.push({key: photo, value: data });
         },
         error => console.log(error));
-    });
+    }
   }
 }
