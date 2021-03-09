@@ -12,11 +12,9 @@ import { CompanyComponent } from './company/company.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { CompanyBossesComponent } from './company/company-bosses/company-bosses.component';
 import { CompanyDepartmentsComponent } from './company/company-departments/company-departments.component';
-import { CompanyIndicatorsComponent } from './company/company-indicators/company-indicators.component';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { ServiceComponent } from './service/service.component';
 import { ImageComponent } from './shared/image/image.component';
-import { DepartmentComponent } from './department/department.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
 import { HistoryRewardedComponent} from './hisrory/history-veterans/history-rewarded.component';
@@ -28,7 +26,6 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NeftByComponent } from './news/neft.by/neft.by.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { BelorusneftComponent } from './news/belorusneft/belorusneft.component';
-import { GraficComponent } from './department/grafic/grafic.component';
 
 
 
@@ -40,11 +37,9 @@ import { GraficComponent } from './department/grafic/grafic.component';
     HeaderComponent,
     CompanyBossesComponent,
     CompanyDepartmentsComponent,
-    CompanyIndicatorsComponent,
     AchievementsComponent,
     ServiceComponent,
     ImageComponent,
-    DepartmentComponent,
     ButtonComponent,
     HistoryMilestonesComponent,
     HistoryRewardedComponent,
@@ -56,7 +51,6 @@ import { GraficComponent } from './department/grafic/grafic.component';
     NeftByComponent,
     NotfoundComponent,
     BelorusneftComponent,
-    GraficComponent
   ],
   imports: [
     BrowserModule,

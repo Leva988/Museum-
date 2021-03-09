@@ -129,7 +129,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post photo
         [HttpPost("{id}/Photo")]
-        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
+        public async Task<ActionResult> PostPhoto(string id,[FromForm(Name="avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
@@ -154,7 +154,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             {
                 Name = employeeNew.Name,
                 Position = employeeNew.Position,
-                Region = employeeNew.Region,
                 Type = employeeNew.Type,
                 DepartmentId = employeeNew.DepartmentId
             };
@@ -167,7 +166,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 {
                     Name = employeesNew.ElementAt(i).Name,
                     Position = employeesNew.ElementAt(i).Position,
-                    Region = employeesNew.ElementAt(i).Region,
                     Type = employeesNew.ElementAt(i).Type,
                     DepartmentId = employeesNew.ElementAt(i).DepartmentId
                 };

@@ -8,7 +8,5 @@ export class Employee {
 
     public departmentId: string;
 
-    public region: string;
-
     public type: string;
 }

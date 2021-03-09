@@ -4,7 +4,6 @@ import { MenuComponent } from './menu/menu.component';
 import { CompanyComponent } from './company/company.component';
 import { AchievementsComponent } from './achievements/achievements.component';
 import { ServiceComponent } from './service/service.component';
-import { DepartmentComponent } from './department/department.component';
 import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
 import { HistoryRewardedComponent} from './hisrory/history-veterans/history-rewarded.component';
 import { SocialComponent } from './social/social.component';
@@ -20,7 +19,6 @@ const routes: Routes = [
    { path: 'company/:id/admin', component: CompanyComponent },
    { path: 'achievements', component: AchievementsComponent},
    { path: 'service', component: ServiceComponent},
-   { path: 'departments/:id', component: DepartmentComponent},
    { path: 'historymilestones', component: HistoryMilestonesComponent},
    { path: 'historyrewarded', component: HistoryRewardedComponent},
    { path: 'social', component: SocialComponent},
@@ -28,6 +26,7 @@ const routes: Routes = [
    { path: 'galleryvideos', component: GalleryVideoComponent},
    { path: 'galleryphotos', component: GalleryPhotoComponent},
    { path: 'projects', component: ProjectsComponent},
+   { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
    { path: '**', component: NotfoundComponent }
 ];
 

@@ -28,7 +28,12 @@
                             "src/assets"
                         ],
                         "styles": [
-                            "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+                            "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "./node_modules/ag-grid-community/dist/styles/ag-grid.css",
+                            "./node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css",
+                            "./node_modules/ag-grid-community/dist/styles/ag-theme-alpine-dark.css",
+                            "./node_modules/ag-grid-community/dist/styles/ag-theme-balham.css",
+                            "./node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.min.js",

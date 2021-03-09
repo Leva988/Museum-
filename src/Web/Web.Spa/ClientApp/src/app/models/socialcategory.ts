@@ -8,5 +8,5 @@ export class SocialCategory {
 
     public description: string;
 
-    public items: string[];
+    public galleries: Gallery[];
 }

@@ -1,0 +1,78 @@
+<div class="head p-3">
+    <h3>Таблица сотрудников</h3>
+</div>
+
+<ag-grid-angular #grid style="width: 100%; height: 50vh;" class="ag-theme-alpine-dark" [gridOptions]='gridOptions' [columnDefs]="columnDefs" [rowData]="rowData">
+</ag-grid-angular>
+<input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить сотрудника" (click)="addEmployee()" />
+<div class="modal fade" id="addModal" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="addHeader">
+                <h2 class="modal-title" id="title">{{modalTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-10">
+                    <label for="name">Введите ФИО:</label>
+                    <input id="name" class="form-control" type="text" name="name" [(ngModel)]="editEmployee.name" required />
+                    <label for="position">Введите Должность:</label>
+                    <input id="position" class="form-control" type="text" name="position" [(ngModel)]="editEmployee.position" required />
+                    <label for="type">Выберите тип:</label>
+                    <select id="type" class="form-control" type="text" name="type" [(ngModel)]="editEmployee.type">
+                        <option *ngFor='let t of types' value="{{t.key}}">{{t.value}}</option>
+                      </select>
+                    <label for="department">Выберите отдел:</label>
+                    <select id="department" class="form-control" type="text" name="department" [(ngModel)]="editEmployee.departmentId">
+                        <option  *ngFor="let d of departments" value="{{d.id}}">{{d.name}}                           
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <input type="button" value="Сохранить" class="btn btn-success" (click)="saveEmployee()" data-toggle="modal" data-target="#modal" />
+                <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPhoto" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="photoHeader" class="modal-header">
+                <h2 class="modal-title" id="title">Фото сотрудника</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <img *ngIf="photo!==null" id="photo" class="img-fluid p-2" src="{{photo}}">
+                <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()" data-toggle="modal" data-target="#modal">Добавить</button>
+                <button type="button" class="btn btn-danger col-md-4" (click)="deletePhoto()" data-toggle="modal" data-target="#modal">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" [style.backgroundColor]="modalColor">
+                <h2 class="modal-title" id="title">{{messageTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <p>{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-secondary col-md-4" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

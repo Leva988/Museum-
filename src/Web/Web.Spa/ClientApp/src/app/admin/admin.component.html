@@ -1,0 +1,20 @@
+<body>
+    <div class="navbar navbar-dark bg-dark p-3">
+        <h1 class="navbar-brand">Museum-BGPZ Admin</h1>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <button class="btn btn-danger btn-block" (click)="logout()">
+                    Logout
+                    </button>
+                <button id="employees" class="btn btn-primary btn-block" routerLink="/admin/main/employees" routerLinkActive="active">
+                     Сотрудники
+                    </button>
+            </div>
+            <div class="col-md-9">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</body>
