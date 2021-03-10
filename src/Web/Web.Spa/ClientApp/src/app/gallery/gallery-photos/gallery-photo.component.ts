@@ -27,20 +27,22 @@ export class GalleryPhotoComponent implements OnInit {
     }
 
   allCategories() {
+    this.galleries = [];
     this.galleryservice.getCategories().subscribe(
       // tslint:disable-next-line: no-shadowed-variable
       (data: GalleryCategory[]) => {
          this.categories = data;
          if (this.route.snapshot.params.category === 'all') {
-         this.categories.forEach(cat => {
-           cat.galleries = this.fixDate(cat.galleries);
-           this.galleries = this.galleries.concat(cat.galleries);
-          });
+          this.categories.forEach(cat => {
+            cat.galleries = this.fixDate(cat.galleries);
+            this.galleries = this.galleries.concat(cat.galleries);
+           });
           } else {
             this.getCategoryById(this.route.snapshot.params.category);
           }
       }, error => console.log(error));
   }
+
 
   getCategoryById(id: string) {
       this.galleryservice.getCategory(id).subscribe(
