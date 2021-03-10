@@ -79,7 +79,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             new Gallery
             {
                 Date = galleryNew.Date,
-                Name = galleryNew.Name
+                Name = galleryNew.Name,
+                CategoryId = galleryNew.CategoryId
             };
 
         // DELETE api/Gallery
