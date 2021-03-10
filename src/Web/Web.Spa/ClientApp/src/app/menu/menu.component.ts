@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
     ];
     this.gallery = [
       { key: '/galleryvideos', value: 'Видео'},
-      { key: '/galleryphotos', value: 'Фото'}
+      { key: '/galleryphotos/all', value: 'Фото'}
     ];
   }
 

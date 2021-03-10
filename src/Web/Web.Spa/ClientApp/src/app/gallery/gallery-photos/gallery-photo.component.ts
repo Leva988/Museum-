@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GalleryService } from '../galleryservice/gallery-service.service';
-import { environment } from 'src/environments/environment';
-import { faPhotoVideo } from '@fortawesome/free-solid-svg-icons';
 import { FaConfig,  FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { GalleryCategory } from 'src/app/models/galleryCategory';
 import { Gallery } from 'src/app/models/gallery';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 
@@ -15,38 +15,54 @@ declare var $: any;
 })
 
 export class GalleryPhotoComponent implements OnInit {
-  faphoto = faPhotoVideo;
-  gallery: Gallery = new Gallery();
-  galleryUrl = environment.backendUrl + '/Gallery';
+
+  categories: GalleryCategory[] = [];
   galleries: Gallery[] = [];
-  imagesId: string [] = [];
-  constructor(private galleryService: GalleryService) {
+
+  constructor(private galleryservice: GalleryService, private route: ActivatedRoute) {
    }
 
   ngOnInit() {
-    this.refreshGalleries();
-    $('#Modal').on('hide.bs.modal', () => {
-       this.imagesId = [];
-     });
+    this.allCategories();
+    }
+
+  allCategories() {
+    this.galleryservice.getCategories().subscribe(
+      // tslint:disable-next-line: no-shadowed-variable
+      (data: GalleryCategory[]) => {
+         this.categories = data;
+         if (this.route.snapshot.params.category === 'all') {
+         this.categories.forEach(cat => {
+           cat.galleries = this.fixDate(cat.galleries);
+           this.galleries = this.galleries.concat(cat.galleries);
+          });
+          } else {
+            this.getCategoryById(this.route.snapshot.params.category);
+          }
+      }, error => console.log(error));
   }
 
-  refreshGalleries() {
-         this.galleryService.getGalleries(this.galleryUrl).subscribe(
-          (data: Gallery[]) => {
-          // tslint:disable: prefer-for-of
-          for (let i = 0; i < data.length; i++) {
-            const d = data[i];
-            const date = new Date(Date.parse(d.date));
-            const options = {  year: 'numeric', month: 'numeric', day: 'numeric' };
-            const local = date.toLocaleDateString(undefined, options);
-            d.date = local;
-            this.galleries.push(d);
-            }
-          },
-         error => console.log(error));
+  getCategoryById(id: string) {
+      this.galleryservice.getCategory(id).subscribe(
+        (data: GalleryCategory) => {
+            data.galleries = this.fixDate(data.galleries);
+            this.galleries = data.galleries;
+        }, error => console.log(error)
+      );
   }
 
-  fetchImgs() {
-    this.imagesId = this.gallery.items;
+
+
+  fixDate(galleries): Gallery[] {
+    // tslint:disable: prefer-for-of
+    for (let i = 0; i < galleries.length; i++) {
+      const d = galleries[i];
+      const date = new Date(Date.parse(d.date));
+      const options = {  year: 'numeric', month: 'numeric', day: 'numeric' };
+      const local = date.toLocaleDateString(undefined, options);
+      d.date = local;
+    }
+    return galleries;
   }
+
 }

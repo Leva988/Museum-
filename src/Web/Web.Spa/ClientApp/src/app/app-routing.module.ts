@@ -12,6 +12,7 @@ import { GalleryVideoComponent } from './gallery/gallery-videos/gallery-video.co
 import { GalleryPhotoComponent } from './gallery/gallery-photos/gallery-photo.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gallery-category.component';
 
 const routes: Routes = [
    { path: '', component: MenuComponent },
@@ -24,7 +25,8 @@ const routes: Routes = [
    { path: 'social', component: SocialComponent},
    { path: 'news', component: NewsComponent},
    { path: 'galleryvideos', component: GalleryVideoComponent},
-   { path: 'galleryphotos', component: GalleryPhotoComponent},
+   { path: 'galleryphotos/:category', component: GalleryPhotoComponent,
+    children: [{path: 'category', component: GalleryCategoryComponent}]},
    { path: 'projects', component: ProjectsComponent},
    { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
    { path: '**', component: NotfoundComponent }

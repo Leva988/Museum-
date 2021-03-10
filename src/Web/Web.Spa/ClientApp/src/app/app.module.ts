@@ -26,6 +26,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NeftByComponent } from './news/neft.by/neft.by.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { BelorusneftComponent } from './news/belorusneft/belorusneft.component';
+import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gallery-category.component';
 
 
 
@@ -51,6 +52,7 @@ import { BelorusneftComponent } from './news/belorusneft/belorusneft.component';
     NeftByComponent,
     NotfoundComponent,
     BelorusneftComponent,
+    GalleryCategoryComponent
   ],
   imports: [
     BrowserModule,

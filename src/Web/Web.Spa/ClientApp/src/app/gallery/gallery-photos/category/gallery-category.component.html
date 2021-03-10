@@ -1,0 +1,41 @@
+<div id="Modal" class="modal fade" role="dialog" aria-labelledby="modaltitle" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modaltitle">{{gallery.name}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                         </button>
+            </div>
+            <div class="modal-body">
+                <div id="galleryCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li *ngFor="let img of imagesId; let i = index" [attr.data-slide-to]="i" [ngClass]="{'active':  i === 0 }"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item" *ngFor="let img of imagesId; let i = index" [ngClass]="{'active': i == 0 }">
+                            <img src="{{galleryUrl}}/{{gallery.id}}/item/{{img}}" class="d-block w-100 img-fluid">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon fontIcon"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#galleryCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon fontIcon"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row galleries d-flex justify-content-around">
+    <div class="col-md-2 " *ngFor="let g of galleries ">
+        <div class="card cards" data-toggle="modal" data-target="#Modal" (click)="gallery=g;fetchImgs();">
+            <img class="img-fluid card-image" src="{{galleryUrl}}/{{g.id}}/item/{{g.items[0]}} " alt="... ">
+            <p class="card-title ">{{g.name}}</p>
+            <pre class="date">{{g.date}}        <fa-icon [icon]="faphoto"></fa-icon> {{g.items.length}}</pre>
+        </div>
+    </div>
+</div>

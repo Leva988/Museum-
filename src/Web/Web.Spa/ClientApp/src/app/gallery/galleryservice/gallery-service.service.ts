@@ -1,14 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class GalleryService {
+  galleryUrl = environment.backendUrl + '/Gallery';
+  categoriesUrl = environment.backendUrl + '/GalleryCategories';
   constructor(private http: HttpClient ) {
       }
 
-  getGalleries(url: string) {
-      const heads = new HttpHeaders();
-      return this.http.get(url , { responseType: 'json'});
+  getGalleries() {
+      return this.http.get(this.galleryUrl , { responseType: 'json'});
+    }
+
+  getCategories() {
+      return this.http.get(this.categoriesUrl , { responseType: 'json'});
+    }
+
+    getCategory(id: string) {
+      return this.http.get(this.categoriesUrl + '/' + id, { responseType: 'json'});
     }
 
   getFile(url: string) {
