@@ -1,14 +1,16 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { ProjectService } from './project-service/project-service.service';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ViewEncapsulation } from '@angular/core';
 import { Project } from '../models/project';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
-  providers: [ProjectService]
+  providers: [ProjectService],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProjectsComponent implements OnInit {
   @ViewChildren('anchors') anchors;
@@ -17,11 +19,16 @@ export class ProjectsComponent implements OnInit {
   url = environment.backendUrl + '/Projects';
 
   // tslint:disable:max-line-length
-  constructor(private projectService: ProjectService,  private route: ActivatedRoute) {
+  constructor(private projectService: ProjectService,  private sanitizer: DomSanitizer) {
    }
 
    ngOnInit() {
     this.refreshProjects();
+  }
+
+  projectClick(project: Project) {
+    this.project = project;
+    $('#Modal').modal('show');
   }
 
   refreshProjects() {

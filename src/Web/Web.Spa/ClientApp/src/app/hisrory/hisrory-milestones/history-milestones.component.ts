@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { HistoryMilestone } from 'src/app/models/historymilestones';
 import { HttpClient } from '@angular/common/http';
 import { KeyValue } from '@angular/common';
+import { ViewEncapsulation } from '@angular/core';
 
 declare var $: any;
 
@@ -11,7 +12,8 @@ declare var $: any;
   selector: 'app-history-dates',
   templateUrl: './history-milestones.component.html',
   styleUrls: ['./history-milestones.component.scss'],
-  providers: [HistoryService]
+  providers: [HistoryService],
+  encapsulation: ViewEncapsulation.None
   })
 export class HistoryMilestonesComponent implements OnInit {
   title = 'Вехи истории';

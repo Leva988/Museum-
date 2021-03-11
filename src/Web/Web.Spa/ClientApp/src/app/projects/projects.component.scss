@@ -2,6 +2,13 @@
     margin-top: 100px;
 }
 
+.museum-table,
+.museum-table tr,
+.museum-table td {
+    border: 1px solid black;
+    padding: 10px;
+}
+
 .project {
     background-size: cover;
     background-repeat: no-repeat;

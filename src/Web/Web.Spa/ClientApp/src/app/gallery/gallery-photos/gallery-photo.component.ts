@@ -60,8 +60,7 @@ export class GalleryPhotoComponent implements OnInit {
     for (let i = 0; i < galleries.length; i++) {
       const d = galleries[i];
       const date = new Date(Date.parse(d.date));
-      const options = {  year: 'numeric', month: 'numeric', day: 'numeric' };
-      const local = date.toLocaleDateString(undefined, options);
+      const local = date.toLocaleDateString(undefined);
       d.date = local;
     }
     return galleries;
