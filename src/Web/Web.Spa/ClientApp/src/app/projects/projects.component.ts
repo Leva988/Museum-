@@ -5,6 +5,8 @@ import { ViewEncapsulation } from '@angular/core';
 import { Project } from '../models/project';
 import { DomSanitizer } from '@angular/platform-browser';
 
+declare var $: any;
+
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
