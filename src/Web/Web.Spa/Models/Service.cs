@@ -15,8 +15,6 @@ namespace Belorusneft.Museum.Web.Spa.Models
         public string CategoryId { get; set; }
 
         public string Name { get; set; }
-
-        public IEnumerable<Project> Projects { get; set; }
-
+        
     }
 }

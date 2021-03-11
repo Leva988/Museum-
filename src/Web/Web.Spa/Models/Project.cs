@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
@@ -14,12 +15,8 @@ namespace Belorusneft.Museum.Web.Spa.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public string Color { get; set; }
-
-        public string DepartmentId { get; set; }
-
-        public string ServiceId { get; set; }
+        
+        public IEnumerable<string> Items {get; set;}
 
     }
 }

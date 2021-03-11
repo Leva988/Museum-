@@ -2,33 +2,48 @@
 </app-header>
 <app-button backcolor='#05803a' buttoncolor="#00f268"> </app-button>
 <div class="container-fluid">
-    <div class="service" *ngFor="let s of services">
-        <a #anchors id="{{s.id}}" class="servicename" *ngIf="s.projects.length!=0" class="servicename d-flex justify-content-center">
-                 {{s.name}}
-            </a>
-        <div class="row d-flex justify-content-around align-items-start">
-            <div class="col-md-4" *ngFor="let p of s.projects">
-                <div class="project d-flex align-items-end" data-toggle="modal" data-target="#Modal" (click)="title=p.name; description=p.description" class="project d-flex align-items-start justify-content-left " [ngStyle]="{'background-image':'url('+this.url + '/' + p.id + '/Image'+')'}"
-                    [style.background-color]="p.color ">
-                    <div class="title d-flex  align-items-end">
-                        <p class="name">{{p.name}}</p>
-                    </div>
+
+    <div class="row d-flex justify-content-around align-items-start">
+        <div class="col-md-4" *ngFor="let p of projects">
+            <div class="project d-flex align-items-end" data-toggle="modal" data-target="#Modal" (click)="project = p" class="project d-flex align-items-start justify-content-left " [ngStyle]="{'background-image':'url('+this.url + '/' + p.id + '/item/'+ p.items[0] +')'}">
+                <div class="title d-flex align-items-end">
+                    <p class="name">{{p.name}}</p>
                 </div>
             </div>
         </div>
     </div>
+
     <div id="Modal" class="modal fade" role="dialog " aria-labelledby="modaltitle" aria-hidden="true">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="modaltitle">{{title}}</h2>
+                    <h2 class="modal-title" id="modaltitle">{{project.name}}</h2>
                     <button type="button " class="close " data-dismiss="modal" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
                      </button>
                 </div>
                 <div class="modal-body">
-                    <p class="description" [innerHTML]="description"></p>
+                    <p class="description" [innerHTML]="project.description"></p>
+                    <div id="galleryCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li *ngFor="let img of project.items; let i = index" [attr.data-slide-to]="i" [ngClass]="{'active':  i === 0 }"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item" *ngFor="let img of project.items; let i = index" [ngClass]="{'active': i == 0 }">
+                                <img src="{{url}}/{{project.id}}/item/{{img}}" class="d-block w-100 img-fluid">
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon fontIcon"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#galleryCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon fontIcon"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>

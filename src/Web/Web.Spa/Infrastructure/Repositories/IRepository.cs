@@ -89,21 +89,17 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<Project> GetProjectAsync(string id);
 
-        Task<IEnumerable<Project>> GetProjectsByDepartment(string depId);
-
-        Task<IEnumerable<Project>> GetProjectsByService(string servId);
-
         Task InsertProjectAsync(Project proj);
 
         Task CreateOrUpdateProjectAsync(Project project);
 
         Task<bool> DeleteProjectAsync(string id);
 
-        Task<FileStreamResult> GetProjectImageAsync(string filename);
+        Task<FileStreamResult> GetProjectImageAsync(string id, string itemId);
 
         Task<string> AddProjectImageAsync(Stream stream, string id, string contentType);
 
-        Task DeleteProjectImageAsync(string filename);
+        Task DeleteProjectImageAsync(string id, string itemId);
         #endregion
 
         #region ServiceCategories

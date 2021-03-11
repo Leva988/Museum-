@@ -342,18 +342,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                await _context.Projects
                      .InsertOneAsync(proj);
 
-        public async Task<IEnumerable<Project>> GetProjectsByDepartment(string depId) =>
-          await _context.Projects
-              .Find(x => x.DepartmentId == depId)
-              .SortBy(x => x.Id)
-              .ToListAsync();
-
-        public async Task<IEnumerable<Project>> GetProjectsByService(string servId) =>
-            await _context.Projects
-              .Find(x => x.ServiceId == servId)
-              .SortBy(x => x.Id)
-              .ToListAsync();
-
         public async Task CreateOrUpdateProjectAsync(Project project) =>
             await _context.Projects
                 .ReplaceOneAsync(x => x.Id == project.Id,
@@ -375,25 +363,23 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
-        public async Task<FileStreamResult> GetProjectImageAsync(string name)
+        public async Task<FileStreamResult> GetProjectImageAsync(string id, string itemId)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.ProjectPhotos
-                .Find(filter)
-                .FirstOrDefaultAsync();
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
 
             var stream = new MemoryStream();
             await _context.ProjectPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
 
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
-            
             return new FileStreamResult(stream, contentType);
         }
 
         public async Task<string> AddProjectImageAsync(Stream stream, string projId, string contentType)
         {
-            var proj = await GetProjectAsync(projId);
+       var proj = await GetProjectAsync(projId);
             if (proj == null)
             {
                 return null;
@@ -411,16 +397,20 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                         },
                     }
                 );
+
+            var update = Builders<Project>.Update.AddToSet(x => x.Items, itemId.ToString());
+            await _context.Projects.UpdateOneAsync(x => x.Id == projId, update);
+
             return itemId.ToString();
         }
 
-        public async Task DeleteProjectImageAsync(string name)
+        public async Task DeleteProjectImageAsync(string id, string itemId)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
-            var info = await _context.ProjectPhotos
-                .Find(filter)
-                .FirstAsync();
-            await _context.ProjectPhotos.DeleteAsync(info.Id);          
+            var proj = await GetProjectAsync(id);
+            var items = proj.Items.Where(el => el != itemId);
+            var update = Builders<Project>.Update.Set(x => x.Items, items);
+            await _context.Projects.UpdateOneAsync(x => x.Id == id, update);
+            await _context.ProjectPhotos.DeleteAsync(ObjectId.Parse(itemId));       
         }
         #endregion
 
@@ -622,8 +612,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                 {
                     await DeleteGalleryItemAsync(id, i);
                 }
-            }
-            
+            }            
             var actionResult = await _context.Galleries
                 .DeleteOneAsync(p => p.Id == id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;

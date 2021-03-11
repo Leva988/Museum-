@@ -6,7 +6,7 @@ export class ProjectService {
   constructor(private http: HttpClient ) {
       }
 
-    getServices(url: string ) {
+    getProjects(url: string ) {
       return this.http.get(url , { responseType: 'json'});
     }
 }

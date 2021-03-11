@@ -27,11 +27,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var item = await _repository.GetAllServicesAsync();
             var services = item.ToArray();
-            foreach (Service serv in services)
-            {
-                var projects = await _repository.GetProjectsByService(serv.Id);
-                serv.Projects = projects;
-            }
             return Ok(services);
         }
 
@@ -41,8 +36,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         public async Task<ActionResult> GetById(string id)
         {
             var item = await _repository.GetServiceAsync(id);
-            var projects = await _repository.GetProjectsByService(item.Id);
-            item.Projects = projects;
             if (item == null)
             {
                 return NotFound();

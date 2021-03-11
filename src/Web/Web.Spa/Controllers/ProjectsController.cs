@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace Belorusneft.Museum.Web.Spa.Controllers
 {
@@ -44,20 +45,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(item);
         }
         
-        //Get api/by department
-        [HttpGet("Department/{depId}")]
-        [AllowAnonymous]
-        public async Task<ActionResult> GetByDepartement(string depId)
-        {
-
-            var item = await _repository.GetProjectsByDepartment(depId);
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
 
         // POST api/project
         [HttpPost]
@@ -101,11 +88,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //GET project image
-        [HttpGet("{id}/Image")]
+        [HttpGet("{projectId}/item/{itemId}")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetImage(string id)
+        public async Task<ActionResult> GetImage(string id, string itemId)
         {
-            var item = await _repository.GetProjectImageAsync(id);
+            var item = await _repository.GetProjectImageAsync(id, itemId);
             if (item == null)
             {
                 return NotFound();
@@ -115,7 +102,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         
         //Post photo
         [HttpPost("{id}/Image")]
-        public async Task<ActionResult> PostPhoto(string id, [FromForm(Name = "avatar")] IFormFile image)
+        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
@@ -127,11 +114,27 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return CreatedAtAction(nameof(GetImage), new { id = Oid, }, new { id = Oid, });
         }
 
-        //Delete photo
-        [HttpDelete("{id}/Image")]
-        public async Task<ActionResult> DeletePhoto(string id)
+        /*
+        [HttpPost("{id}/Images")]
+        public async Task<ActionResult> PostPhotos(string id, IFormFileCollection images)
         {
-            await _repository.DeleteProjectImageAsync(id);        
+            foreach(var img in images) {
+               var stream = img.OpenReadStream();
+               var input = new StreamReader(stream).BaseStream;
+               var Oid = await _repository.AddProjectImageAsync(input, id, img.ContentType);
+               if (Oid == null)
+               {
+                   return BadRequest();
+               }               
+               return CreatedAtAction(nameof(GetImage), new { id = Oid, }, new { id = Oid });
+            }      
+        }*/
+
+        //Delete photo
+        [HttpDelete("{projectId}/item/{itemId}")]
+        public async Task<ActionResult> DeletePhoto(string id, string itemId)
+        {
+            await _repository.DeleteProjectImageAsync(id, itemId);        
             return Ok();
         }
 
@@ -140,9 +143,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
               {
                   Name = projectNew.Name,
                   Description = projectNew.Description,
-                  Color = projectNew.Color,               
-                  DepartmentId = projectNew.DepartmentId,
-                  ServiceId = projectNew.ServiceId
+                   Items = new List<string>()
               };
     }
 }

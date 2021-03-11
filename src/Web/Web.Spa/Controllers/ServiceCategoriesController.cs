@@ -29,11 +29,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             foreach (ServiceCategory cat in categories)
             {
                 var services = await _repository.GetServicesAsync(cat.Id);
-                foreach (Service service in services)
-                {
-                    var projects = await _repository.GetProjectsByService(service.Id);
-                    service.Projects = projects;
-                }
                 cat.Services = services;
             }
             return Ok(categories);
@@ -46,11 +41,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var item = await _repository.GetServiceCategoryAsync(id);
             var services = await _repository.GetServicesAsync(item.Id);
-            foreach (Service service in services)
-            {
-                var projects = await _repository.GetProjectsByService(service.Id);
-                service.Projects = projects;
-            }
             item.Services = services;
             if (item == null)
             {

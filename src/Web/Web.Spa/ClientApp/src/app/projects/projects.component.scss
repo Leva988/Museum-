@@ -2,24 +2,6 @@
     margin-top: 100px;
 }
 
-.service {
-    margin-bottom: 50px;
-}
-
-.servicename,
-.servicename:hover {
-    text-align: center;
-    color: #00B5F9;
-    font-weight: 700;
-    font-size: 16pt;
-    border-top: 55px solid transparent;
-    margin-top: -55px;
-    padding: 15px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box;
-}
-
 .project {
     background-size: cover;
     background-repeat: no-repeat;
@@ -45,7 +27,7 @@
 }
 
 .modal-title {
-    color: #00B5F9;
+    color: #029e1b;
 }
 
 .close {
@@ -62,4 +44,43 @@
     to {
         background-position: 70% 20%;
     }
+}
+
+.carousel-indicators li,
+.carousel-indicators li.active {
+    float: left;
+    height: 5px;
+    margin: 2px;
+    border-radius: 0;
+    border: 0;
+    opacity: 0.7;
+}
+
+.carousel-indicators li.active {
+    background: #029e1b;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    height: 10vh;
+    top: 40%;
+    border-radius: 10vh;
+    width: 10vh;
+    background: black;
+    align-items: center;
+    opacity: 0.2;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 0.8;
+}
+
+.fontIcon {
+    height: 5vh;
+    width: 5vh;
+}
+
+.description {
+    word-wrap: break-word;
 }

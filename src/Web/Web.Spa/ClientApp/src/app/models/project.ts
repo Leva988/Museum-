@@ -4,11 +4,7 @@ export class Project {
 
     public name: string;
 
-    public color: string;
-
-    public departmentId: string;
-
     public description: string;
 
-    public serviceId: string;
+    public items: string[];
 }
