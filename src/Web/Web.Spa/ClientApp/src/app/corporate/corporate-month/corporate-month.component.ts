@@ -13,6 +13,7 @@ export class CorporateMonthComponent implements OnInit  {
 
   @Input() months: CorporateMonth[];
   month: CorporateMonth = new CorporateMonth();
+  photo = '';
   url = environment.backendUrl + '/CorporateMonths';
   constructor()  {
   }
