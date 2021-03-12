@@ -201,22 +201,36 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task DeleteHistoryItemAsync(string id, string itemId);
         #endregion
 
-        #region SocialCategory
-        Task<IEnumerable<SocialCategory>> GetSocialCategoriesAsync();
+        #region CorporateMonth
+        Task<IEnumerable<CorporateMonth>> GetCorporateMonthsAsync();
 
-        Task<SocialCategory> GetSocialCategoryAsync(string id);
+        Task<CorporateMonth> GetCorporateMonthAsync(string id);
 
-        Task InsertSocialCategoryAsync(SocialCategory ev);
+        Task <IEnumerable<CorporateMonth>> GetCorporateMonthsByYearAsync (string yearId);
 
-        Task CreateOrUpdateSocialCategoryAsync(SocialCategory ev);
+        Task InsertCorporateMonthAsync(CorporateMonth month);
 
-        Task<bool> DeleteSocialCategoryAsync(string id);
+        Task CreateOrUpdateCorporateMonthAsync(CorporateMonth month);
 
-        Task<FileStreamResult> GetSocialCategoryPhotoAsync(string socialcategoryId, string itemId);
+        Task<bool> DeleteCorporateMonthAsync(string id);
 
-        Task<string> AddSocialCategoryPhotoAsync(Stream stream, string socialcategoryId, string contentType);
+        Task<FileStreamResult> GetCorporateMonthPhotoAsync(string id, string itemId);
 
-        Task DeleteSocialCategoryPhotoAsync(string socialcategoryId, string itemId);
+        Task<string> AddCorporateMonthPhotoAsync(Stream stream, string socialcategoryId, string contentType);
+
+        Task DeleteCorporateMonthPhotoAsync(string id, string itemId);
+        #endregion
+
+        #region CorporateYear
+        Task<IEnumerable<CorporateYear>> GetCorporateYearsAsync();
+
+        Task<CorporateYear> GetCorporateYearAsync(string id);
+
+        Task InsertCorporateYearAsync(CorporateYear year);
+
+        Task CreateOrUpdateCorporateYearAsync(CorporateYear year);
+
+        Task<bool> DeleteCorporateYearAsync(string id);
         #endregion
 
         #region Departments      

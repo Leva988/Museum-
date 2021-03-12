@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
-    public class SocialCategory
+    public class CorporateMonth
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -15,6 +15,8 @@ namespace Belorusneft.Museum.Web.Spa.Models
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public string YearId { get; set; }
 
         public IEnumerable<string> Items { get; set; }
     }

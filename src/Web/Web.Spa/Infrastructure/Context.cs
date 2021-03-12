@@ -122,18 +122,21 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                 }
             );
 
-        public IMongoCollection<SocialCategory> SocialCategories =>
-            _database.GetCollection<SocialCategory>("SocialCategories");
+        public IMongoCollection<CorporateMonth> CorporateMonths =>
+            _database.GetCollection<CorporateMonth>("CorporateMonths");
 
-        public GridFSBucket SocialCategoryPhotos =>
+        public GridFSBucket CorporateMonthPhotos =>
              new GridFSBucket(
                 _database,
                 new GridFSBucketOptions
                 {
-                    BucketName = "social-photos",
+                    BucketName = "corporate-photos",
                     ChunkSizeBytes = _deafultChunkSize,
                 }
              );
+       
+        public IMongoCollection<CorporateYear> CorporateYears =>
+            _database.GetCollection<CorporateYear>("CorporateYears");
 
         public IMongoCollection<Department> Departments =>
           _database.GetCollection<Department>("Departments");

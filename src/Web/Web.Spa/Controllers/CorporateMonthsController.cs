@@ -13,21 +13,21 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
     [Route("api/[controller]")]
     [ApiController]
     /*[Authorize] */
-    public class SocialCategoriesController : ControllerBase
+    public class CorporateMonthsController : ControllerBase
     {
         private readonly IRepository _repository;
 
-        public SocialCategoriesController(IRepository repository)
+        public CorporateMonthsController(IRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
-        //Get api/all SocialCategories
+        //Get api/all months
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> Get()
         {
-            var item = await _repository.GetSocialCategoriesAsync();
+            var item = await _repository.GetCorporateMonthsAsync();
             if (item == null)
             {
                 return NotFound();
@@ -36,12 +36,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(item);
         }
 
-        //Get api/Event
+        //Get api/month
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult> GetById(string id)
         {
-            var item = await _repository.GetSocialCategoryAsync(id);
+            var item = await _repository.GetCorporateMonthAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -49,40 +49,40 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(item);
         }
 
-        // POST api/SocialCategory
+        // POST api/month
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] SocialCategoryNew socialNew)
+        public async Task<IActionResult> Post([FromBody] CorporateMonthNew corpNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values);
             }
-            var social = MapSocial(socialNew);
-            social.Items = new List<string>();
-            await _repository.InsertSocialCategoryAsync(social);
-            return CreatedAtAction(nameof(GetById), new { id = social.Id }, new { id = social.Id });
+            var corp = MapCorporate(corpNew);
+            corp.Items = new List<string>();
+            await _repository.InsertCorporateMonthAsync(corp);
+            return CreatedAtAction(nameof(GetById), new { id = corp.Id }, new { id = corp.Id });
         }
 
-        // Put api/SocialCategory
+        // Put api/month
         [HttpPut("{id}")]
-        public async Task<ActionResult<SocialCategory>> Put(string id, [FromBody] SocialCategoryNew socialNew)
+        public async Task<ActionResult<CorporateMonth>> Put(string id, [FromBody] CorporateMonthNew corpNew)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.Values);
             }
 
-            var social = MapSocial(socialNew);
-            social.Id = id;
-            await _repository.CreateOrUpdateSocialCategoryAsync(social);
-            return Ok(social);
+            var corp = MapCorporate(corpNew);
+            corp.Id = id;
+            await _repository.CreateOrUpdateCorporateMonthAsync(corp);
+            return Ok(corp);
         }
 
-        // DELETE api/SocialCategory
+        // DELETE api/month
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            if (await _repository.DeleteSocialCategoryAsync(id))
+            if (await _repository.DeleteCorporateMonthAsync(id))
             {
                 return Ok();
             }
@@ -94,7 +94,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetPhoto(string id, string photoId)
         {
-            var item = await _repository.GetSocialCategoryPhotoAsync(id, photoId);
+            var item = await _repository.GetCorporateMonthPhotoAsync(id, photoId);
             if (item == null)
             {
                 return NotFound();
@@ -108,7 +108,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
-            var itemId = await _repository.AddSocialCategoryPhotoAsync(input, id, image.ContentType);
+            var itemId = await _repository.AddCorporateMonthPhotoAsync(input, id, image.ContentType);
             if (itemId == null)
             {
                 return BadRequest();
@@ -120,15 +120,16 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(string id, string photoId)
         {
-            await _repository.DeleteSocialCategoryPhotoAsync(id, photoId);
+            await _repository.DeleteCorporateMonthPhotoAsync(id, photoId);
             return Ok();
         }
 
-        private SocialCategory MapSocial(SocialCategoryNew socialNew) =>
-             new SocialCategory
+        private CorporateMonth MapCorporate(CorporateMonthNew corporate) =>
+             new CorporateMonth
              {
-                 Name = socialNew.Name,
-                 Description = socialNew.Description
+                 Name = corporate.Name,
+                 Description = corporate.Description,
+                 YearId = corporate.YearId
              };
     }
 }

@@ -5,10 +5,10 @@
     <nav class="navbar navbar-expand-md navbar-dark">
         <div class="navbar-nav">
             <p class="nav-item" *ngFor="let c of categories">
-                <a class="nav-link active" routerLink="/galleryphotos/{{c.id}}/category" (click)="getCategoryById(c.id)">{{c.name}} </a>
+                <a class="nav-link active" routerLink="/galleryphotos/category/{{c.name}}" (click)="fetchGalleries(c)">{{c.name}} </a>
             </p>
             <p class="nav-item">
-                <a class="nav-link active" routerLink="/galleryphotos/all" (click)="allCategories()">Все галлереи </a>
+                <a class="nav-link active" routerLink="/galleryphotos/category/all" (click)="allCategories()">Все галлереи </a>
             </p>
         </div>
     </nav>

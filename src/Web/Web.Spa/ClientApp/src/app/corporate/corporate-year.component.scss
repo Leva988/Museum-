@@ -1,0 +1,26 @@
+body {
+    overflow-x: hidden;
+    background: url(/assets/images/corp-life.jpg) center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+nav {
+    margin-top: 100px;
+    background-color: #3492d9;
+}
+
+a {
+    font-weight: 600;
+    font-size: 20pt;
+}
+
+.nav-link:hover {
+    opacity: 0.5;
+}
+
+.nav-link::after {
+    content: '|';
+}

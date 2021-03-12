@@ -1,0 +1,13 @@
+<body>
+    <app-header id="header" title="{{title}}" [links]="[]" navbackcolor='linear-gradient(to bottom,#3492d9,#366a91)' buttoncolor='#366a91'>
+    </app-header>
+    <app-button backcolor='#366a91' buttoncolor="#3492d9"> </app-button>
+    <nav class="navbar navbar-expand-md navbar-dark">
+        <div class="navbar-nav">
+            <p class="nav-item" *ngFor="let y of years">
+                <a class="nav-link active" routerLink="/corporate/year/{{y.year}}" (click)="fetchMonths(y)">{{y.year}} </a>
+            </p>
+        </div>
+    </nav>
+    <app-corp-month [months]="months"></app-corp-month>
+</body>

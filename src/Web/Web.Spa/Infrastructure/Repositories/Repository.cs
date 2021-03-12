@@ -810,23 +810,28 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
-        #region SocialCategory
-        public async Task<IEnumerable<SocialCategory>> GetSocialCategoriesAsync() =>
-            await _context.SocialCategories.Find(_ => true)
+        #region CorporateMonth
+        public async Task<IEnumerable<CorporateMonth>> GetCorporateMonthsAsync() =>
+            await _context.CorporateMonths.Find(_ => true)
                 .SortBy(c => c.Id)
                 .ToListAsync();
 
-        public async Task InsertSocialCategoryAsync(SocialCategory ev) =>
-        await _context.SocialCategories
-              .InsertOneAsync(ev);
+        public async Task <IEnumerable<CorporateMonth>> GetCorporateMonthsByYearAsync(string yearId) =>
+            await _context.CorporateMonths.Find(x => x.YearId == yearId)
+                .SortBy(c => c.Id)
+                .ToListAsync();
 
-        public async Task CreateOrUpdateSocialCategoryAsync(SocialCategory ev)
+        public async Task InsertCorporateMonthAsync(CorporateMonth month) =>
+        await _context.CorporateMonths
+              .InsertOneAsync(month);
+
+        public async Task CreateOrUpdateCorporateMonthAsync(CorporateMonth month)
         {
-            var filter = Builders<SocialCategory>.Filter.Eq(x => x.Id , ev.Id);
-            var update = Builders<SocialCategory>.Update
-                .Set(x => x.Name, ev.Name)
-                .Set(x => x.Description, ev.Description);    
-            await _context.SocialCategories.UpdateOneAsync(
+            var filter = Builders<CorporateMonth>.Filter.Eq(x => x.Id , month.Id);
+            var update = Builders<CorporateMonth>.Update
+                .Set(x => x.Name, month.Name)
+                .Set(x => x.Description, month.Description);    
+            await _context.CorporateMonths.UpdateOneAsync(
                 filter,
                 update, 
                 new UpdateOptions()
@@ -835,43 +840,43 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                 });
         }
 
-        public async Task<SocialCategory> GetSocialCategoryAsync(string id) =>
-            await _context.SocialCategories
+        public async Task<CorporateMonth> GetCorporateMonthAsync(string id) =>
+            await _context.CorporateMonths
                 .Find(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
-        public async Task<bool> DeleteSocialCategoryAsync(string id)
+        public async Task<bool> DeleteCorporateMonthAsync(string id)
         {           
-            var actionResult = await _context.SocialCategories
+            var actionResult = await _context.CorporateMonths
                 .DeleteOneAsync(p => p.Id == id);           
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
         
-        public async Task<FileStreamResult> GetSocialCategoryPhotoAsync(string id, string itemId)
+        public async Task<FileStreamResult> GetCorporateMonthPhotoAsync(string id, string itemId)
         {
-           var info = await _context.SocialCategoryPhotos
+           var info = await _context.CorporateMonthPhotos
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
                 .FirstAsync();
 
             var stream = new MemoryStream();
-            await _context.SocialCategoryPhotos.DownloadToStreamAsync(info.Id, stream);
+            await _context.CorporateMonthPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
 
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
             return new FileStreamResult(stream, contentType);
         }
 
-        public async Task<string> AddSocialCategoryPhotoAsync(Stream stream, string socialCategoryId, string contentType)
+        public async Task<string> AddCorporateMonthPhotoAsync(Stream stream, string id, string contentType)
         {
-            var social = await GetSocialCategoryAsync(socialCategoryId);
-            if (social == null)
+            var corp = await GetCorporateMonthAsync(id);
+            if (corp == null)
             {
                 return null;
             }
 
-            var itemId = await _context.SocialCategoryPhotos
+            var itemId = await _context.CorporateMonthPhotos
                 .UploadFromStreamAsync(
-                    socialCategoryId,
+                    id,
                     stream,
                     new GridFSUploadOptions
                     {
@@ -881,20 +886,69 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                         },
                     }
                 ); 
-            var update = Builders<SocialCategory>.Update.AddToSet(x => x.Items, itemId.ToString());
-            await _context.SocialCategories.UpdateOneAsync(x => x.Id == socialCategoryId, update);
+            var update = Builders<CorporateMonth>.Update.AddToSet(x => x.Items, itemId.ToString());
+            await _context.CorporateMonths.UpdateOneAsync(x => x.Id == id, update);
 
             return itemId.ToString();
         }
 
-        public async Task DeleteSocialCategoryPhotoAsync(string id, string itemId)
+        public async Task DeleteCorporateMonthPhotoAsync(string id, string itemId)
         {
-            var cat = await GetSocialCategoryAsync(id);
+            var cat = await GetCorporateMonthAsync(id);
             var items = cat.Items.Where(el => el != itemId);
-            var update = Builders<SocialCategory>.Update.Set(x => x.Items, items);
-            await _context.SocialCategories.UpdateOneAsync(x => x.Id == id, update);
-            await _context.SocialCategoryPhotos.DeleteAsync(ObjectId.Parse(itemId));
+            var update = Builders<CorporateMonth>.Update.Set(x => x.Items, items);
+            await _context.CorporateMonths.UpdateOneAsync(x => x.Id == id, update);
+            await _context.CorporateMonthPhotos.DeleteAsync(ObjectId.Parse(itemId));
         }
+        #endregion
+
+        #region CorporateYear
+        public async Task<IEnumerable<CorporateYear>> GetCorporateYearsAsync() {
+            var years = await _context.CorporateYears.Find(_ => true)
+                .SortBy(c => c.Year)
+                .ToListAsync();
+            if (years.Count() != 0) {
+                foreach (CorporateYear year in years) {
+                   year.Months = await GetCorporateMonthsByYearAsync(year.Id);
+                }           
+            }
+            return years;
+        }
+
+        public async Task InsertCorporateYearAsync(CorporateYear year) =>
+            await _context.CorporateYears
+              .InsertOneAsync(year);
+
+        public async Task CreateOrUpdateCorporateYearAsync(CorporateYear year)
+        {
+            var filter = Builders<CorporateYear>.Filter.Eq(x => x.Id , year.Id);
+            var update = Builders<CorporateYear>.Update
+                .Set(x => x.Year, year.Year);  
+            await _context.CorporateYears.UpdateOneAsync(
+                filter,
+                update, 
+                new UpdateOptions()
+                {
+                    IsUpsert = true
+                });
+        }
+
+        public async Task<CorporateYear> GetCorporateYearAsync(string id) {
+            var year =  await _context.CorporateYears
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+            if (year != null) {
+                year.Months = await GetCorporateMonthsByYearAsync(id);
+            }
+            return year;
+        }
+
+        public async Task<bool> DeleteCorporateYearAsync(string id)
+        {           
+            var actionResult = await _context.CorporateYears
+                .DeleteOneAsync(p => p.Id == id);           
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }       
         #endregion
 
         #region Departments

@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class SocialService {
+export class CorporateService {
+
+  url = environment.backendUrl + '/CorporateYears';
   constructor(private http: HttpClient ) {
       }
 
-    getCategories(url: string ) {
-      return this.http.get(url , {responseType: 'json'});
+    getYears() {
+      return this.http.get(this.url , {responseType: 'json'});
      }
 
     getFile(url: string) {

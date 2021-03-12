@@ -17,8 +17,9 @@ import { ServiceComponent } from './service/service.component';
 import { ImageComponent } from './shared/image/image.component';
 import { ButtonComponent } from './shared/button/button.component';
 import { HistoryMilestonesComponent} from './hisrory/hisrory-milestones/history-milestones.component';
-import { HistoryRewardedComponent} from './hisrory/history-veterans/history-rewarded.component';
-import { SocialComponent } from './social/social.component';
+import { HistoryRewardedComponent} from './hisrory/history-rewarded/history-rewarded.component';
+import { CorporateMonthComponent } from './corporate/corporate-month/corporate-month.component';
+import { CorporateYearComponent } from './corporate/corporate-year.component';
 import { NewsComponent } from './news/news.component';
 import { GalleryVideoComponent } from './gallery/gallery-videos/gallery-video.component';
 import { GalleryPhotoComponent } from './gallery/gallery-photos/gallery-photo.component';
@@ -44,7 +45,7 @@ import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gall
     ButtonComponent,
     HistoryMilestonesComponent,
     HistoryRewardedComponent,
-    SocialComponent,
+    CorporateMonthComponent,
     NewsComponent,
     GalleryVideoComponent,
     GalleryPhotoComponent,
@@ -52,7 +53,8 @@ import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gall
     NeftByComponent,
     NotfoundComponent,
     BelorusneftComponent,
-    GalleryCategoryComponent
+    GalleryCategoryComponent,
+    CorporateYearComponent
   ],
   imports: [
     BrowserModule,

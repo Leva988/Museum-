@@ -32,28 +32,18 @@ export class GalleryPhotoComponent implements OnInit {
       // tslint:disable-next-line: no-shadowed-variable
       (data: GalleryCategory[]) => {
          this.categories = data;
-         if (this.route.snapshot.params.category === 'all') {
+         if (this.categories.length !== 0) {
           this.categories.forEach(cat => {
             cat.galleries = this.fixDate(cat.galleries);
             this.galleries = this.galleries.concat(cat.galleries);
            });
-          } else {
-            this.getCategoryById(this.route.snapshot.params.category);
+         }
+         if (this.route.snapshot.params.category !== 'all') {
+            const cat = this.categories.find(x => x.name === this.route.snapshot.params.category);
+            this.fetchGalleries(cat);
           }
       }, error => console.log(error));
   }
-
-
-  getCategoryById(id: string) {
-      this.galleryservice.getCategory(id).subscribe(
-        (data: GalleryCategory) => {
-            data.galleries = this.fixDate(data.galleries);
-            this.galleries = data.galleries;
-        }, error => console.log(error)
-      );
-  }
-
-
 
   fixDate(galleries): Gallery[] {
     // tslint:disable: prefer-for-of
@@ -64,6 +54,11 @@ export class GalleryPhotoComponent implements OnInit {
       d.date = local;
     }
     return galleries;
+  }
+
+  fetchGalleries(cat: GalleryCategory) {
+    this.galleries = [];
+    this.galleries = cat.galleries;
   }
 
 }

@@ -9,6 +9,16 @@
     padding: 10px;
 }
 
+ol {
+    counter-reset: section;
+    list-style-type: none;
+}
+
+li::before {
+    counter-increment: section;
+    content: counters(section, ".") " ";
+}
+
 .project {
     background-size: cover;
     background-repeat: no-repeat;

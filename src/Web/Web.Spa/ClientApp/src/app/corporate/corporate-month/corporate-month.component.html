@@ -1,0 +1,17 @@
+<div class="month">
+    <div *ngFor="let m of months;" class="container-fluid">
+        <h2>{{m.name}} </h2>
+        <ul class="description" [innerHTML]="m.description" style="list-style-type: square;">
+        </ul>
+        <div class="row images d-flex justify-content-around">
+            <div class="col-md-4" *ngFor="let i of m.items">
+                <img class="img-fluid" src="{{url}}/{{m.id}}/Photo/{{i}}" data-toggle="modal" data-target="#Modalimage" (click)="photo=i;month=m">
+            </div>
+            <div id="Modalimage" class="modal fade">
+                <div class="modal-dialog  modal-lg d-flex justify-content-center align-items-center">
+                    <img class="img-fluid" id="img_mod" src="{{url}}/{{month.id}}/Photo/{{photo}}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

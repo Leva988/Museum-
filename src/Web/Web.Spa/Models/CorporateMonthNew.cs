@@ -2,12 +2,14 @@
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
-    public class SocialCategoryNew
+    public class CorporateMonthNew
     {
         [Required(ErrorMessage = "Name is not assigned")]
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public string YearId { get; set; }
 
     }
 }
