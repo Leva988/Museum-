@@ -1,3 +1,19 @@
 <app-header title="Достижения" navbackcolor='linear-gradient(to bottom,#3c6626,#419415)' buttoncolor='#3c6626'>
 </app-header>
 <app-button backcolor='#3c6626' buttoncolor="#419415"> </app-button>
+<div class="container-fluid">
+    <div class="row">
+        <div id="diploma" class="col-md-12 diploma align-items-center">
+            <h2 class="title d-flex justify-content-center">Дипломы</h2>
+            <div class="row d-flex justify-content-around">
+                <div class="col-md-3" *ngFor="let d of diplomas; ">
+                    <div>
+                        <img class="img-fluid" src="{{rewardsUrl}}/{{d.id}}/Image">
+                        <h4>{{d.name}}</h4>
+                        <p>{{d.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

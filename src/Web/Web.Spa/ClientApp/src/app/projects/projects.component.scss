@@ -9,12 +9,12 @@
     padding: 10px;
 }
 
-ol {
+.modal-content ol {
     counter-reset: section;
     list-style-type: none;
 }
 
-li::before {
+.modal-content li::before {
     counter-increment: section;
     content: counters(section, ".") " ";
 }

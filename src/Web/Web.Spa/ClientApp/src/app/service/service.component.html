@@ -9,13 +9,8 @@
                 <p class="card-text">{{c.description}}</p>
                 <div class="card-text">
                     <ul *ngFor="let s of c.services">
-                        <li *ngIf="s.projects.length!=0">
-                            <a href="/projects#{{s.id}}" internal-link>{{s.name}} </a>
-                        </li>
-                        <li *ngIf="s.projects.length==0">
-                            <p>
-                                {{s.name}}
-                            </p>
+                        <li>
+                            {{s.name}}
                         </li>
                     </ul>
                 </div>
