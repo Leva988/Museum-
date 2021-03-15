@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { RewardService } from './rewards-service/rewards-service.service';
 import { environment } from 'src/environments/environment';
 import { Achievement } from '../models/achievement';
+import { HttpClient } from '@angular/common/http';
+import { AchievementNew } from '../models/achievementNew';
+import { map } from 'rxjs/operators';
+import {Observable} from 'rxjs';
+
+declare var $: any;
 
 @Component({
   selector: 'app-achievements',
@@ -11,31 +17,45 @@ import { Achievement } from '../models/achievement';
 
 export class AchievementsComponent implements OnInit {
   rewardsUrl = environment.backendUrl  + '/Achievements';
-  diplomas: Achievement[] = [];
-  certificates: Achievement[] = [];
+  rewards: Achievement[] = [];
+  diplomas: AchievementNew[] = [];
+  diploma: AchievementNew = new AchievementNew();
+  active: string;
 
-  constructor(private rewardservice: RewardService) {
+  constructor(private rewardservice: RewardService, private http: HttpClient) {
     this.refreshRewards();
+    $('#ModalImage').on('hidden.bs.modal', () => {
+      this.diploma = new AchievementNew();
+    });
   }
 
   ngOnInit() { }
   refreshRewards() {
     this.rewardservice.getRewards(this.rewardsUrl).subscribe(
       (data: Achievement[]) => {
-        // tslint:disable prefer-for-of
-        for (let i = 0; i < data.length; i++) {
-          const d = data[i];
-          if ( d.type === 'diploma') {
-            this.diplomas.push(d);
-            }
-          if ( d.type === 'certificate') {
-              this.certificates.push(d);
-              }
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+        this.rewards = data;
+        this.rewards.forEach(rew => {
+          const diploma: AchievementNew = new AchievementNew();
+          diploma.id = rew.id;
+          diploma.name = rew.name;
+          diploma.items = [];
+          rew.items.forEach(item => {
+            item = {key: item, value: this.getDescription(rew.id, item)};
+            diploma.items.push(item);
+          });
+          this.diplomas.push(diploma);
+       });
+      }, error => console.log(error));
+    console.log(this.diplomas);
+  }
+
+  getDescription(id: string, itemid: string): Observable<string> {
+    return this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + itemid, {responseType: 'text'}).
+      pipe(map(data => data.toString()));
+  }
+
+  modal(diploma, i) {
+    this.diploma = diploma;
+    this.active = i;
   }
 }

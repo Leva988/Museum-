@@ -491,7 +491,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<Achievement>> GetAchievementsAsync() =>
             await _context.Achievements
                 .Find(_ => true)
-                .SortBy(c => c.Id)
                 .ToListAsync();
 
         public async Task InsertAchievementAsync(Achievement achievement) =>
@@ -518,53 +517,64 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
-        public async Task<FileStreamResult> GetAchievementImageAsync(string filename)
+        public async Task<FileStreamResult> GetAchievementImageAsync(string id, string itemId)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, filename);
             var info = await _context.AchievementImages
-                .Find(filter)
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
                 .FirstAsync();
 
             var stream = new MemoryStream();
             await _context.AchievementImages.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
-
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
             return new FileStreamResult(stream, contentType);
 
         }
 
-        public async Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType)
+        public async Task<string> GetAchievemenItemDescriptionAsync(string achId, string itemId)
+        {
+            var info = await _context.AchievementImages
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
+            var name = info.Filename;
+            return name;
+        }
+
+        public async Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType, string filename)
         {
             var ach = await GetAchievementAsync(achievementId);
             if (ach == null)
             {
                 return null;
             }
-
+            string extension = System.IO.Path.GetExtension(filename);
+            string name =  filename.Substring(0, filename.Length - extension.Length);
             var itemId = await _context.AchievementImages
                 .UploadFromStreamAsync(
-                    achievementId,
+                    name,
                     stream,
                     new GridFSUploadOptions
                     {
                         Metadata = new BsonDocument
                         {
-                            {"Content-Type", contentType},
+                            {"Content-Type", contentType}
                         },
                     }
                 );
 
+            var update = Builders<Achievement>.Update.AddToSet(x => x.Items, itemId.ToString());
+            await _context.Achievements.UpdateOneAsync(x => x.Id == achievementId, update);
+
             return itemId.ToString();
         }
 
-        public async Task DeleteAchievementImageAsync(string filename)
+        public async Task DeleteAchievementImageAsync(string id, string itemId)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, filename);
-            var info = await _context.AchievementImages
-                .Find(filter)
-                .FirstAsync();
-            await _context.AchievementImages.DeleteAsync(info.Id);
+            var hist = await GetAchievementAsync(id);
+            var items = hist.Items.Where(el => el != itemId);
+            var update = Builders<Achievement>.Update.Set(x => x.Items, items);
+            await _context.Achievements.UpdateOneAsync(x => x.Id == id, update);
+            await _context.AchievementImages.DeleteAsync(ObjectId.Parse(itemId));
 
         }
         #endregion

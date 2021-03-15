@@ -106,7 +106,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             }
             return item;
         }
-
         
         //GET item
         [HttpGet("{id}/itemDescription/{itemId}")]

@@ -1,5 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
@@ -11,9 +13,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
-        public AchievementType Type { get; set; }
+        public IEnumerable<string> Items {get; set;}
 
 
     }

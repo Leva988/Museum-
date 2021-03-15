@@ -1,17 +1,43 @@
 <app-header title="Достижения" navbackcolor='linear-gradient(to bottom,#3c6626,#419415)' buttoncolor='#3c6626'>
 </app-header>
 <app-button backcolor='#3c6626' buttoncolor="#419415"> </app-button>
-<div class="container-fluid">
-    <div class="row">
-        <div id="diploma" class="col-md-12 diploma align-items-center">
-            <h2 class="title d-flex justify-content-center">Дипломы</h2>
-            <div class="row d-flex justify-content-around">
-                <div class="col-md-3" *ngFor="let d of diplomas; ">
-                    <div>
-                        <img class="img-fluid" src="{{rewardsUrl}}/{{d.id}}/Image">
-                        <h4>{{d.name}}</h4>
-                        <p>{{d.description}}</p>
+<div class="container-fluid ">
+    <h2 id="diploma" class="title">Дипломы, грамоты, награды</h2>
+    <div class="rewards" *ngFor="let d of diplomas" class="title">
+        <h3>
+            {{d.name}}
+        </h3>
+        <div class="row d-flex justify-content-around align-items-start">
+            <div class="col-md-3 diploma align-items-center justify-content-around" *ngFor="let i of d.items; let index = index">
+                <img class="img-fluid " src="{{rewardsUrl}}/{{d.id}}/Image/{{i.key}}" (click)="modal(d, index)" data-toggle="modal" data-target="#ModalImage">
+                <h5>{{i.value | async}}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalImage" class="modal fade">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content d-flex justify-content-center align-items-center">
+                <div id="achCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li *ngFor="let item of diploma.items; let i = index" [attr.data-slide-to]="active" [ngClass]="{'active':  i === active }"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item" *ngFor="let photo of diploma.items;let u = index;" [ngClass]="{'active':  u === active}">
+                            <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block w-100 img-fluid">
+                            <div class="carousel-caption">
+                                <h5>{{photo.value | async}}</h5>
+                            </div>
+                        </div>
                     </div>
+                    <a class="carousel-control-prev" href="#achCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon fontIcon"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#achCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon fontIcon"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
             </div>
         </div>

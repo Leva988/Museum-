@@ -80,16 +80,29 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //GET photo
-        [HttpGet("{id}/Image")]
+        [HttpGet("{id}/Image/{itemId}")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetPhoto(string id)
+        public async Task<ActionResult> GetPhoto(string id, string itemId)
         {
-            var item = await _repository.GetAchievementImageAsync(id);
+            var item = await _repository.GetAchievementImageAsync(id, itemId);
             if (item == null)
             {
                 return NotFound();
             }
             return item;
+        }
+
+        //GET desc
+        [HttpGet("{id}/itemDescription/{itemId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetItemDescription(string id, string itemId)
+        {
+            var item = await _repository.GetAchievemenItemDescriptionAsync(id, itemId);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
         }
 
         //Post photo
@@ -98,7 +111,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
-            var Oid = await _repository.AddAchievementImageAsync(input, id, image.ContentType);
+            var Oid = await _repository.AddAchievementImageAsync(input, id, image.ContentType, image.FileName);
             if (Oid == null)
             {
                 return BadRequest();
@@ -107,11 +120,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //Delete photo
-        [HttpDelete("{id}/Image")]
-        public async Task<ActionResult> DeletePhoto(string id)
+        [HttpDelete("{id}/Image/{itemId}")]
+        public async Task<ActionResult> DeletePhoto(string id, string itemId)
         {
 
-            await _repository.DeleteAchievementImageAsync(id);
+            await _repository.DeleteAchievementImageAsync(id, itemId);
             return Ok();
         }
 
@@ -119,8 +132,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             new Achievement
             {
                 Name = achievementNew.Name,
-                Description = achievementNew.Description,
-                Type = achievementNew.Type,
+                Items = new List<string>()
             };
 
     }

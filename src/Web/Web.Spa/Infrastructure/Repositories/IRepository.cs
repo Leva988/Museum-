@@ -142,11 +142,13 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<bool> DeleteAchievementAsync(string id);
         
-        Task<FileStreamResult> GetAchievementImageAsync(string id);
+        Task<FileStreamResult> GetAchievementImageAsync(string id, string itemId);
 
-        Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType);
+        Task<string> GetAchievemenItemDescriptionAsync(string id, string itemId);
 
-        Task DeleteAchievementImageAsync(string id);
+        Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType,  string filename);
+
+        Task DeleteAchievementImageAsync(string id, string itemId);
         #endregion
 
         #region Gallery
