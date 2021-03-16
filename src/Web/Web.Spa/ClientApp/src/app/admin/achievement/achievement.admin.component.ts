@@ -203,7 +203,12 @@ export class AchievementAdminComponent implements OnInit {
             this.modalColor = '#f20800';
         } else {
             this.repository.addAchievementImage(this.editID, this.fileToUpload).subscribe(
-                () => {
+                (data: any) => {
+                    this.repository.getAchPhotoDescription(this.editID, data.id).subscribe(
+                        (desc: string) => {
+                            const photo = { key:  data.id, value: desc};
+                            this.photos.push(photo);
+                        }, error => console.log(error));
                     this.modalColor = '#2fc900';
                     this.modalMessage = 'Фото добавлено';
                     this.getAchievements();
@@ -218,11 +223,18 @@ export class AchievementAdminComponent implements OnInit {
     }
 
     deletePhoto(photo) {
+        console.log(photo);
         this.repository.deleteAchievementImage(this.editID, photo.key).subscribe(
             () => {
-                 this.modalColor = '#2fc900';
-                 this.modalMessage = `Фото  удалено`;
-                 this.getAchievements();
+                for (let i = 0; i < this.photos.length; i++) {
+                     if ( this.photos[i] === photo) {
+                    this.photos.splice(i, 1);
+                    i--;
+                    }
+                 }
+                this.modalColor = '#2fc900';
+                this.modalMessage = `Фото  удалено`;
+                this.getAchievements();
              },
              error => {
                 console.log(error);
