@@ -7,7 +7,9 @@ import { KeyValue } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
+import { NgForm } from '@angular/forms';
 
+declare var $: any;
 
 @Component({
 templateUrl: 'employee.admin.component.html',
@@ -26,7 +28,6 @@ export class EmployeeAdminComponent implements OnInit {
     fileToUpload: File;
     modalMessage: string;
     modalTitle: string;
-    messageTitle: string;
     modalColor: string;
     columnDefs: any[] = [];
     rowData: any[] = [];
@@ -36,9 +37,15 @@ export class EmployeeAdminComponent implements OnInit {
     }
 
     ngOnInit() {
+        $('#addModal').on('hidden.bs.modal', () => {
+            this.modalMessage = this.modalColor = this.modalTitle = null;
+        });
+        $('#modalPhoto').on('hidden.bs.modal', () => {
+            this.modalMessage = this.modalColor = this.modalTitle = null;
+        });
         this.getEmployees();
+        // tslint:disable: deprecation
         this.repository.getDepartments().subscribe(
-            // tslint:disable-next-line: no-shadowed-variable
             (data: Department[]) => {
                 this.departments = data;
             },
@@ -69,7 +76,7 @@ export class EmployeeAdminComponent implements OnInit {
                 onClick: this.deleteEmployee.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
-                    modal: '#modal',
+                    modal: '',
                     maxWidth: 100
                    },
                 resizable: true
@@ -104,7 +111,6 @@ export class EmployeeAdminComponent implements OnInit {
 
     }
 
-
     addEmployee() {
         this.editEmployee = new Employee();
         this.modalTitle = 'Добавить сотрудника';
@@ -129,46 +135,44 @@ export class EmployeeAdminComponent implements OnInit {
             error => console.log(error));
     }
 
-    saveEmployee() {
-        if (isNullOrUndefined(this.editEmployee.departmentId)) {
-            this.editEmployee.departmentId = '';
-        }
-        if (this.editEmployee.name === undefined || this.editEmployee.type === undefined) {
-            this.modalMessage = 'Введите данные!';
-            this.modalColor = '#f20800';
-            this.messageTitle = 'Ошибка';
-        } else {
-        if (this.isNewRecord) {
-            this.repository.addEmployee(this.editEmployee).subscribe(
-                () => {
-                    this.modalColor = '#2fc900';
-                    this.modalMessage = `Сотрудник добавлен`;
-                    this.getEmployees();
-                },
-                error => {
-                    this.modalMessage = 'Введите верные данные!';
-                    this.modalColor = '#f20800';
-                    this.messageTitle = 'Ошибка';
-                    console.log(error);
-                 });
-            } else {
-                this.repository.updateEmployee(this.editID, this.editEmployee).subscribe(
+    saveEmployee(form: NgForm) {
+        if (form.valid) {
+            if (isNullOrUndefined(this.editEmployee.departmentId)) {
+                this.editEmployee.departmentId = '';
+            }
+            if (this.isNewRecord) {
+                this.repository.addEmployee(this.editEmployee).subscribe(
                     () => {
+                        this.modalMessage = `Сотрудник добавлен`;
                         this.modalColor = '#2fc900';
-                        this.modalMessage = `Данные по сотруднику обновлены`;
                         this.getEmployees();
                     },
                     error => {
                         this.modalMessage = 'Введите верные данные!';
                         this.modalColor = '#f20800';
-                        this.messageTitle = 'Ошибка';
                         console.log(error);
                      });
-            }
+                } else {
+                    this.repository.updateEmployee(this.editID, this.editEmployee).subscribe(
+                        () => {
+                            this.modalColor = '#2fc900';
+                            this.modalMessage = `Данные по сотруднику обновлены`;
+                            this.getEmployees();
+                        },
+                        error => {
+                            this.modalMessage = 'Введите верные данные!';
+                            this.modalColor = '#f20800';
+                            console.log(error);
+                         });
+                }
+        } else {
+            this.modalMessage = 'Введите данные!';
+            this.modalColor = '#f20800';
         }
     }
 
     cancel() {
+        this.modalMessage = null;
         this.editEmployee = new Employee();
         if (this.isNewRecord) {
             this.isNewRecord = false;
@@ -176,19 +180,18 @@ export class EmployeeAdminComponent implements OnInit {
     }
 
     deleteEmployee(e) {
-        this.modalTitle = 'Удалить сотрудника';
-        const deleteId = e.rowData.id;
-        this.repository.deleteEmployee(deleteId).subscribe(
-            () => {
-                this.modalColor = '#2fc900';
-                this.modalMessage = `Сотрудник удалён`;
-                this.getEmployees();
-             },
-             error => {
-                console.log(error);
-                this.modalColor = '#f20800';
-                this.modalMessage = `Сотрудник не найден или произошла ошибка!`;
-               });
+        if (confirm('Удалить данного сотрудника?')) {
+            const deleteId = e.rowData.id;
+            this.repository.deleteEmployee(deleteId).subscribe(
+                () => {
+                    this.getEmployees();
+                 },
+                 error => {
+                    console.log(error);
+                    this.modalColor = '#f20800';
+                    this.modalMessage = `Сотрудник не найден или произошла ошибка!`;
+                   });
+        }
      }
 
     getPhoto(e) {

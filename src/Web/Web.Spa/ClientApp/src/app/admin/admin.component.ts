@@ -7,6 +7,7 @@ import { HttpClient,  HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee';
+import { Achievement } from '../models/achievement';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -80,6 +81,60 @@ export class AdminComponent implements ComponentCanDeactivate  {
 
   deleteEmployeePhoto(id: string) {
       return this.http.delete(this.baseUrl + '/Employees/' + id + '/Photo',
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  // Achievement Panel
+  getAchievements() {
+    return this.http.get(this.baseUrl + '/Achievements');
+  }
+
+  getAchievement(id: string) {
+      return  this.http.get(this.baseUrl + '/Achievements' + '/' + id, {responseType: 'json'});
+  }
+
+  addAchievement(ach: Achievement) {
+      return this.http.post(this.baseUrl + '/Achievements', ach,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateAchievement(id: string, ach: Achievement) {
+      return this.http.put(this.baseUrl + '/Achievements' + '/' + id, ach,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteAchievement(id: string) {
+      return this.http.delete(this.baseUrl + '/Achievements' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  getAchPhotoDescription(id: string, photoId: string) {
+    return this.http.get(this.baseUrl + '/Achievements' + '/' + id + '/itemDescription/' + photoId,
+    {
+      headers: this.authHeaders,
+      responseType: 'text'
+    });
+  }
+
+  addAchievementImage(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/Achievements/' + id + '/Image', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
+  deleteAchievementImage(id: string, photoId: string) {
+      return this.http.delete(this.baseUrl + '/Achievements' + '/' + id + '/Image/' + photoId,
       {
         headers: this.authHeaders
       });

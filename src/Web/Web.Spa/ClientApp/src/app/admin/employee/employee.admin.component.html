@@ -1,10 +1,9 @@
 <div class="head p-3">
     <h3>Таблица сотрудников</h3>
 </div>
-
+<input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить сотрудника" (click)="addEmployee()" />
 <ag-grid-angular #grid style="width: 100%; height: 50vh;" class="ag-theme-alpine-dark" [gridOptions]='gridOptions' [columnDefs]="columnDefs" [rowData]="rowData">
 </ag-grid-angular>
-<input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить сотрудника" (click)="addEmployee()" />
 <div class="modal fade" id="addModal" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -15,25 +14,33 @@
                  </button>
             </div>
             <div class="modal-body">
-                <div class="col-md-10">
+                <form #form="ngForm" (ngSubmit)="saveEmployee(form)" class="col-md-10 form-group">
                     <label for="name">Введите ФИО:</label>
-                    <input id="name" class="form-control" type="text" name="name" [(ngModel)]="editEmployee.name" required />
+                    <input id="name" class="form-control" name="name" type="text" [(ngModel)]="editEmployee.name" #name="ngModel" required />
+                    <div [hidden]="name.valid" class="alert alert-danger">
+                        ФИО не указано
+                    </div>
                     <label for="position">Введите Должность:</label>
-                    <input id="position" class="form-control" type="text" name="position" [(ngModel)]="editEmployee.position" required />
+                    <input id="position" class="form-control" type="text" name="position" [(ngModel)]="editEmployee.position" #position="ngModel" required />
+                    <div [hidden]="position.valid" class="alert alert-danger">
+                        Должность не указана
+                    </div>
                     <label for="type">Выберите тип:</label>
-                    <select id="type" class="form-control" type="text" name="type" [(ngModel)]="editEmployee.type">
+                    <select id="type" class="form-control" type="text" name="type" [(ngModel)]="editEmployee.type" #type="ngModel" required>
                         <option *ngFor='let t of types' value="{{t.key}}">{{t.value}}</option>
-                      </select>
+                    </select>
+                    <div [hidden]="type.valid" class="alert alert-danger">
+                        Тип не указан
+                    </div>
                     <label for="department">Выберите отдел:</label>
                     <select id="department" class="form-control" type="text" name="department" [(ngModel)]="editEmployee.departmentId">
                         <option  *ngFor="let d of departments" value="{{d.id}}">{{d.name}}                           
                         </option>
                     </select>
-                </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <input type="button" value="Сохранить" class="btn btn-success" (click)="saveEmployee()" data-toggle="modal" data-target="#modal" />
-                <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
+                    <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
+                    <input type="submit" value="Сохранить" class="btn btn-success">
+                    <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
+                </form>
             </div>
         </div>
     </div>
@@ -50,28 +57,11 @@
             <div class="modal-body">
                 <img *ngIf="photo!==null" id="photo" class="img-fluid p-2" src="{{photo}}">
                 <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+                <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()" data-toggle="modal" data-target="#modal">Добавить</button>
-                <button type="button" class="btn btn-danger col-md-4" (click)="deletePhoto()" data-toggle="modal" data-target="#modal">Удалить</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" [style.backgroundColor]="modalColor">
-                <h2 class="modal-title" id="title">{{messageTitle}}</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-            </div>
-            <div class="modal-body">
-                <p>{{modalMessage}}</p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-secondary col-md-4" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()">Добавить</button>
+                <button type="button" class="btn btn-danger col-md-4" (click)="deletePhoto()">Удалить</button>
             </div>
         </div>
     </div>

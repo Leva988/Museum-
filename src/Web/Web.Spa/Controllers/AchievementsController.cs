@@ -107,7 +107,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post photo
         [HttpPost("{id}/Image")]
-        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
+        public async Task<ActionResult> PostPhoto(string id,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

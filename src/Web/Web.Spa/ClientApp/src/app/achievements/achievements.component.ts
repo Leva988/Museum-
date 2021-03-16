@@ -46,7 +46,6 @@ export class AchievementsComponent implements OnInit {
           this.diplomas.push(diploma);
        });
       }, error => console.log(error));
-    console.log(this.diplomas);
   }
 
   getDescription(id: string, itemid: string): Observable<string> {

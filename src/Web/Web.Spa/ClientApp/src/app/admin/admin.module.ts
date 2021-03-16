@@ -11,16 +11,20 @@ import { EmployeeAdminComponent } from './employee/employee.admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ExitGuard } from './auth/exit.admin.guard';
 import { ButtonRendererComponent } from './button-renderer.component';
+import { AchievementAdminComponent } from './achievement/achievement.admin.component';
+
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
   { path: 'main', component: AdminComponent, // canActivate: [AuthGuard], canDeactivate: [ExitGuard],
     children: [
-      { path: 'employees', component: EmployeeAdminComponent}, ]},
-  { path: '**', redirectTo: 'auth' }
+      { path: 'employees', component: EmployeeAdminComponent},
+      { path: 'achievements', component: AchievementAdminComponent}
+     ]},
+      { path: '**', redirectTo: 'auth' }
 ]);
 @NgModule({
   imports: [CommonModule, FormsModule, routing, ReactiveFormsModule, AgGridModule.withComponents([ButtonRendererComponent])],
-  declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, ButtonRendererComponent],
+  declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, ButtonRendererComponent],
   providers: [AuthGuard, AuthToken, ExitGuard]
 })
 export class AdminModule {
