@@ -18,6 +18,7 @@ providers: [AdminComponent]
 export class AchievementAdminComponent implements OnInit {
     achievements: Achievement[] = [];
     url = environment.backendUrl + '/Achievements';
+    active: number;
     editAchievement: Achievement = new Achievement();
     editID: string;
     isNewRecord: boolean;
