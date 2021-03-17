@@ -9,6 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { CompanyComponent } from './company/company.component';
+import { DepartmentComponent } from './department/department.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { CompanyBossesComponent } from './company/company-bosses/company-bosses.component';
 import { CompanyDepartmentsComponent } from './company/company-departments/company-departments.component';
@@ -54,7 +55,8 @@ import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gall
     NotfoundComponent,
     BelorusneftComponent,
     GalleryCategoryComponent,
-    CorporateYearComponent
+    CorporateYearComponent,
+    DepartmentComponent
   ],
   imports: [
     BrowserModule,

@@ -14,10 +14,12 @@ import { ProjectsComponent } from './projects/projects.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gallery-category.component';
 import { CorporateYearComponent } from './corporate/corporate-year.component';
+import { DepartmentComponent } from './department/department.component';
 
 const routes: Routes = [
    { path: '', component: MenuComponent },
    { path: 'company/:id', component: CompanyComponent },
+   { path: 'departments/:id', component: DepartmentComponent},
    { path: 'company/:id/admin', component: CompanyComponent },
    { path: 'achievements', component: AchievementsComponent},
    { path: 'service', component: ServiceComponent},

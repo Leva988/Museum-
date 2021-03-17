@@ -15,5 +15,8 @@
     "src/test.ts",
     "src/**/*.spec.ts"
   ],
-  "types": ["jquery", "bootstrap"]
+  "types": ["jquery", "bootstrap"],
+  "typeRoots": [
+    "../node_modules/@types"   
+  ]
 }

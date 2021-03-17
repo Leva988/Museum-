@@ -7,6 +7,7 @@ import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
 import { Achievement } from 'src/app/models/achievement';
 import { NgForm } from '@angular/forms';
+import { $$ } from 'protractor';
 
 declare var $: any;
 
@@ -223,16 +224,13 @@ export class AchievementAdminComponent implements OnInit {
         }
     }
 
-    deletePhoto(photo) {
-        console.log(photo);
+    deletePhoto(photo, index) {
+        this.photos.splice(index, 1);
+        $('#achCarousel').carousel('next');
+        console.log(this.photos);
         this.repository.deleteAchievementImage(this.editID, photo.key).subscribe(
             () => {
-                for (let i = 0; i < this.photos.length; i++) {
-                     if ( this.photos[i] === photo) {
-                    this.photos.splice(i, 1);
-                    i--;
-                    }
-                 }
+                this.photos.splice(index, 1);
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;
                 this.getAchievements();

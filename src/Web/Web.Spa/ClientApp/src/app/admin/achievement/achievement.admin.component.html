@@ -56,7 +56,7 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item " *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === 0}">
-                            <input type="button" value="Удалить" (click)="deletePhoto(photo);" class="btn btn-danger btn-lg btn-block" />
+                            <input type="button" value="Удалить" (click)="deletePhoto(photo, u);" class="btn btn-danger btn-lg btn-block" />
                             <img src="{{url}}/{{editID}}/Image/{{photo.key}}" class="d-block w-100 img-fluid">
                             <div class="carousel-caption">
                                 <h5>{{photo.value}} </h5>

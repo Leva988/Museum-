@@ -1,0 +1,36 @@
+<div class="wrapper">
+    <app-header title="{{department.shortName}}" [links]="[{'key':'team', 'value': 'Состав'}]" navbackcolor='linear-gradient(to bottom,#294D8D,#00B5F9)' buttoncolor='#294D8D'>
+    </app-header>
+    <app-image backimage="{{headerUrl}}" height="300px" formcolor="#294D8D" formtext="{{department.description}}"></app-image>
+    <app-button buttoncolor='#00B5F9' backcolor="#294D8D"> </app-button>
+    <div class="container-fluid">
+        <div class="row justify-content-center" id="team">
+            <div class="col-md-11">
+                <div class="row d-flex justify-content-center">
+                    <h2>Состав команды</h2>
+                </div>
+                <div class="row  d-flex justify-content-center">
+                    <p class="subtitle">ЧИСЛЕНОСТЬ ОТДЕЛА: {{number}} </p>
+                </div>
+
+                <div class="row  d-flex justify-content-center">
+                    <div *ngIf="boss.id" class="col-md-4 boss">
+                        <img class="img-fluid" src="{{empUrl}}/{{boss.id}}/Photo" alt="...">
+                        <h5 class="bossname">{{boss.name}}</h5>
+                        <p class="bossposition">{{boss.position}}</p>
+                    </div>
+
+                    <div class="col-md-7 employees">
+                        <div class="row  d-flex justify-content-center">
+                            <div class="col-md-3 employee" *ngFor="let e of employees">
+                                <h6 class="name">{{e.name}}</h6>
+                                <p class="position">{{e.position}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
