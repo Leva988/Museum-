@@ -25,7 +25,7 @@
                 <div class="sub col-md-11" *ngFor="let sub of s.subStructures;">
                     <div class="subDistrict" *ngFor="let d of sub.departments">
                         <div id="lastSub" class="district" [style.backgroundColor]="d.color">
-                            <a>{{d.name}}</a>
+                            <a href="/departments/{{d.id}}">{{d.name}}</a>
                         </div>
                     </div>
                 </div>
