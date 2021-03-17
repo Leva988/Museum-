@@ -82,6 +82,12 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task UpdateRewardAsync(Reward reward);
         
         Task<bool> DeleteRewardAsync(string id);
+
+        Task<FileStreamResult> GetRewardPhotoAsync(string id);
+
+        Task DeleteRewardPhotoAsync(string id);
+
+        Task<string> AddRewardPhotoAsync(Stream stream, string employeeId, string contentType);
         #endregion      
 
         #region Project

@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Belorusneft.Museum.Web.Spa.Infrastructure.Repositories;
 using Belorusneft.Museum.Web.Spa.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
@@ -19,7 +23,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
 
-        //Get api/all categories
+        //Get api/all rewards
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> GetAllRewards()
@@ -37,7 +41,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(awards);
         }
 
-        //Get api/category id
+        //Get api/reward id
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<ActionResult> GetById(string id)
@@ -50,9 +54,9 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(award);
         }
 
-        // POST api/project
+        // POST api/reward
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdateCategory([FromBody] RewardNew awardNew)
+        public async Task<IActionResult> CreateorUpdateReward([FromBody] RewardNew awardNew)
         {
             if (!ModelState.IsValid)
             {
@@ -63,7 +67,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return CreatedAtAction(nameof(GetById), new { id = award.Id }, new { id = award.Id });
         }
 
-        // Put api/Employee
+        // Put api/reward
         [HttpPut("{id}")]
         public async Task<ActionResult<Employee>> Put(string id, [FromBody] RewardNew awardNew)
         {
@@ -79,7 +83,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok();
         }
 
-        //Delete api/category
+        //Delete api/reward
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteReward(string id)
         {
@@ -88,6 +92,42 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 return Ok();
             }
             return NotFound();
+        }
+
+        
+        //GET photo
+        [HttpGet("{id}/Photo")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetPhoto(string id)
+        {
+            var item = await _repository.GetRewardPhotoAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return item;
+        }
+
+        //Post photo
+        [HttpPost("{id}/Photo")]
+        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
+        {
+            var stream = image.OpenReadStream();
+            var input = new StreamReader(stream).BaseStream;
+            var Oid = await _repository.AddRewardPhotoAsync(input, id, image.ContentType);
+            if (Oid == null)
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(GetPhoto), new { id = Oid, }, new { id = Oid, });
+        }
+
+        //Delete photo
+        [HttpDelete("{id}/Photo")]
+        public async Task<ActionResult> DeletePhoto(string id)
+        {
+            await _repository.DeleteRewardPhotoAsync(id);         
+            return Ok();
         }
 
         private Reward MapReward(RewardNew awardNew) =>

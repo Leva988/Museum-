@@ -33,6 +33,16 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Reward> Rewards =>
              _database.GetCollection<Reward>("Rewards");
 
+        public GridFSBucket RewardPhotos => 
+            new GridFSBucket(
+                _database,
+                new GridFSBucketOptions
+                {
+                    BucketName = "reward-photos",
+                    ChunkSizeBytes = _deafultChunkSize,
+                }
+            );
+
         public GridFSBucket EmployeePhotos =>
             new GridFSBucket(
                 _database,

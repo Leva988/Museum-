@@ -4,6 +4,9 @@
 <div class="container-fluid" *ngFor="let r of rewards">
     <div class="rewards" *ngIf="r.rewardedEmployees">
         <h2>{{r.name}}</h2>
+        <div class="d-flex justify-content-center">
+            <img class="img-fluid reward-photo" src="{{rewardsUrl}}/{{r.id}}/Photo" onerror="this.style.display='none'">
+        </div>
         <div class="row d-flex justify-content-around">
             <div class="col-md-3" *ngFor="let emp of r.rewardedEmployees">
                 <span class="card">
@@ -11,7 +14,7 @@
                       <div class="card-body">
                         <h4 class="card-title">{{emp.name}}</h4>
                         <div class="card-text">
-                          <p >{{emp.position}}</p>
+                          <p>{{emp.position}}</p>
                           <p>Дата рождения: {{emp.dateBirth}}г. </p>
                           <p>Период работы c {{emp.dateStart}} - {{emp.dateEnd}} </p>
                           <div *ngFor="let rew of emp.rewards" >

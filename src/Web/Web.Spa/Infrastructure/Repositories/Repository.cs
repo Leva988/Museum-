@@ -329,6 +329,55 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
+        
+        public async Task<FileStreamResult> GetRewardPhotoAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = await _context.RewardPhotos
+                .Find(filter)
+                .FirstAsync();
+
+            var stream = new MemoryStream();
+            await _context.RewardPhotos.DownloadToStreamAsync(info.Id, stream);
+            stream.Position = 0;
+
+            var contentType = info.Metadata.GetValue("Content-Type").ToString();
+
+            return new FileStreamResult(stream, contentType);
+        }
+
+        public async Task<string> AddRewardPhotoAsync(Stream stream, string id, string contentType)
+        {
+            var rew = await GetRewardAsync(id);
+            if (rew == null)
+            {
+                return null;
+            }
+
+            var itemId = await _context.RewardPhotos
+                .UploadFromStreamAsync(
+                    id,
+                    stream,
+                    new GridFSUploadOptions
+                    {
+                        Metadata = new BsonDocument
+                        {
+                            {"Content-Type", contentType},
+                        },
+                    }
+                );
+            return itemId.ToString();
+        }
+
+        public async Task DeleteRewardPhotoAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = _context.RewardPhotos
+                .Find(filter)
+                .FirstOrDefault();
+            await _context.RewardPhotos.DeleteAsync(info.Id);  
+        }
+
         #endregion
 
         #region Projects

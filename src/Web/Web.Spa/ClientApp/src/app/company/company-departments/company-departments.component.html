@@ -26,6 +26,9 @@
                     <div class="subDistrict" *ngFor="let d of sub.departments">
                         <div id="lastSub" class="district" [style.backgroundColor]="d.color">
                             <a href="/departments/{{d.id}}">{{d.name}}</a>
+                            <div class="sector" *ngFor="let sect of d.sectors">
+                                {{sect}}
+                            </div>
                         </div>
                     </div>
                 </div>
