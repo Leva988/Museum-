@@ -14,6 +14,7 @@ import { Employee } from '../models/employee';
 })
 export class DepartmentComponent implements OnInit {
   depUrl = environment.backendUrl + '/Departments/';
+  empUrl = environment.backendUrl + '/Employees';
   headerUrl: string;
   department: Department = new Department();
   title: string;
