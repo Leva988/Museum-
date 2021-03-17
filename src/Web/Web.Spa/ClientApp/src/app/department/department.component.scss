@@ -6,7 +6,7 @@
 ::ng-deep h2 {
     padding-top: 50px;
     text-align: center;
-    color: #294D8D;
+    color: #13490a;
 }
 
 .container-fluid {
@@ -14,7 +14,7 @@
 }
 
 .subtitle {
-    background-color: #294D8D;
+    background-color: #13490a;
     padding: 10px 50px 10px 50px;
     color: white;
     margin-bottom: 40px;
@@ -47,50 +47,4 @@
 .position {
     font-size: 10pt;
     hyphens: auto;
-}
-
-.project {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 100% 20%;
-    border-radius: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    height: 200px;
-    cursor: pointer;
-}
-
-.title {
-    height: 100%;
-    border-radius: 20px;
-    width: 100%;
-    background: transparent linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(01, 03, 07, 0.3) 33%, #020711 100%) 0% 0% no-repeat padding-box;
-}
-
-.projectname,
-.projectname:hover {
-    margin-left: 2rem;
-    margin-bottom: 1rem;
-    color: white;
-    font-weight: 600;
-}
-
-.modal-title {
-    color: #00B5F9;
-}
-
-.close {
-    font-size: 40px;
-    font-weight: bold;
-    transition: 0.3s;
-    cursor: pointer;
-}
-
-@keyframes hover {
-    from {
-        background-position: 100% 20%;
-    }
-    to {
-        background-position: 70% 20%;
-    }
 }
