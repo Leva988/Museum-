@@ -1,0 +1,39 @@
+.head,
+#addHeader,
+#photoHeader {
+    background-color: #3b7be3;
+}
+
+#ag-grid {
+    margin-bottom: 20px;
+}
+
+h3 {
+    color: white;
+    margin-top: 20px;
+}
+
+#add {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    font-weight: 700;
+    color: white;
+}
+
+.modal-body {
+    font-size: 14pt;
+    font-weight: 400;
+}
+
+#addModal .btn,
+#modalPhoto .btn {
+    margin: 10px;
+}
+
+.modalmessage {
+    margin: 10px;
+    color: red;
+}

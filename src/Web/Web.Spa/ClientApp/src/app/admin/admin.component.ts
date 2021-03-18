@@ -10,6 +10,7 @@ import { Employee } from '../models/employee';
 import { Achievement } from '../models/achievement';
 import { RewardedEmployee } from '../models/rewardedemployee';
 import { RewardedEmployeeNew } from '../models/rewardedemployeeNew';
+import { Reward } from '../models/reward';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -148,10 +149,6 @@ export class AdminComponent implements ComponentCanDeactivate  {
     return this.http.get(this.baseUrl + '/RewardedEmployees');
   }
 
-  getRewards() {
-    return this.http.get(this.baseUrl + '/Rewards');
-  }
-
   getRewardbyID(id) {
     return this.http.get(this.baseUrl + '/Rewards' + id);
   }
@@ -201,4 +198,53 @@ export class AdminComponent implements ComponentCanDeactivate  {
       });
     }
 
+    // Rewards
+    getRewards() {
+      return this.http.get(this.baseUrl + '/Rewards');
+    }
+
+    getReward(id: string) {
+        return  this.http.get(this.baseUrl + '/Reward' + '/' + id, {responseType: 'json'});
+    }
+
+    addReward(reward: Reward) {
+        return this.http.post(this.baseUrl + '/Rewards', reward,
+        {
+          headers: this.authHeaders
+        });
+      }
+
+    updateReward(id: string, rew: Reward) {
+        return this.http.put(this.baseUrl + '/Rewards' + '/' + id, rew,
+        {
+          headers: this.authHeaders
+        });
+      }
+
+    deleteReward(id: string) {
+        return this.http.delete(this.baseUrl + '/Rewards' + '/' + id,
+        {
+          headers: this.authHeaders
+        });
+      }
+
+    getRewardPhoto(id: string) {
+        return  this.http.get(this.baseUrl + '/Rewards' + '/' + id + '/Photo', {responseType: 'blob'});
+    }
+
+    addRewardPhoto(id: string, file: File) {
+        const formData: FormData = new FormData();
+        formData.append('avatar', file, file.name);
+        return this.http.post(this.baseUrl + '/Rewards/' + id + '/Photo', formData,
+        {
+          headers: this.authHeaders
+        });
+     }
+
+    deleteRewardPhoto(id: string) {
+        return this.http.delete(this.baseUrl + '/Rewards/' + id + '/Photo',
+        {
+          headers: this.authHeaders
+        });
+      }
 }
