@@ -1,0 +1,92 @@
+<div class="head p-3">
+    <h3>Таблица награждённых</h3>
+</div>
+<input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить сотрудника" (click)="addEmployee()" />
+<ag-grid-angular id="ag-grid" style="width: 100%; height: 100vh;" class="ag-theme-alpine-dark" [gridOptions]='gridOptions' [columnDefs]="columnDefs" [rowData]="rowData">
+</ag-grid-angular>
+<div class="modal fade" id="addModal" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="addHeader">
+                <h2 class="modal-title" id="title">{{modalTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm" (ngSubmit)="saveEmployee(form)" class="row form-group">
+                    <div class="col-md-6">
+                        <label for="name">Введите ФИО:</label>
+                        <input id="name" class="form-control" name="name" type="text" [(ngModel)]="editEmployee.name" #name="ngModel" required />
+                        <div [hidden]="name.valid || name.touched" class="alert alert-danger">
+                            ФИО не указано
+                        </div>
+                        <label for="position">Введите Должность:</label>
+                        <input id="position" class="form-control" type="text" name="position" [(ngModel)]="editEmployee.position" #position="ngModel" required />
+                        <div [hidden]="position.valid" class="alert alert-danger">
+                            Должность не указана
+                        </div>
+                        <label for="dateBirth">Введите дату рождения:</label>
+                        <input id="dateBirth" class="form-control" type="date" name="dateBirth" [ngModel]="editEmployee.dateBirth | date:'yyyy-MM-dd'" (ngModelChange)="editEmployee.dateBirth = $event" #dateBirth="ngModel" required/>
+                        <div [hidden]="dateBirth.valid" class="alert alert-danger">
+                            Дата рождения не указана
+                        </div>
+                        <label for="dateStart">Введите дату принятия на работу:</label>
+                        <input id="dateStart" class="form-control" type="date" name="dateStart" [ngModel]="editEmployee.dateStart | date:'yyyy-MM-dd'" (ngModelChange)="editEmployee.dateStart = $event" #dateStart="ngModel" required/>
+                        <div [hidden]="dateStart.valid" class="alert alert-danger">
+                            Дата принятия на работу не указана
+                        </div>
+                        <label for="dateEnd">Введите дату увольнения:</label>
+                        <input id="dateEnd" class="form-control" type="date" name="dateEnd" [ngModel]="editEmployee.dateEnd | date:'yyyy-MM-dd'" (ngModelChange)="editEmployee.dateEnd = $event" />
+                    </div>
+                    <div class="col-md-6">
+                        <h3 style="color: black;">Награды</h3>
+                        <div *ngFor="let rew of editEmployee.rewards; let i = index">
+                            <button type="button" class="close" aria-label="Close" (click)="removeReward(editEmployee.rewards, i)">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <label for="rewardId">Введите название награды:</label>
+                            <select class="form-control" name="rewardId{{i}}" [(ngModel)]="editEmployee.rewards[i].rewardId" #rewardId="ngModel" required>
+                                <option *ngFor='let r of rewards' value="{{r.key}}">{{r.value}}</option>
+                            </select>
+                            <div [hidden]="rewardId.valid" class="alert alert-danger">
+                                Награда не указана
+                            </div>
+                            <label for="dateReward">Введите дату награды:</label>
+                            <input class="form-control" type="date" name="dateReward{{i}}" [ngModel]="editEmployee.rewards[i].dateReward | date:'yyyy-MM-dd'" (ngModelChange)="editEmployee.rewards[i].dateReward = $event" #dateReward="ngModel" required/>
+                            <div [hidden]="dateReward.valid" class="alert alert-danger">
+                                Дата награды не указана
+                            </div>
+                            <hr>
+                        </div>
+                        <input type="button" value="Добавить награду" (click)="addReward(editEmployee.rewards)" class="btn btn-primary btn-lg">
+                    </div>
+                    <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
+                    <input type="submit" value="Сохранить" class="btn btn-success btn-lg">
+                    <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger btn-lg" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPhoto" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="photoHeader" class="modal-header">
+                <h2 class="modal-title" id="title">Фото сотрудника</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <img *ngIf="photo!==null" id="photo" class="img-fluid p-2" src="{{photo}}">
+                <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+                <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()">Добавить</button>
+                <button type="button" class="btn btn-danger col-md-4" (click)="deletePhoto()">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>

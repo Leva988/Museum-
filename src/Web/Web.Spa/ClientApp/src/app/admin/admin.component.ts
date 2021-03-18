@@ -8,6 +8,8 @@ import {Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee';
 import { Achievement } from '../models/achievement';
+import { RewardedEmployee } from '../models/rewardedemployee';
+import { RewardedEmployeeNew } from '../models/rewardedemployeeNew';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -135,6 +137,65 @@ export class AdminComponent implements ComponentCanDeactivate  {
 
   deleteAchievementImage(id: string, photoId: string) {
       return this.http.delete(this.baseUrl + '/Achievements' + '/' + id + '/Image/' + photoId,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  // Reward Panel
+
+  getRewardedEmployees() {
+    return this.http.get(this.baseUrl + '/RewardedEmployees');
+  }
+
+  getRewards() {
+    return this.http.get(this.baseUrl + '/Rewards');
+  }
+
+  getRewardbyID(id) {
+    return this.http.get(this.baseUrl + '/Rewards' + id);
+  }
+
+  getRewardedEmployee(id: string) {
+      return  this.http.get(this.baseUrl + '/RewardedEmployees' + '/' + id, {responseType: 'json'});
+  }
+
+  addRewardedEmployee(rew: RewardedEmployeeNew) {
+      return this.http.post(this.baseUrl + '/RewardedEmployees/RewardedEmployee', rew,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateRewardedEmployee(id: string, emp: RewardedEmployeeNew) {
+      return this.http.put(this.baseUrl + '/RewardedEmployees' + '/' + id, emp,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteRewardedEmployee(id: string) {
+      return this.http.delete(this.baseUrl + '/RewardedEmployees' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  getRewardedEmployeePhoto(id: string) {
+      return  this.http.get(this.baseUrl + '/RewardedEmployees' + '/' + id + '/Photo', {responseType: 'blob'});
+  }
+
+  addRewardedEmployeePhoto(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/RewardedEmployees/' + id + '/Photo', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
+  deleteRewardedEmployeePhoto(id: string) {
+      return this.http.delete(this.baseUrl + '/RewardedEmployees/' + id + '/Photo',
       {
         headers: this.authHeaders
       });
