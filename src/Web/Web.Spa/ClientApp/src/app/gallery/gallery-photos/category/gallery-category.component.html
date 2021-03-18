@@ -14,7 +14,9 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item" *ngFor="let img of imagesId; let i = index" [ngClass]="{'active': i == 0 }">
-                            <img src="{{galleryUrl}}/{{gallery.id}}/item/{{img}}" class="d-block w-100 img-fluid">
+                            <div class="img-container">
+                                <img src="{{galleryUrl}}/{{gallery.id}}/item/{{img}}" class="d-block w-100 img-fluid">
+                            </div>
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
