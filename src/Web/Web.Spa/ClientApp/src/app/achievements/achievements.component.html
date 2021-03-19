@@ -24,17 +24,19 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item" *ngFor="let photo of diploma.items;let u = index;" [ngClass]="{'active':  u === active}">
-                            <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block w-100 img-fluid">
+                            <div class="img-container">
+                                <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block w-100 img-fluid">
+                            </div>
                             <div class="carousel-caption">
                                 <h5>{{photo.value | async}}</h5>
                             </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#achCarousel" role="button" data-slide="prev">
+                    <a *ngIf="diploma.items.length > 1" class="carousel-control-prev" href="#achCarousel" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon fontIcon"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#achCarousel" role="button" data-slide="next">
+                    <a *ngIf="diploma.items.length > 1" class="carousel-control-next" href="#achCarousel" role="button" data-slide="next">
                         <span class="carousel-control-next-icon fontIcon"></span>
                         <span class="sr-only">Next</span>
                     </a>

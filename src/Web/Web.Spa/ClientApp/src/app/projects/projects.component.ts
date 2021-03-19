@@ -26,6 +26,7 @@ export class ProjectsComponent implements OnInit {
 
    ngOnInit() {
     this.refreshProjects();
+    this.project.items = [];
   }
 
   projectClick(project: Project) {

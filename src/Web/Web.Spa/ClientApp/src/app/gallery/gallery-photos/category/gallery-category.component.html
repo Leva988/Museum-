@@ -19,11 +19,11 @@
                             </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
+                    <a *ngIf="imagesId.length > 1" class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon fontIcon"></span>
                         <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#galleryCarousel" role="button" data-slide="next">
+                    <a *ngIf="imagesId.length > 1" class="carousel-control-next" href="#galleryCarousel" role="button" data-slide="next">
                         <span class="carousel-control-next-icon fontIcon"></span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -34,7 +34,7 @@
 </div>
 <div class="row galleries d-flex justify-content-around">
     <div class="col-md-2 " *ngFor="let g of galleries ">
-        <div class="card cards" data-toggle="modal" data-target="#Modal" (click)="gallery=g;fetchImgs();">
+        <div class="card" data-toggle="modal" data-target="#Modal" (click)="gallery=g;fetchImgs();">
             <img class="img-fluid card-image" src="{{galleryUrl}}/{{g.id}}/item/{{g.items[0]}} " alt="... ">
             <p class="card-title ">{{g.name}}</p>
             <pre class="date">{{g.date}}        <fa-icon [icon]="faphoto"></fa-icon> {{g.items.length}}</pre>

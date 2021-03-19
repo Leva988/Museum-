@@ -23,6 +23,7 @@ export class AchievementsComponent implements OnInit {
   active: string;
 
   constructor(private rewardservice: RewardService, private http: HttpClient) {
+    this.diploma.items = [];
     this.refreshRewards();
     $('#ModalImage').on('hidden.bs.modal', () => {
       this.diploma = new AchievementNew();
