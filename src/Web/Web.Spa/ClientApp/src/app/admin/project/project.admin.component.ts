@@ -1,29 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminComponent } from '../admin.component';
 import { ButtonRendererComponent } from '../button-renderer.component';
-import { KeyValue } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
-import { Achievement } from 'src/app/models/achievement';
 import { NgForm } from '@angular/forms';
-import { $$ } from 'protractor';
+import { Project } from 'src/app/models/project';
 
 declare var $: any;
 
 @Component({
-templateUrl: 'achievement.admin.component.html',
-styleUrls: ['achievement.admin.component.scss'],
+templateUrl: 'project.admin.component.html',
+styleUrls: ['project.admin.component.scss'],
 providers: [AdminComponent]
 })
-export class AchievementAdminComponent implements OnInit {
-    achievements: Achievement[] = [];
-    url = environment.backendUrl + '/Achievements';
+export class ProjectAdminComponent implements OnInit {
+    projects: Project[] = [];
+    url = environment.backendUrl + '/Projects';
     active: number;
-    editAchievement: Achievement = new Achievement();
+    editProject: Project = new Project();
     editID: string;
     isNewRecord: boolean;
-    photos: KeyValue<string, string>[] = [];
+    photos: string[] = [];
     fileToUpload: File;
     modalMessage: string;
     modalTitle: string;
@@ -47,19 +45,20 @@ export class AchievementAdminComponent implements OnInit {
             this.modalMessage = this.modalColor = this.modalTitle = null;
             $('#photoMessage').hide();
         });
-        this.getAchievements();
+        this.getProjects();
         // tslint:disable: deprecation
         this.columnDefs = [
-            { field: 'name', headerName: 'Достижение', sortable: true, filter: true, resizable: true },
+            { field: 'name', headerName: 'Название', sortable: true, filter: true, resizable: true },
+            { field: 'description', headerName: 'Описание', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
-                onClick: this.updateAchievement.bind(this),
+                onClick: this.updateProject.bind(this),
                     label: 'Изменить',
                     class: 'btn btn-secondary',
                     modal: '#addModal',
-                    modalTitle: 'Изменить достижение',
+                    modalTitle: 'Изменить проект',
                     modalColor: this.modalColor,
                     maxWidth: 100,
                 },
@@ -69,7 +68,7 @@ export class AchievementAdminComponent implements OnInit {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
-                onClick: this.deleteAchievement.bind(this),
+                onClick: this.deleteProject.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
                     modal: '',
@@ -104,37 +103,37 @@ export class AchievementAdminComponent implements OnInit {
            };
     }
 
-    addAchievement() {
-        this.editAchievement = new Achievement();
-        this.modalTitle = 'Добавить достижение';
+    addProject() {
+        this.editProject = new Project();
+        this.modalTitle = 'Добавить проект';
         this.isNewRecord = true;
     }
 
-    updateAchievement(e) {
+    updateProject(e) {
         this.editID = e.rowData.id;
-        this.editAchievement = e.rowData;
-        this.modalTitle = 'Изменить достижение';
+        this.editProject = e.rowData;
+        this.modalTitle = 'Изменить проект';
         this.isNewRecord = false;
     }
 
-    getAchievements() {
-         this.repository.getAchievements().subscribe(
+    getProjects() {
+         this.repository.getProjects().subscribe(
             // tslint:disable: no-shadowed-variable
-            (data: Achievement[]) => {
-                this.achievements = data;
-                this.rowData = this.achievements;
+            (data: Project[]) => {
+                this.projects = data;
+                this.rowData = this.projects;
               },
             error => console.log(error));
     }
 
-    saveAchievement(form: NgForm) {
+    saveProject(form: NgForm) {
         if (form.valid) {
         if (this.isNewRecord) {
-            this.repository.addAchievement(this.editAchievement).subscribe(
+            this.repository.addProject(this.editProject).subscribe(
                 () => {
                     this.modalColor = '#2fc900';
-                    this.modalMessage = `Достижение добавлено`;
-                    this.getAchievements();
+                    this.modalMessage = `Проект добавлен`;
+                    this.getProjects();
                     $('#modalMessage').show();
                 },
                 error => {
@@ -144,11 +143,11 @@ export class AchievementAdminComponent implements OnInit {
                     console.log(error);
                  });
             } else {
-                this.repository.updateAchievement(this.editID, this.editAchievement).subscribe(
+                this.repository.updateProject(this.editID, this.editProject).subscribe(
                     () => {
                         this.modalColor = '#2fc900';
-                        this.modalMessage = `Данные по достижению обновлены`;
-                        this.getAchievements();
+                        this.modalMessage = `Данные по проекту обновлены`;
+                        this.getProjects();
                         $('#modalMessage').show();
                     },
                     error => {
@@ -167,18 +166,18 @@ export class AchievementAdminComponent implements OnInit {
 
     cancel() {
         $('#modalMessage').hide();
-        this.editAchievement = new Achievement();
+        this.editProject = new Project();
         if (this.isNewRecord) {
             this.isNewRecord = false;
         }
     }
 
-    deleteAchievement(e) {
-        if (confirm('Удалить достижение?')) {
+    deleteProject(e) {
+        if (confirm('Удалить проект?')) {
             const deleteId = e.rowData.id;
-            this.repository.deleteAchievement(deleteId).subscribe(
+            this.repository.deleteProject(deleteId).subscribe(
                  () => {
-                     this.getAchievements();
+                     this.getProjects();
                   },
                   error => {
                      console.log(error);
@@ -186,25 +185,14 @@ export class AchievementAdminComponent implements OnInit {
         }
      }
 
-    getPhoto(e) {
-        this.photos = [];
-        this.editID = e.rowData.id;
-        if (isNullOrUndefined(this.editID)) {
-            this.photos = [];
-          } else {
-             this.arrowsHandler(e.rowData.items);
-             e.rowData.items.forEach(item => {
-                 this.repository.getAchPhotoDescription(this.editID, item).subscribe(
-                     (data: string) => {
-                         const photo = { key: item, value: data};
-                         this.photos.push(photo);
-                     }, error => console.log(error));
-             });
-        }
-    }
-
     handleFileInput(files: FileList) {
         this.fileToUpload = files.item(0);
+    }
+
+    getPhoto(e) {
+       this.editID = e.rowData.id;
+       this.arrowsHandler(e.rowData.items);
+       this.photos = e.rowData.items;
     }
 
     savePhoto() {
@@ -213,17 +201,13 @@ export class AchievementAdminComponent implements OnInit {
             this.modalColor = '#f20800';
             $('#photoMessage').show();
         } else {
-            this.repository.addAchievementImage(this.editID, this.fileToUpload).subscribe(
+            this.repository.addProjectImage(this.editID, this.fileToUpload).subscribe(
                 (data: any) => {
-                    this.repository.getAchPhotoDescription(this.editID, data.id).subscribe(
-                        (desc: string) => {
-                            const photo = { key:  data.id, value: desc};
-                            this.photos.push(photo);
-                            this.arrowsHandler(this.photos);
-                        }, error => console.log(error));
-                    this.modalColor = '#2fc900';
-                    this.modalMessage = 'Фото добавлено';
-                    $('#photoMessage').show();
+                   this.photos.push(data.id);
+                   this.arrowsHandler(this.photos);
+                   this.modalColor = '#2fc900';
+                   this.modalMessage = 'Фото добавлено';
+                   $('#photoMessage').show();
                 },
                 (err) => {
                     console.log(err);
@@ -238,8 +222,8 @@ export class AchievementAdminComponent implements OnInit {
     deletePhoto(photo, index) {
         this.photos.splice(index, 1);
         this.arrowsHandler(this.photos);
-        $('#achCarousel').carousel('next');
-        this.repository.deleteAchievementImage(this.editID, photo.key).subscribe(
+        $('#projCarousel').carousel('next');
+        this.repository.deleteProjectImage(this.editID, photo).subscribe(
             () => {
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;

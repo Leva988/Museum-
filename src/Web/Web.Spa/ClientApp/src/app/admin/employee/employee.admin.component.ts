@@ -123,7 +123,6 @@ export class EmployeeAdminComponent implements OnInit {
 
     updateEmployee(e) {
         this.editID = e.rowData.id;
-        delete e.rowData.id;
         this.editEmployee = e.rowData;
         this.modalTitle = 'Изменить сотрудника';
         this.isNewRecord = false;

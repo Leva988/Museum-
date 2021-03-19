@@ -11,6 +11,7 @@ import { Achievement } from '../models/achievement';
 import { RewardedEmployee } from '../models/rewardedemployee';
 import { RewardedEmployeeNew } from '../models/rewardedemployeeNew';
 import { Reward } from '../models/reward';
+import { Project } from '../models/project';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -56,6 +57,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
     }
 
   updateEmployee(id: string, emp: Employee) {
+      delete emp.id;
       return this.http.put(this.baseUrl + '/Employees' + '/' + id, emp,
       {
         headers: this.authHeaders
@@ -106,6 +108,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
     }
 
   updateAchievement(id: string, ach: Achievement) {
+      delete ach.id;
       return this.http.put(this.baseUrl + '/Achievements' + '/' + id, ach,
       {
         headers: this.authHeaders
@@ -165,6 +168,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
     }
 
   updateRewardedEmployee(id: string, emp: RewardedEmployeeNew) {
+      delete emp.id;
       return this.http.put(this.baseUrl + '/RewardedEmployees' + '/' + id, emp,
       {
         headers: this.authHeaders
@@ -215,6 +219,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
       }
 
     updateReward(id: string, rew: Reward) {
+        delete rew.id;
         return this.http.put(this.baseUrl + '/Rewards' + '/' + id, rew,
         {
           headers: this.authHeaders
@@ -247,4 +252,52 @@ export class AdminComponent implements ComponentCanDeactivate  {
           headers: this.authHeaders
         });
       }
+
+  // Project panel
+   getProjects() {
+     return this.http.get(this.baseUrl + '/Projects');
+   }
+
+   getProject(id: string) {
+       return  this.http.get(this.baseUrl + '/Projects' + '/' + id, {responseType: 'json'});
+   }
+
+   addProject(proj: Project) {
+       return this.http.post(this.baseUrl + '/Projects', proj,
+       {
+         headers: this.authHeaders
+       });
+     }
+
+   updateProject(id: string, proj: Project) {
+       delete proj.id;
+       return this.http.put(this.baseUrl + '/Projects' + '/' + id, proj,
+       {
+         headers: this.authHeaders
+       });
+     }
+
+   deleteProject(id: string) {
+       return this.http.delete(this.baseUrl + '/Projects' + '/' + id,
+       {
+         headers: this.authHeaders
+       });
+     }
+
+   addProjectImage(id: string, file: File) {
+       const formData: FormData = new FormData();
+       formData.append('avatar', file, file.name);
+       return this.http.post(this.baseUrl + '/Projects/' + id + '/Image', formData,
+       {
+         headers: this.authHeaders
+       });
+    }
+
+   deleteProjectImage(id: string, photoId: string) {
+       return this.http.delete(this.baseUrl + '/Projects' + '/' + id + '/item/' + photoId,
+       {
+         headers: this.authHeaders
+       });
+     }
+
 }

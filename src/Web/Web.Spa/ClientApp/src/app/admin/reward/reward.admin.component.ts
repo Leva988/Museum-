@@ -113,7 +113,6 @@ export class RewardAdminComponent implements OnInit {
 
     updateReward(e) {
         this.editID = e.rowData.id;
-        delete e.rowData.id;
         this.editReward = e.rowData;
         this.modalTitle = 'Изменить награду';
         this.isNewRecord = false;

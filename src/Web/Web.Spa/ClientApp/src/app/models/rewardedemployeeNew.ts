@@ -1,6 +1,9 @@
 import { RewardWithYear } from './rewardwithYear';
 
 export class RewardedEmployeeNew {
+
+    public id: string;
+
     public name: string;
 
     public position: string;

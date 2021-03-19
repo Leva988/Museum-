@@ -15,8 +15,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
     [ApiController]
      /*[Authorize] */
     public class ProjectsController : ControllerBase
-    {
-             
+    {             
         private readonly IRepository _repository;
 
         public ProjectsController(IRepository repository, ILogger<ProjectsController> logger)
@@ -90,9 +89,9 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         //GET project image
         [HttpGet("{projectId}/item/{itemId}")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetImage(string id, string itemId)
+        public async Task<ActionResult> GetImage(string projectId, string itemId)
         {
-            var item = await _repository.GetProjectImageAsync(id, itemId);
+            var item = await _repository.GetProjectImageAsync(projectId, itemId);
             if (item == null)
             {
                 return NotFound();
@@ -102,7 +101,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         
         //Post photo
         [HttpPost("{id}/Image")]
-        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
+        public async Task<ActionResult> PostPhoto(string id,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
@@ -132,9 +131,9 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Delete photo
         [HttpDelete("{projectId}/item/{itemId}")]
-        public async Task<ActionResult> DeletePhoto(string id, string itemId)
+        public async Task<ActionResult> DeletePhoto(string projectId, string itemId)
         {
-            await _repository.DeleteProjectImageAsync(id, itemId);        
+            await _repository.DeleteProjectImageAsync(projectId, itemId);        
             return Ok();
         }
 
