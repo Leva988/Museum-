@@ -29,6 +29,7 @@ import { NeftByComponent } from './news/neft.by/neft.by.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { BelorusneftComponent } from './news/belorusneft/belorusneft.component';
 import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gallery-category.component';
+import { BossComponent } from './hisrory/history-bosses/history-bosses.component';
 
 
 
@@ -56,7 +57,8 @@ import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gall
     BelorusneftComponent,
     GalleryCategoryComponent,
     CorporateYearComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    BossComponent
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,7 @@ export class MenuComponent implements OnInit {
     this.history = [
       {key: '/historymilestones', value: 'Вехи истории'},
       {key: '/historyrewarded', value: 'Награжденные ведомственными и государственными наградами'},
+      {key: '/historybosses', value: 'Наши руководители'},
     ];
     this.gallery = [
       { key: '/galleryvideos', value: 'Видео'},

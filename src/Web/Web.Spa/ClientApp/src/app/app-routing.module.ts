@@ -15,6 +15,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gallery-category.component';
 import { CorporateYearComponent } from './corporate/corporate-year.component';
 import { DepartmentComponent } from './department/department.component';
+import { BossComponent } from './hisrory/history-bosses/history-bosses.component';
 
 const routes: Routes = [
    { path: '', component: MenuComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
    { path: 'service', component: ServiceComponent},
    { path: 'historymilestones', component: HistoryMilestonesComponent},
    { path: 'historyrewarded', component: HistoryRewardedComponent},
+   { path: 'historybosses', component: BossComponent},
    { path: 'corporate/year/:year', component: CorporateYearComponent,
     children: [{path: '', component: CorporateMonthComponent}]},
    { path: 'news', component: NewsComponent},

@@ -1,0 +1,14 @@
+<app-header title="{{title}}" navbackcolor='linear-gradient(to bottom,#55694a,#3eab02)' buttoncolor='#55694a'>
+</app-header>
+<app-button backcolor='#55694a' buttoncolor="#3eab02"> </app-button>
+<div class="container-fluid">
+    <h2>Директора БГПЗ</h2>
+    <div class="bosses  align-self-center" *ngFor="let b of bosses">
+        <div class="d-flex justify-content-center">
+            <img src="{{url}}/{{b.id}}/Photo">
+        </div>
+        <h4 class="year d-flex justify-content-center">{{b.dateStart}} – {{b.dateEnd}}</h4>
+        <p [innerHTML]="b.description"></p>
+    </div>
+
+</div>

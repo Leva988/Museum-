@@ -114,6 +114,90 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
+        #region Boss
+        public async Task<IEnumerable<Boss>> GetBossesAsync() =>
+            await _context.Bosses
+                .Find(_ => true)
+                .SortBy(c => c.DateEnd)
+                .ToListAsync();
+        
+        public async Task InsertBossAsync(Boss boss) =>
+                await _context.Bosses
+                      .InsertOneAsync(boss);
+
+        public async Task CreateOrUpdateBossAsync(Boss boss) =>
+            await _context.Bosses
+                .ReplaceOneAsync(x => x.Id == boss.Id,
+                boss,
+                new ReplaceOptions
+                {
+                    IsUpsert = true,
+                }
+            );
+
+        public async Task<Boss> GetBossAsync(string id) =>
+            await _context.Bosses
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteBossAsync(string id)
+        {           
+            var actionResult = await _context.Bosses
+                .DeleteOneAsync(b => b.Id == id); 
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<FileStreamResult> GetBossPhotoAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = await _context.BossPhotos
+                .Find(filter)
+                .FirstAsync();
+
+            var stream = new MemoryStream();
+            await _context.BossPhotos.DownloadToStreamAsync(info.Id, stream);
+            stream.Position = 0;
+
+            var contentType = info.Metadata.GetValue("Content-Type").ToString();
+
+            return new FileStreamResult(stream, contentType);
+
+        }
+
+        public async Task<string> AddBossPhotoAsync(Stream stream, string id, string contentType)
+        {
+            var emp = await GetBossAsync(id);
+            if (emp == null)
+            {
+                return null;
+            }
+
+            var itemId = await _context.BossPhotos
+                .UploadFromStreamAsync(
+                    id,
+                    stream,
+                    new GridFSUploadOptions
+                    {
+                        Metadata = new BsonDocument
+                        {
+                            {"Content-Type", contentType},
+                        },
+                    }
+                );
+            return itemId.ToString();
+        }
+
+        public async Task DeleteBossPhotoAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = _context.BossPhotos
+                .Find(filter)
+                .FirstOrDefault();
+            await _context.BossPhotos.DeleteAsync(info.Id);  
+
+        }
+        #endregion
+
         #region Veteran
         public async Task<IEnumerable<Veteran>> GetVeteransAsync() =>
             await _context.Veterans
