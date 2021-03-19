@@ -20,7 +20,7 @@
                     <div [hidden]="name.valid" class="alert alert-danger">
                         Название не указано
                     </div>
-                    <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
+                    <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success" />
                     <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
                 </form>
@@ -48,7 +48,7 @@
                         <input type="button" value="Добавить" (click)="savePhoto()" class="btn btn-success btn-block">
                     </div>
                     <hr>
-                    <h2 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h2>
+                    <h5 id="photoMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                 </div>
                 <div id="achCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
                     <ol class="carousel-indicators">

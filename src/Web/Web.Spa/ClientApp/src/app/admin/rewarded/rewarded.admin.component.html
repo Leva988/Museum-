@@ -61,7 +61,7 @@
                         </div>
                         <input type="button" value="Добавить награду" (click)="addReward(editEmployee.rewards)" class="btn btn-primary btn-lg">
                     </div>
-                    <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
+                    <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success btn-lg">
                     <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger btn-lg" />
                 </form>
@@ -81,7 +81,7 @@
             <div class="modal-body">
                 <img *ngIf="photo!==null" id="photo" class="img-fluid p-2" src="{{photo}}">
                 <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
-                <h5 class="modalmessage" [style.color]="modalColor">{{modalMessage}}</h5>
+                <h5 id="photoMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()">Добавить</button>

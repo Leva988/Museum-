@@ -37,11 +37,15 @@ export class AchievementAdminComponent implements OnInit {
     }
 
     ngOnInit() {
+        $('#modalMessage').hide();
+        $('#photoMessage').hide();
         $('#addModal').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            $('#modalMessage').hide();
         });
         $('#modalPhoto').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            $('#photoMessage').hide();
         });
         this.getAchievements();
         // tslint:disable: deprecation
@@ -132,10 +136,12 @@ export class AchievementAdminComponent implements OnInit {
                     this.modalColor = '#2fc900';
                     this.modalMessage = `Достижение добавлено`;
                     this.getAchievements();
+                    $('#modalMessage').show();
                 },
                 error => {
                     this.modalMessage = 'Введите верные данные!';
                     this.modalColor = '#f20800';
+                    $('#modalMessage').show();
                     console.log(error);
                  });
             } else {
@@ -144,20 +150,24 @@ export class AchievementAdminComponent implements OnInit {
                         this.modalColor = '#2fc900';
                         this.modalMessage = `Данные по достижению обновлены`;
                         this.getAchievements();
+                        $('#modalMessage').show();
                     },
                     error => {
                         this.modalMessage = 'Введите верные данные!';
                         this.modalColor = '#f20800';
+                        $('#modalMessage').show();
                         console.log(error);
                      });
             }
         } else {
             this.modalMessage = 'Введите данные!';
             this.modalColor = '#f20800';
+            $('#modalMessage').show();
         }
     }
 
     cancel() {
+        $('#modalMessage').hide();
         this.editAchievement = new Achievement();
         if (this.isNewRecord) {
             this.isNewRecord = false;
@@ -173,8 +183,6 @@ export class AchievementAdminComponent implements OnInit {
                   },
                   error => {
                      console.log(error);
-                     this.modalColor = '#f20800';
-                     this.modalMessage = `Достижение не найдено или произошла ошибка!`;
                     });
         }
      }
@@ -182,8 +190,8 @@ export class AchievementAdminComponent implements OnInit {
     getPhoto(e) {
         this.photos = [];
         this.editID = e.rowData.id;
-        if (this.editID === undefined || this.editID === '') {
-           this.photos = null;
+        if (isNullOrUndefined(this.editID)) {
+            this.photos = [];
           } else {
             e.rowData.items.forEach(item => {
                 this.repository.getAchPhotoDescription(this.editID, item).subscribe(
@@ -203,6 +211,7 @@ export class AchievementAdminComponent implements OnInit {
         if (isNullOrUndefined(this.fileToUpload)) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
+            $('#photoMessage').show();
         } else {
             this.repository.addAchievementImage(this.editID, this.fileToUpload).subscribe(
                 (data: any) => {
@@ -214,11 +223,13 @@ export class AchievementAdminComponent implements OnInit {
                     this.modalColor = '#2fc900';
                     this.modalMessage = 'Фото добавлено';
                     this.getAchievements();
+                    $('#photoMessage').show();
                 },
                 (err) => {
                     console.log(err);
                     this.modalMessage = `Введите верные данные`;
                     this.modalColor = '#f20800';
+                    $('#photoMessage').show();
                 }
               );
         }
@@ -227,18 +238,19 @@ export class AchievementAdminComponent implements OnInit {
     deletePhoto(photo, index) {
         this.photos.splice(index, 1);
         $('#achCarousel').carousel('next');
-        console.log(this.photos);
         this.repository.deleteAchievementImage(this.editID, photo.key).subscribe(
             () => {
                 this.photos.splice(index, 1);
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;
                 this.getAchievements();
+                $('#photoMessage').show();
              },
              error => {
                 console.log(error);
                 this.modalMessage = `Фото отсутствует`;
                 this.modalColor = '#f20800';
+                $('#photoMessage').show();
                });
     }
 

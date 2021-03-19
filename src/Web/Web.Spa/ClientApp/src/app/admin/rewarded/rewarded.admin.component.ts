@@ -38,11 +38,15 @@ export class RewardedAdminComponent implements OnInit {
     }
 
     ngOnInit() {
+        $('#modalMessage').hide();
+        $('#photoMessage').hide();
         $('#addModal').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            $('#modalMessage').hide();
         });
         $('#modalPhoto').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            $('#photoMessage').hide();
         });
         this.getEmployees();
         // tslint:disable: deprecation
@@ -118,7 +122,6 @@ export class RewardedAdminComponent implements OnInit {
         this.editEmployee = new RewardedEmployeeNew();
         this.editEmployee.rewards = [];
         this.editEmployee.rewards.push(new RewardWithYear());
-        console.log(this.editEmployee);
         this.modalTitle = 'Добавить сотрудника';
         this.isNewRecord = true;
     }
@@ -178,10 +181,12 @@ export class RewardedAdminComponent implements OnInit {
                         this.modalMessage = `Сотрудник добавлен`;
                         this.modalColor = '#2fc900';
                         this.getEmployees();
+                        $('#modalMessage').show();
                     },
                     error => {
                         this.modalMessage = 'Введите верные данные!';
                         this.modalColor = '#f20800';
+                        $('#modalMessage').show();
                         console.log(error);
                      });
                 } else {
@@ -190,16 +195,19 @@ export class RewardedAdminComponent implements OnInit {
                             this.modalColor = '#2fc900';
                             this.modalMessage = `Данные по сотруднику обновлены`;
                             this.getEmployees();
+                            $('#modalMessage').show();
                         },
                         error => {
                             this.modalMessage = 'Введите верные данные!';
                             this.modalColor = '#f20800';
+                            $('#modalMessage').show();
                             console.log(error);
                          });
                 }
         } else {
             this.modalMessage = 'Введите данные!';
             this.modalColor = '#f20800';
+            $('#modalMessage').show();
         }
     }
 
@@ -220,8 +228,6 @@ export class RewardedAdminComponent implements OnInit {
                  },
                  error => {
                     console.log(error);
-                    this.modalColor = '#f20800';
-                    this.modalMessage = `Сотрудник не найден или произошла ошибка!`;
                    });
         }
      }
@@ -241,7 +247,9 @@ export class RewardedAdminComponent implements OnInit {
             },
             error => {
                 console.log(error);
-                this.modalMessage = `Фото отсутствует`;
+                this.modalMessage = 'Фото отсутствует!';
+                this.modalColor = '#f20800';
+                $('#photoMessage').show();
             });
         }
         this.photo = undefined;
@@ -255,27 +263,26 @@ export class RewardedAdminComponent implements OnInit {
         if (isNullOrUndefined(this.fileToUpload)) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
+            $('#photoMessage').show();
         } else {
         this.repository.addRewardedEmployeePhoto(this.editID, this.fileToUpload).subscribe(
             () => {
                 this.modalColor = '#2fc900';
                 this.modalMessage = 'Фото добавлено';
                 this.photo = environment.backendUrl + '/RewardedEmployees/' + this.editID + '/Photo';
+                $('#photoMessage').show();
             },
             (err) => {
                 console.log(err);
                 this.modalMessage = `Введите верные данные`;
                 this.modalColor = '#f20800';
+                $('#photoMessage').show();
             }
           );
         }
     }
 
     deletePhoto() {
-        if (this.photo === null || this.photo === undefined) {
-            this.modalMessage = 'Фото отсутствует!';
-            this.modalColor = '#f20800';
-        } else {
         this.repository.deleteRewardedEmployeePhoto(this.editID).subscribe(
             () => {
                  this.modalColor = '#2fc900';
@@ -286,8 +293,8 @@ export class RewardedAdminComponent implements OnInit {
                 console.log(error);
                 this.modalMessage = `Фото отсутствует`;
                 this.modalColor = '#f20800';
+                $('photoMessage').show();
                });
-            }
      }
 
 }

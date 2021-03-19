@@ -35,16 +35,20 @@ export class RewardAdminComponent implements OnInit {
     }
 
     ngOnInit() {
+        $('#modalMessage').hide();
+        $('#photoMessage').hide();
         $('#addModal').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            $('#modalMessage').hide();
         });
         $('#modalPhoto').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            $('#photoMessage').hide();
         });
         this.getRewards();
         // tslint:disable: deprecation
         this.columnDefs = [
-            { field: 'name', headerName: 'Называние', sortable: true, filter: true, resizable: true },
+            { field: 'name', headerName: 'Название', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
@@ -133,10 +137,12 @@ export class RewardAdminComponent implements OnInit {
                         this.modalMessage = `Награда добавлена`;
                         this.modalColor = '#2fc900';
                         this.getRewards();
+                        $('#modalMessage').show();
                     },
                     error => {
                         this.modalMessage = 'Введите верные данные!';
                         this.modalColor = '#f20800';
+                        $('#modalMessage').show();
                         console.log(error);
                      });
                 } else {
@@ -144,17 +150,20 @@ export class RewardAdminComponent implements OnInit {
                         () => {
                             this.modalColor = '#2fc900';
                             this.modalMessage = `Данные по награде обновлены`;
+                            $('#modalMessage').show();
                             this.getRewards();
                         },
                         error => {
                             this.modalMessage = 'Введите верные данные!';
                             this.modalColor = '#f20800';
+                            $('#modalMessage').show();
                             console.log(error);
                          });
                 }
         } else {
             this.modalMessage = 'Введите данные!';
             this.modalColor = '#f20800';
+            $('#modalMessage').show();
         }
     }
 
@@ -175,8 +184,6 @@ export class RewardAdminComponent implements OnInit {
                  },
                  error => {
                     console.log(error);
-                    this.modalColor = '#f20800';
-                    this.modalMessage = `Награда не найдена или произошла ошибка!`;
                    });
         }
      }
@@ -196,7 +203,9 @@ export class RewardAdminComponent implements OnInit {
             },
             error => {
                 console.log(error);
-                this.modalMessage = `Фото отсутствует`;
+                this.modalMessage = 'Фото отсутствует!';
+                this.modalColor = '#f20800';
+                $('#photoMessage').show();
             });
         }
         this.photo = undefined;
@@ -210,39 +219,39 @@ export class RewardAdminComponent implements OnInit {
         if (isNullOrUndefined(this.fileToUpload)) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
+            $('#photoMessage').show();
         } else {
         this.repository.addRewardPhoto(this.editID, this.fileToUpload).subscribe(
             () => {
                 this.modalColor = '#2fc900';
                 this.modalMessage = 'Фото добавлено';
                 this.photo = environment.backendUrl + '/Rewards/' + this.editID + '/Photo';
+                $('#photoMessage').show();
             },
             (err) => {
                 console.log(err);
                 this.modalMessage = `Введите верные данные`;
                 this.modalColor = '#f20800';
+                $('#photoMessage').show();
             }
           );
         }
     }
 
     deletePhoto() {
-        if (this.photo === null || this.photo === undefined) {
-            this.modalMessage = 'Фото отсутствует!';
-            this.modalColor = '#f20800';
-        } else {
         this.repository.deleteRewardPhoto(this.editID).subscribe(
             () => {
                  this.modalColor = '#2fc900';
                  this.modalMessage = `Фото  удалено`;
                  this.photo = null;
+                 $('#photoMessage').show();
              },
              error => {
                 console.log(error);
                 this.modalMessage = `Фото отсутствует`;
                 this.modalColor = '#f20800';
+                $('#photoMessage').show();
                });
-            }
      }
 
 }
