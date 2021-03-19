@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HistoryService } from '../historyservice/history-service.service';
 import { Boss } from 'src/app/models/boss';
 import { environment } from 'src/environments/environment';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-history-bosses',
@@ -28,8 +29,12 @@ export class BossComponent implements OnInit {
             const d = data[i];
             const localdatestart = new Date(Date.parse(d.dateStart)).getFullYear().toString();
             d.dateStart = localdatestart;
-            const localdateEnd = new Date(Date.parse(d.dateEnd)).getFullYear().toString();
-            d.dateEnd = localdateEnd;
+            if (isNullOrUndefined(d.dateEnd)) {
+              d.dateEnd = 'н.в';
+            } else {
+              const localdateEnd = new Date(Date.parse(d.dateEnd)).getFullYear().toString();
+              d.dateEnd = localdateEnd;
+            }
             this.bosses.push(d);
           }
         },

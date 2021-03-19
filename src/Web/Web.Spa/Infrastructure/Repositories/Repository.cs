@@ -118,7 +118,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<Boss>> GetBossesAsync() =>
             await _context.Bosses
                 .Find(_ => true)
-                .SortBy(c => c.DateEnd)
+                .SortBy(c => c.DateStart)
                 .ToListAsync();
         
         public async Task InsertBossAsync(Boss boss) =>
@@ -291,7 +291,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesAsync() =>
             await _context.RewardedEmployees
                 .Find(_ => true)
-                .SortBy(c => c.DateEnd)
+                .SortBy(c => c.DateStart)
                 .ToListAsync();
 
         public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesByRewardAsync(string rewardId) =>
