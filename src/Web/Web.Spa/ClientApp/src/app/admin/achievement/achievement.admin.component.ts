@@ -193,13 +193,14 @@ export class AchievementAdminComponent implements OnInit {
         if (isNullOrUndefined(this.editID)) {
             this.photos = [];
           } else {
-            e.rowData.items.forEach(item => {
-                this.repository.getAchPhotoDescription(this.editID, item).subscribe(
-                    (data: string) => {
-                        const photo = { key: item, value: data};
-                        this.photos.push(photo);
-                    }, error => console.log(error));
-            });
+             this.arrowsHandler(e.rowData.items);
+             e.rowData.items.forEach(item => {
+                 this.repository.getAchPhotoDescription(this.editID, item).subscribe(
+                     (data: string) => {
+                         const photo = { key: item, value: data};
+                         this.photos.push(photo);
+                     }, error => console.log(error));
+             });
         }
     }
 
@@ -219,10 +220,10 @@ export class AchievementAdminComponent implements OnInit {
                         (desc: string) => {
                             const photo = { key:  data.id, value: desc};
                             this.photos.push(photo);
+                            this.arrowsHandler(this.photos);
                         }, error => console.log(error));
                     this.modalColor = '#2fc900';
                     this.modalMessage = 'Фото добавлено';
-                    this.getAchievements();
                     $('#photoMessage').show();
                 },
                 (err) => {
@@ -237,13 +238,12 @@ export class AchievementAdminComponent implements OnInit {
 
     deletePhoto(photo, index) {
         this.photos.splice(index, 1);
+        this.arrowsHandler(this.photos);
         $('#achCarousel').carousel('next');
         this.repository.deleteAchievementImage(this.editID, photo.key).subscribe(
             () => {
-                this.photos.splice(index, 1);
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;
-                this.getAchievements();
                 $('#photoMessage').show();
              },
              error => {
@@ -252,6 +252,16 @@ export class AchievementAdminComponent implements OnInit {
                 this.modalColor = '#f20800';
                 $('#photoMessage').show();
                });
+    }
+
+    arrowsHandler(photos) {
+        if (photos.length <= 1) {
+            $('#prev').hide();
+            $('#next').hide();
+        } else {
+            $('#prev').show();
+            $('#next').show();
+        }
     }
 
 }
