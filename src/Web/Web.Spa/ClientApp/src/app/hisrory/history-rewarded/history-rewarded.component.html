@@ -6,7 +6,9 @@
         <div class="row d-flex justify-content-around" *ngIf="r.rewardedEmployees">
             <div class="col-md-3">
                 <h2>{{r.name}}</h2>
-                <img class="img-fluid reward-photo" src="{{rewardsUrl}}/{{r.id}}/Photo" onerror="this.style.display='none'">
+                <div class="col-md-10 justify-content-center">
+                    <img class="img-fluid reward-photo" src="{{rewardsUrl}}/{{r.id}}/Photo" onerror="this.style.display='none'">
+                </div>
             </div>
             <div class="col-md-9 row d-flex justify-content-left align-items-center">
                 <div class="col-md-4" *ngFor="let emp of r.rewardedEmployees">
