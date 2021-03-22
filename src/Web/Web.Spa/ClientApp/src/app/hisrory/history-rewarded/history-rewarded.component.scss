@@ -1,49 +1,50 @@
-.card {
-    position: relative;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    margin-top: 20px;
-    text-align: left;
-}
-
-.container-fluid {
-    margin-top: 100px;
-}
-
-h2 {
-    text-align: center;
-    color: green;
-}
-
-.row {
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50px;
-}
-
-.card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.card-body {
-    padding: 15px 15px;
-}
-
-.card-title {
-    font-size: 14pt;
-    font-weight: 600;
-}
-
-.card-text {
-    font-size: 10pt;
-    hyphens: auto;
-}
-
-.position {
-    font-size: 10pt;
-    font-weight: 600;
-}
-
-.reward-photo {
-    border: 3px solid green;
-}
+    .card {
+        position: relative;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        margin-top: 20px;
+        text-align: left;
+    }
+    
+    .container-fluid {
+        margin-top: 100px;
+    }
+    
+    h2 {
+        text-align: center;
+        color: green;
+    }
+    
+    .row {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 50px;
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-body {
+        padding: 15px 15px;
+    }
+    
+    .card-title {
+        font-size: 14pt;
+        font-weight: 600;
+    }
+    
+    .card-text {
+        font-size: 10pt;
+        hyphens: auto;
+    }
+    
+    .position {
+        font-size: 10pt;
+        font-weight: 600;
+    }
+    
+    .reward-photo {
+        border: 3px solid green;
+        margin-left: 50px;
+    }
