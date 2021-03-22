@@ -58,8 +58,6 @@ export class ProjectAdminComponent implements OnInit {
                     label: 'Изменить',
                     class: 'btn btn-secondary',
                     modal: '#addModal',
-                    modalTitle: 'Изменить проект',
-                    modalColor: this.modalColor,
                     maxWidth: 100,
                 },
                 resizable: true

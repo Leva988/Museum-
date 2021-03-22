@@ -7,7 +7,6 @@ import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
 import { Achievement } from 'src/app/models/achievement';
 import { NgForm } from '@angular/forms';
-import { $$ } from 'protractor';
 
 declare var $: any;
 
@@ -59,8 +58,6 @@ export class AchievementAdminComponent implements OnInit {
                     label: 'Изменить',
                     class: 'btn btn-secondary',
                     modal: '#addModal',
-                    modalTitle: 'Изменить достижение',
-                    modalColor: this.modalColor,
                     maxWidth: 100,
                 },
                 resizable: true

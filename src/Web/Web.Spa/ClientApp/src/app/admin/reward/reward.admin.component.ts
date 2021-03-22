@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/models/employee';
 import { AdminComponent } from '../admin.component';
-import { Department } from 'src/app/models/department';
 import { ButtonRendererComponent } from '../button-renderer.component';
-import { KeyValue } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
@@ -57,8 +54,6 @@ export class RewardAdminComponent implements OnInit {
                     label: 'Изменить',
                     class: 'btn btn-secondary',
                     modal: '#addModal',
-                    modalTitle: 'Изменить сотрудника',
-                    modalColor: this.modalColor,
                     maxWidth: 100,
                 },
                 resizable: true

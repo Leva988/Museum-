@@ -14,8 +14,6 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
   label: string;
   class: string;
   modal: string;
-  modalTitle: string;
-  modalColor: string;
 
   constructor() {
   }
@@ -25,8 +23,6 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
     this.label = this.params.label;
     this.class = this.params.class;
     this.modal = this.params.modal;
-    this.modalTitle = this.params.modalTitle;
-    this.modalColor = this.params.modalColor;
   }
 
   refresh(params?: any): boolean {
@@ -39,9 +35,7 @@ export class ButtonRendererComponent implements ICellRendererAngularComp {
         event: $event,
         rowData: this.params.node.data,
         label: this.label,
-        modal: this.modal,
-        modalTitle: this.modalTitle,
-        modalColor: this.modalColor
+        modal: this.modal
       };
       this.params.onClick(params);
     }

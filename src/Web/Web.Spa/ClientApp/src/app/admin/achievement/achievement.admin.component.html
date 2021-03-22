@@ -4,7 +4,7 @@
 <input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить достижение" (click)="addAchievement()" />
 <ag-grid-angular id="ag-grid" style="width: 100%; height: 70vh;" class="ag-theme-alpine-dark" [gridOptions]='gridOptions' [columnDefs]="columnDefs" [rowData]="rowData">
 </ag-grid-angular>
-<div class="modal fade" id="addModal" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true">
+<div class="modal fade" id="addModal" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header" id="addHeader">
@@ -29,7 +29,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="modalPhoto" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalPhoto" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div id="photoHeader" class="modal-header">

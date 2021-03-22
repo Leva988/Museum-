@@ -12,6 +12,7 @@ import { RewardedEmployee } from '../models/rewardedemployee';
 import { RewardedEmployeeNew } from '../models/rewardedemployeeNew';
 import { Reward } from '../models/reward';
 import { Project } from '../models/project';
+import { GalleryCategory } from '../models/galleryCategory';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -146,7 +147,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
       });
     }
 
-  // Reward Panel
+  // Rewarded Employees Panel
 
   getRewardedEmployees() {
     return this.http.get(this.baseUrl + '/RewardedEmployees');
@@ -202,7 +203,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
       });
     }
 
-    // Rewards
+    // Rewards Panel
     getRewards() {
       return this.http.get(this.baseUrl + '/Rewards');
     }
@@ -300,4 +301,34 @@ export class AdminComponent implements ComponentCanDeactivate  {
        });
      }
 
+    // GalleryCategory Panel
+    getGalleryCategories() {
+        return this.http.get(this.baseUrl + '/GalleryCategories');
+      }
+
+    getGalleryCategoryById(id: string) {
+          return  this.http.get(this.baseUrl + '/GalleryCategories' + '/' + id, {responseType: 'json'});
+      }
+
+      addGalleryCategory(cat: GalleryCategory) {
+          return this.http.post(this.baseUrl + '/GalleryCategories', cat,
+          {
+            headers: this.authHeaders
+          });
+        }
+
+      updateGalleryCategory(id: string, cat: GalleryCategory) {
+          delete cat.id;
+          return this.http.put(this.baseUrl + '/GalleryCategories' + '/' + id, cat,
+          {
+            headers: this.authHeaders
+          });
+        }
+
+      deleteGalleryCategory(id: string) {
+          return this.http.delete(this.baseUrl + '/GalleryCategories' + '/' + id,
+          {
+            headers: this.authHeaders
+          });
+        }
 }

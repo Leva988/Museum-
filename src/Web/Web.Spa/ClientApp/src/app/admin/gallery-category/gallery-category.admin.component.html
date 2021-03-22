@@ -1,0 +1,30 @@
+<div class="head p-3">
+    <h3>Таблица категорий для галерей</h3>
+</div>
+<input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить категорию" (click)="addCategory()" />
+<ag-grid-angular id="ag-grid" style="width: 100%; height: 100vh;" class="ag-theme-alpine-dark" [gridOptions]='gridOptions' [columnDefs]="columnDefs" [rowData]="rowData">
+</ag-grid-angular>
+<div class="modal fade" id="addModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="addHeader">
+                <h2 class="modal-title" id="title">{{modalTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm" (ngSubmit)="saveCategory(form)" class="col-md-10 form-group">
+                    <label for="name">Введите название:</label>
+                    <input id="name" class="form-control" name="name" type="text" [(ngModel)]="editCategory.name" #name="ngModel" required />
+                    <div [hidden]="name.valid" class="alert alert-danger">
+                        Название не указано
+                    </div>
+                    <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
+                    <input type="submit" value="Сохранить" class="btn btn-success">
+                    <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
