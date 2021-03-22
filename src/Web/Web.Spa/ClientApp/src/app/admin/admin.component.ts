@@ -14,6 +14,8 @@ import { Reward } from '../models/reward';
 import { Project } from '../models/project';
 import { GalleryCategory } from '../models/galleryCategory';
 import { Gallery } from '../models/gallery';
+import { CorporateYear } from '../models/corporateyear';
+import { CorporateMonth } from '../models/corporatemonth';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -380,4 +382,81 @@ export class AdminComponent implements ComponentCanDeactivate  {
            });
          }
 
+        // CorporateYear Panel
+        getCorporateYears() {
+          return this.http.get(this.baseUrl + '/CorporateYears');
+        }
+
+       getCorporateYearById(id: string) {
+            return  this.http.get(this.baseUrl + '/CorporateYears' + '/' + id, {responseType: 'json'});
+        }
+
+        addCorporateYear(year: CorporateYear) {
+            return this.http.post(this.baseUrl + '/CorporateYears', year,
+            {
+              headers: this.authHeaders
+            });
+          }
+
+        updateCorporateYear(id: string, year: CorporateYear) {
+            delete year.id;
+            return this.http.put(this.baseUrl + '/CorporateYears' + '/' + id, year,
+            {
+              headers: this.authHeaders
+            });
+          }
+
+        deleteCorporateYear(id: string) {
+            return this.http.delete(this.baseUrl + '/CorporateYears' + '/' + id,
+            {
+              headers: this.authHeaders
+            });
+          }
+
+         // CorporateMonth Panel
+        getMonths() {
+           return this.http.get(this.baseUrl + '/CorporateMonths');
+         }
+
+        getCorporateMonth(id: string) {
+             return  this.http.get(this.baseUrl + '/CorporateMonths' + '/' + id, {responseType: 'json'});
+         }
+
+        addCorporateMonth(month: CorporateMonth) {
+             return this.http.post(this.baseUrl + '/CorporateMonths', month,
+             {
+               headers: this.authHeaders
+             });
+           }
+
+        updateCorporateMonth(id: string, month: CorporateMonth) {
+             delete month.id;
+             return this.http.put(this.baseUrl + '/CorporateMonths' + '/' + id, month,
+             {
+               headers: this.authHeaders
+             });
+           }
+
+        deleteCorporateMonth(id: string) {
+             return this.http.delete(this.baseUrl + '/CorporateMonths' + '/' + id,
+             {
+               headers: this.authHeaders
+             });
+           }
+
+        addCorporatePhoto(id: string, file: File) {
+             const formData: FormData = new FormData();
+             formData.append('avatar', file, file.name);
+             return this.http.post(this.baseUrl + '/CorporateMonths/' + id + '/Photo', formData,
+             {
+               headers: this.authHeaders
+             });
+          }
+
+        deleteCorporatePhoto(id: string, itemId: string) {
+             return this.http.delete(this.baseUrl + '/CorporateMonths/' + id + '/Photo/' + itemId,
+             {
+               headers: this.authHeaders
+             });
+        }
 }

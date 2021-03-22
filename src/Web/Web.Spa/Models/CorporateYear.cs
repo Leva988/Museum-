@@ -11,7 +11,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         
-        public DateTime Year { get; set; }
+        public int Year { get; set; }
 
         public IEnumerable<CorporateMonth> Months { get; set; }
         

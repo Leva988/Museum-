@@ -6,7 +6,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
     public class CorporateYearNew
     {
         
-        public DateTime Year { get; set; }
+        public int Year { get; set; }
         
     }
 }

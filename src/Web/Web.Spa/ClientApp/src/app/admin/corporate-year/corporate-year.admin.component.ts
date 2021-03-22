@@ -3,18 +3,18 @@ import { AdminComponent } from '../admin.component';
 import { ButtonRendererComponent } from '../button-renderer.component';
 import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { NgForm } from '@angular/forms';
-import { GalleryCategory } from 'src/app/models/galleryCategory';
+import { CorporateYear } from 'src/app/models/corporateyear';
 
 declare var $: any;
 
 @Component({
-templateUrl: 'gallery-category.admin.component.html',
-styleUrls: ['gallery-category.admin.component.scss'],
+templateUrl: 'corporate-year.admin.component.html',
+styleUrls: ['corporate-year.admin.component.scss'],
 providers: [AdminComponent]
 })
-export class GalleryCategoryAdminComponent implements OnInit {
-    categories: GalleryCategory[] = [];
-    editCategory: GalleryCategory = new GalleryCategory();
+export class CorporateYearAdminComponent implements OnInit {
+    years: CorporateYear[] = [];
+    editYear: CorporateYear = new CorporateYear();
     editID: string;
     isNewRecord: boolean;
     modalMessage: string;
@@ -33,15 +33,15 @@ export class GalleryCategoryAdminComponent implements OnInit {
             this.modalMessage = this.modalColor = this.modalTitle = null;
             $('#modalMessage').hide();
         });
-        this.getCategories();
+        this.getYears();
         // tslint:disable: deprecation
         this.columnDefs = [
-            { field: 'name', headerName: 'Название категории', sortable: true, filter: true, resizable: true },
+            { field: 'year', headerName: 'Год', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
-                onClick: this.updateCategory.bind(this),
+                onClick: this.updateYear.bind(this),
                     label: 'Изменить',
                     class: 'btn btn-secondary',
                     modal: '#addModal',
@@ -53,7 +53,7 @@ export class GalleryCategoryAdminComponent implements OnInit {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
-                onClick: this.deleteCategory.bind(this),
+                onClick: this.deleteYear.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
                     modal: '',
@@ -79,37 +79,37 @@ export class GalleryCategoryAdminComponent implements OnInit {
 
     }
 
-    addCategory() {
-        this.editCategory = new GalleryCategory();
-        this.modalTitle = 'Добавить категорию';
+    addYear() {
+        this.editYear = new CorporateYear();
+        this.modalTitle = 'Добавить год';
         this.isNewRecord = true;
     }
 
-    updateCategory(e) {
+    updateYear(e) {
         this.editID = e.rowData.id;
-        this.editCategory = e.rowData;
-        this.modalTitle = 'Изменить категорию';
+        this.editYear = e.rowData;
+        this.modalTitle = 'Изменить год';
         this.isNewRecord = false;
     }
 
-    getCategories() {
-         this.repository.getGalleryCategories().subscribe(
+    getYears() {
+         this.repository.getCorporateYears().subscribe(
             // tslint:disable: no-shadowed-variable
-            (data: GalleryCategory[]) => {
-                this.categories = data;
-                this.rowData = this.categories;
+            (data: CorporateYear[]) => {
+                this.years = data;
+                this.rowData = this.years;
               },
             error => console.log(error));
     }
 
-    saveCategory(form: NgForm) {
+    saveYear(form: NgForm) {
         if (form.valid) {
             if (this.isNewRecord) {
-                this.repository.addGalleryCategory(this.editCategory).subscribe(
+                this.repository.addCorporateYear(this.editYear).subscribe(
                     () => {
-                        this.modalMessage = `Категория добавлена`;
+                        this.modalMessage = `Год добавлен`;
                         this.modalColor = '#2fc900';
-                        this.getCategories();
+                        this.getYears();
                         $('#modalMessage').show();
                     },
                     error => {
@@ -119,12 +119,12 @@ export class GalleryCategoryAdminComponent implements OnInit {
                         console.log(error);
                      });
                 } else {
-                    this.repository.updateGalleryCategory(this.editID, this.editCategory).subscribe(
+                    this.repository.updateCorporateYear(this.editID, this.editYear).subscribe(
                         () => {
                             this.modalColor = '#2fc900';
                             this.modalMessage = `Данные по категории обновлены`;
                             $('#modalMessage').show();
-                            this.getCategories();
+                            this.getYears();
                         },
                         error => {
                             this.modalMessage = 'Введите верные данные!';
@@ -142,18 +142,18 @@ export class GalleryCategoryAdminComponent implements OnInit {
 
     cancel() {
         this.modalMessage = null;
-        this.editCategory = new GalleryCategory();
+        this.editYear = new CorporateYear();
         if (this.isNewRecord) {
             this.isNewRecord = false;
         }
     }
 
-    deleteCategory(e) {
-        if (confirm('Удалить данную категорию?')) {
+    deleteYear(e) {
+        if (confirm('Удалить данный год?')) {
             const deleteId = e.rowData.id;
-            this.repository.deleteGalleryCategory(deleteId).subscribe(
+            this.repository.deleteCorporateYear(deleteId).subscribe(
                 () => {
-                    this.getCategories();
+                    this.getYears();
                  },
                  error => {
                     console.log(error);

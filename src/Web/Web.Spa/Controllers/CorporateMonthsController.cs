@@ -25,15 +25,13 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         //Get api/all months
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult> Get()
-        {
-            var item = await _repository.GetCorporateMonthsAsync();
-            if (item == null)
-            {
-                return NotFound();
+        public async Task<ActionResult> Get() {
+            var months = await _repository.GetCorporateMonthsAsync();
+            foreach(CorporateMonth month in months) {
+                CorporateYear year = await _repository.GetCorporateYearAsync(month.YearId);
+                month.Year = year.Year;
             }
-
-            return Ok(item);
+            return Ok(months);
         }
 
         //Get api/month
@@ -41,12 +39,14 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetById(string id)
         {
-            var item = await _repository.GetCorporateMonthAsync(id);
-            if (item == null)
+            var month = await _repository.GetCorporateMonthAsync(id);
+            if (month == null)
             {
                 return NotFound();
             }
-            return Ok(item);
+            CorporateYear year = await _repository.GetCorporateYearAsync(month.YearId);
+            month.Year = year.Year;
+            return Ok(month);
         }
 
         // POST api/month
@@ -104,7 +104,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post photo
         [HttpPost("{id}/Photo")]
-        public async Task<ActionResult> PostPhoto(string id, IFormFile image)
+        public async Task<ActionResult> PostPhoto(string id,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

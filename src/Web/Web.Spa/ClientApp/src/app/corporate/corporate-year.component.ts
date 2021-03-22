@@ -29,12 +29,6 @@ export class CorporateYearComponent implements OnInit  {
     this.corpService.getYears().subscribe(
       (data: CorporateYear[]) => {
           this.years = data;
-          if (this.years.length !== 0) {
-            this.years.forEach(y => {
-              const year = new Date(Date.parse(y.year));
-              y.year = year.getFullYear().toString();
-            });
-          }
           if (this.route.snapshot.params.year === 'last') {
             this.fetchMonths(this.years[this.years.length - 1]);
           } else {

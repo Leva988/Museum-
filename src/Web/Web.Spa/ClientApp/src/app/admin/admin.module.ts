@@ -17,6 +17,8 @@ import { RewardAdminComponent } from './reward/reward.admin.component';
 import { ProjectAdminComponent } from './project/project.admin.component';
 import { GalleryCategoryAdminComponent } from './gallery-category/gallery-category.admin.component';
 import { GalleryAdminComponent } from './gallery/gallery.admin.component';
+import { CorporateYearAdminComponent } from './corporate-year/corporate-year.admin.component';
+import { CorporateMonthAdminComponent } from './corporate-month/corporate-month.admin.component';
 
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
@@ -29,13 +31,16 @@ const routing = RouterModule.forChild([
       { path: 'projects', component: ProjectAdminComponent },
       { path: 'gallery-categories', component: GalleryCategoryAdminComponent },
       { path: 'galleries', component: GalleryAdminComponent },
+      { path: 'corporate-years', component: CorporateYearAdminComponent },
+      { path: 'corporate-months', component: CorporateMonthAdminComponent }
      ]},
       { path: '**', redirectTo: 'auth' }
 ]);
 @NgModule({
   imports: [CommonModule, FormsModule, routing, ReactiveFormsModule, AgGridModule.withComponents([ButtonRendererComponent])],
-  declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, GalleryAdminComponent,
-     RewardedAdminComponent, ButtonRendererComponent, RewardAdminComponent, ProjectAdminComponent, GalleryCategoryAdminComponent],
+  declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent,
+     GalleryAdminComponent, RewardedAdminComponent, ButtonRendererComponent, RewardAdminComponent,
+     ProjectAdminComponent, GalleryCategoryAdminComponent, CorporateYearAdminComponent, CorporateMonthAdminComponent],
   providers: [AuthGuard, AuthToken, ExitGuard]
 })
 export class AdminModule {
