@@ -19,7 +19,7 @@ export class GalleryCategoryComponent implements OnInit {
   gallery: Gallery = new Gallery();
   @Input() galleries: Gallery[] = [];
   imagesId: string [] = [];
-  galleryUrl = environment.backendUrl + '/Gallery';
+  galleryUrl = environment.backendUrl + '/Galleries';
 
   constructor() {
    }

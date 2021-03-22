@@ -13,6 +13,7 @@ import { RewardedEmployeeNew } from '../models/rewardedemployeeNew';
 import { Reward } from '../models/reward';
 import { Project } from '../models/project';
 import { GalleryCategory } from '../models/galleryCategory';
+import { Gallery } from '../models/gallery';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -331,4 +332,52 @@ export class AdminComponent implements ComponentCanDeactivate  {
             headers: this.authHeaders
           });
         }
+
+      // Gallery Panel
+       getGalleries() {
+         return this.http.get(this.baseUrl + '/Galleries');
+       }
+
+       getGallery(id: string) {
+           return  this.http.get(this.baseUrl + '/Galleries' + '/' + id, {responseType: 'json'});
+       }
+
+       addGallery(gal: Gallery) {
+           return this.http.post(this.baseUrl + '/Galleries', gal,
+           {
+             headers: this.authHeaders
+           });
+         }
+
+       updateGallery(id: string, gal: Gallery) {
+           delete gal.id;
+           return this.http.put(this.baseUrl + '/Galleries' + '/' + id, gal,
+           {
+             headers: this.authHeaders
+           });
+         }
+
+       deleteGallery(id: string) {
+           return this.http.delete(this.baseUrl + '/Galleries' + '/' + id,
+           {
+             headers: this.authHeaders
+           });
+         }
+
+       addGalleryPhoto(id: string, file: File) {
+           const formData: FormData = new FormData();
+           formData.append('avatar', file, file.name);
+           return this.http.post(this.baseUrl + '/Galleries/' + id + '/item', formData,
+           {
+             headers: this.authHeaders
+           });
+        }
+
+       deleteGalleryPhoto(id: string, itemId: string) {
+           return this.http.delete(this.baseUrl + '/Galleries/' + id + '/item/' + itemId,
+           {
+             headers: this.authHeaders
+           });
+         }
+
 }

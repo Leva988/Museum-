@@ -14,10 +14,10 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
     [Route("api/[controller]")]
     [ApiController]
      /*[Authorize] */
-    public class GalleryController : ControllerBase
+    public class GalleriesController : ControllerBase
     {
         private readonly IRepository _repository;
-        public GalleryController(IRepository repository, ILogger<GalleryController> logger)
+        public GalleriesController(IRepository repository)
         {
             _repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
@@ -27,8 +27,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Get()
         {
-            var item = await _repository.GetGalleriesAsync();
-            return Ok(item);
+            var galleries = await _repository.GetGalleriesAsync();
+            foreach (Gallery gal in galleries) {
+                var category = await _repository.GetGalleryCategoryAsync(gal.CategoryId);
+                gal.Category = category.Name;
+            }
+            return Ok(galleries);
         }
 
         //Get api/Gallery
@@ -37,7 +41,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         public async Task<ActionResult> GetById(string id)
         {
             var item = await _repository.GetGalleryAsync(id);
-
+            var cat = await _repository.GetGalleryCategoryAsync(item.CategoryId);
+            item.Category = cat.Name;
             if (item == null)
             {
                 return NotFound();
@@ -110,7 +115,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post item
         [HttpPost("{galleryId}/item")]
-        public async Task<ActionResult> Post(string galleryId, IFormFile image)
+        public async Task<ActionResult> Post(string galleryId,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

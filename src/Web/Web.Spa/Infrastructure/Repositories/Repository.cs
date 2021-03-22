@@ -726,7 +726,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<Gallery>.Filter.Eq(x => x.Id, gallery.Id);
             var update = Builders<Gallery>.Update
                 .Set(x => x.Name, gallery.Name)
-                .Set(x => x.Date, gallery.Date);             
+                .Set(x => x.Date, gallery.Date)
+                .Set (x =>x.CategoryId, gallery.CategoryId);             
             await _context.Galleries.UpdateOneAsync(
                 filter,
                 update,

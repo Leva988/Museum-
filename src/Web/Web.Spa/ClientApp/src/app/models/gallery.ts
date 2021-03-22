@@ -6,6 +6,8 @@ export class Gallery {
 
     public date: string;
 
+    public category: string;
+
     public categoryId: string;
 
     public items: string[];
