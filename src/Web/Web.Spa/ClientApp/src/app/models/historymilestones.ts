@@ -8,7 +8,7 @@ export class HistoryMilestone {
 
     public dateEnd: string;
 
-    public descripton: string;
+    public description: string;
 
     public items: string[];
 }
