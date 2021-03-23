@@ -8,7 +8,6 @@ import {Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee';
 import { Achievement } from '../models/achievement';
-import { RewardedEmployee } from '../models/rewardedemployee';
 import { RewardedEmployeeNew } from '../models/rewardedemployeeNew';
 import { Reward } from '../models/reward';
 import { Project } from '../models/project';
@@ -16,6 +15,7 @@ import { GalleryCategory } from '../models/galleryCategory';
 import { Gallery } from '../models/gallery';
 import { CorporateYear } from '../models/corporateyear';
 import { CorporateMonth } from '../models/corporatemonth';
+import { HistoryMilestone } from '../models/historymilestones';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -362,101 +362,156 @@ export class AdminComponent implements ComponentCanDeactivate  {
        deleteGallery(id: string) {
            return this.http.delete(this.baseUrl + '/Galleries' + '/' + id,
            {
-             headers: this.authHeaders
-           });
-         }
+           headers: this.authHeaders
+         });
+       }
 
-       addGalleryPhoto(id: string, file: File) {
-           const formData: FormData = new FormData();
-           formData.append('avatar', file, file.name);
-           return this.http.post(this.baseUrl + '/Galleries/' + id + '/item', formData,
-           {
-             headers: this.authHeaders
-           });
+     addGalleryPhoto(id: string, file: File) {
+         const formData: FormData = new FormData();
+         formData.append('avatar', file, file.name);
+         return this.http.post(this.baseUrl + '/Galleries/' + id + '/item', formData,
+         {
+           headers: this.authHeaders
+         });
+      }
+
+     deleteGalleryPhoto(id: string, itemId: string) {
+         return this.http.delete(this.baseUrl + '/Galleries/' + id + '/item/' + itemId,
+         {
+           headers: this.authHeaders
+         });
+       }
+
+      // CorporateYear Panel
+      getCorporateYears() {
+        return this.http.get(this.baseUrl + '/CorporateYears');
+      }
+
+     getCorporateYearById(id: string) {
+          return  this.http.get(this.baseUrl + '/CorporateYears' + '/' + id, {responseType: 'json'});
+      }
+
+      addCorporateYear(year: CorporateYear) {
+          return this.http.post(this.baseUrl + '/CorporateYears', year,
+          {
+            headers: this.authHeaders
+          });
         }
 
-       deleteGalleryPhoto(id: string, itemId: string) {
-           return this.http.delete(this.baseUrl + '/Galleries/' + id + '/item/' + itemId,
-           {
-             headers: this.authHeaders
-           });
-         }
-
-        // CorporateYear Panel
-        getCorporateYears() {
-          return this.http.get(this.baseUrl + '/CorporateYears');
+      updateCorporateYear(id: string, year: CorporateYear) {
+          delete year.id;
+          return this.http.put(this.baseUrl + '/CorporateYears' + '/' + id, year,
+          {
+            headers: this.authHeaders
+          });
         }
 
-       getCorporateYearById(id: string) {
-            return  this.http.get(this.baseUrl + '/CorporateYears' + '/' + id, {responseType: 'json'});
+      deleteCorporateYear(id: string) {
+          return this.http.delete(this.baseUrl + '/CorporateYears' + '/' + id,
+          {
+            headers: this.authHeaders
+          });
         }
 
-        addCorporateYear(year: CorporateYear) {
-            return this.http.post(this.baseUrl + '/CorporateYears', year,
-            {
-              headers: this.authHeaders
-            });
-          }
+        // CorporateMonth Panel
+  getMonths() {
+     return this.http.get(this.baseUrl + '/CorporateMonths');
+   }
 
-        updateCorporateYear(id: string, year: CorporateYear) {
-            delete year.id;
-            return this.http.put(this.baseUrl + '/CorporateYears' + '/' + id, year,
-            {
-              headers: this.authHeaders
-            });
-          }
+  getCorporateMonth(id: string) {
+       return  this.http.get(this.baseUrl + '/CorporateMonths' + '/' + id, {responseType: 'json'});
+   }
 
-        deleteCorporateYear(id: string) {
-            return this.http.delete(this.baseUrl + '/CorporateYears' + '/' + id,
-            {
-              headers: this.authHeaders
-            });
-          }
+  addCorporateMonth(month: CorporateMonth) {
+       return this.http.post(this.baseUrl + '/CorporateMonths', month,
+       {
+         headers: this.authHeaders
+       });
+     }
 
-         // CorporateMonth Panel
-        getMonths() {
-           return this.http.get(this.baseUrl + '/CorporateMonths');
-         }
+  updateCorporateMonth(id: string, month: CorporateMonth) {
+       delete month.id;
+       return this.http.put(this.baseUrl + '/CorporateMonths' + '/' + id, month,
+       {
+         headers: this.authHeaders
+       });
+     }
 
-        getCorporateMonth(id: string) {
-             return  this.http.get(this.baseUrl + '/CorporateMonths' + '/' + id, {responseType: 'json'});
-         }
+  deleteCorporateMonth(id: string) {
+       return this.http.delete(this.baseUrl + '/CorporateMonths' + '/' + id,
+       {
+         headers: this.authHeaders
+       });
+     }
 
-        addCorporateMonth(month: CorporateMonth) {
-             return this.http.post(this.baseUrl + '/CorporateMonths', month,
-             {
-               headers: this.authHeaders
-             });
-           }
+  addCorporatePhoto(id: string, file: File) {
+       const formData: FormData = new FormData();
+       formData.append('avatar', file, file.name);
+       return this.http.post(this.baseUrl + '/CorporateMonths/' + id + '/Photo', formData,
+       {
+         headers: this.authHeaders
+       });
+    }
 
-        updateCorporateMonth(id: string, month: CorporateMonth) {
-             delete month.id;
-             return this.http.put(this.baseUrl + '/CorporateMonths' + '/' + id, month,
-             {
-               headers: this.authHeaders
-             });
-           }
+  deleteCorporatePhoto(id: string, itemId: string) {
+       return this.http.delete(this.baseUrl + '/CorporateMonths/' + id + '/Photo/' + itemId,
+       {
+         headers: this.authHeaders
+       });
+  }
 
-        deleteCorporateMonth(id: string) {
-             return this.http.delete(this.baseUrl + '/CorporateMonths' + '/' + id,
-             {
-               headers: this.authHeaders
-             });
-           }
+  // Achievement Panel
+  getHistoryMilestones() {
+    return this.http.get(this.baseUrl + '/HistoryMilestones');
+  }
 
-        addCorporatePhoto(id: string, file: File) {
-             const formData: FormData = new FormData();
-             formData.append('avatar', file, file.name);
-             return this.http.post(this.baseUrl + '/CorporateMonths/' + id + '/Photo', formData,
-             {
-               headers: this.authHeaders
-             });
-          }
+  getHistoryMilestone(id: string) {
+      return  this.http.get(this.baseUrl + '/HistoryMilestones' + '/' + id, {responseType: 'json'});
+  }
 
-        deleteCorporatePhoto(id: string, itemId: string) {
-             return this.http.delete(this.baseUrl + '/CorporateMonths/' + id + '/Photo/' + itemId,
-             {
-               headers: this.authHeaders
-             });
-        }
+  addHistoryMilestone(hist: HistoryMilestone) {
+      return this.http.post(this.baseUrl + '/HistoryMilestones', hist,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateHistoryMilestone(id: string, hist: HistoryMilestone) {
+      delete hist.id;
+      return this.http.put(this.baseUrl + '/HistoryMilestones' + '/' + id, hist,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteHistoryMilestone(id: string) {
+      return this.http.delete(this.baseUrl + '/HistoryMilestones' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  getHistoryPhotoDescription(id: string, photoId: string) {
+    return this.http.get(this.baseUrl + '/HistoryMilestones' + '/' + id + '/itemDescription/' + photoId,
+    {
+      headers: this.authHeaders,
+      responseType: 'text'
+    });
+  }
+
+  addHistoryImage(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/HistoryMilestones/' + id + '/item', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
+  deleteHistoryImage(id: string, photoId: string) {
+      return this.http.delete(this.baseUrl + '/HistoryMilestones' + '/' + id + '/item/' + photoId,
+      {
+        headers: this.authHeaders
+      });
+    }
 }

@@ -15,7 +15,7 @@
 
                 <div class="row  d-flex justify-content-center">
                     <div *ngIf="boss.id" class="col-md-4 boss">
-                        <img class="img-fluid" src="{{empUrl}}/{{boss.id}}/Photo" alt="...">
+                        <img class="img-fluid" src="{{empUrl}}/{{boss.id}}/Photo" alt="..." onerror="this.style.display='none'">
                         <h5 class="bossname">{{boss.name}}</h5>
                         <p class="bossposition">{{boss.position}}</p>
                     </div>
