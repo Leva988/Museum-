@@ -1,31 +1,12 @@
-.row {
-    margin: auto;
+body {
+    overflow-x: hidden;
 }
 
 .container-fluid {
     margin-top: 100px;
 }
 
-.card {
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    -webkit-transition: 0.3s;
-    -o-transition: 0.3s;
-    transition: 0.3s;
-    overflow: hidden;
-    margin-bottom: 50px;
-}
-
-.card:hover {
-    -webkit-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.card-title {
-    padding-left: 35px;
-}
-
-a {
-    color: #00B5F9;
-    scroll-behavior: auto;
+h2 {
+    color: #5e9104;
+    text-align: center;
 }

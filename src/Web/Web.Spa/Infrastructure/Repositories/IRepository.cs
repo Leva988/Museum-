@@ -126,27 +126,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task DeleteProjectImageAsync(string id, string itemId);
         #endregion
 
-        #region ServiceCategories
-
-        Task<IEnumerable<ServiceCategory>> GetServiceCategoriesAsync();
-
-        Task<ServiceCategory> GetServiceCategoryAsync(string id);
-
-        Task InsertServiceCategoryAsync(ServiceCategory category);
-
-        Task UpdateServiceCategoryAsync(ServiceCategory category);
-
-        Task<bool> DeleteServiceCategoryAsync(string id);
-
-        #endregion
-
         #region Services      
 
         Task<IEnumerable<Service>> GetAllServicesAsync();
 
         Task<Service> GetServiceAsync(string id);
-
-        Task<IEnumerable<Service>> GetServicesAsync(string category);       
 
         Task AddServiceAsync(Service services);
 

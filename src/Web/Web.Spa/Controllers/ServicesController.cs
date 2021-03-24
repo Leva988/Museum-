@@ -44,21 +44,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(item);
         }
 
-        //Get api/services(category)
-        [HttpGet("Category/{categoryId}")]
-        [AllowAnonymous]
-        public async Task<ActionResult> GetByCategory(string category)
-        {
-            var item = await _repository.GetServicesAsync(category);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(item);
-        }
-
         [HttpPost]
         public async Task<IActionResult> AddServices([FromBody] ServiceNew servicenew)
         {
@@ -102,8 +87,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         private Service MapService(ServiceNew serviceNew) =>
             new Service
             {
-                Name = serviceNew.Name,
-                CategoryId = serviceNew.CategoryId
+                Name = serviceNew.Name
             };
     }
 }

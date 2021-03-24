@@ -1,19 +1,12 @@
-<app-header title="Направления деятельности" navbackcolor='linear-gradient(to bottom,#5e9104,#95e607)' buttoncolor='#5e9104'>
-</app-header>
-<app-button backcolor='#5e9104' buttoncolor="#95e607"> </app-button>
-<div class="container-fluid">
-    <div class="row justify-content-center align-items-start">
-        <div class="col-md-4" *ngFor="let c of services">
-            <div class="card card-body" [@appear]="app">
-                <h4 class="card-title">{{c.name}}</h4>
-                <p class="card-text">{{c.description}}</p>
-                <div class="card-text">
-                    <ul *ngFor="let s of c.services">
-                        <li>
-                            {{s.name}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<body>
+    <app-header title="Направления деятельности" navbackcolor='linear-gradient(to bottom,#5e9104,#95e607)' buttoncolor='#5e9104'>
+    </app-header>
+    <app-button backcolor='#5e9104' buttoncolor="#95e607"> </app-button>
+    <div class="container-fluid">
+
+        <h2>Выполняемые работы, оказываемые услуги</h2>
+        <div class="row  d-flex justify-content-center">
+            <canvas id="canvas" height="900px" width="900px"></canvas>
         </div>
     </div>
+</body>

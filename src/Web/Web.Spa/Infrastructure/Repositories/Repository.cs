@@ -547,41 +547,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
-        #region ServiceCategories
-        public async Task<IEnumerable<ServiceCategory>> GetServiceCategoriesAsync() =>
-            await _context.ServiceCategory
-                .Find(_ => true)
-                .SortBy(c => c.Id)
-                .ToListAsync();
-
-        public async Task InsertServiceCategoryAsync(ServiceCategory cat) =>
-             await _context.ServiceCategory
-                   .InsertOneAsync(cat);
-
-        public async Task<ServiceCategory> GetServiceCategoryAsync(string id) =>
-            await _context.ServiceCategory
-                .Find(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
-        public async Task UpdateServiceCategoryAsync(ServiceCategory category) =>
-            await _context.ServiceCategory
-               .ReplaceOneAsync(x => x.Id == category.Id,
-               category,
-               new ReplaceOptions
-               {
-                   IsUpsert = true,
-               });      
-
-        public async Task<bool> DeleteServiceCategoryAsync(string id)
-        {
-            var actionResult = await _context.ServiceCategory
-                .DeleteOneAsync(p => p.Id == id);
-
-            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
-        }
-        
-        #endregion
-
         #region Services
         
         public async Task<IEnumerable<Service>> GetAllServicesAsync() =>
@@ -593,11 +558,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             await _context.Service
              .Find(x => x.Id == id)
              .FirstOrDefaultAsync();
-
-        public async Task<IEnumerable<Service>> GetServicesAsync(string categoryId) =>
-            await _context.Service
-                .Find(x => x.CategoryId == categoryId)
-                .ToListAsync();
 
         public async Task AddServiceAsync(Service service) =>
           await _context.Service.InsertOneAsync(service);

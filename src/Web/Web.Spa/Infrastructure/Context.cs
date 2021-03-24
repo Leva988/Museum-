@@ -86,9 +86,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                }
            );
 
-        public IMongoCollection<ServiceCategory> ServiceCategory
-            => _database.GetCollection<ServiceCategory>("ServiceCategories");
-
         public IMongoCollection<Service> Service =>
             _database.GetCollection<Service>("Services");
 

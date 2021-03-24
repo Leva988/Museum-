@@ -1,47 +1,139 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { trigger, state, transition, style, animate} from '@angular/animations';
-import { Service } from './service/service.service';
+import { Service } from '../models/service';
 import { environment } from 'src/environments/environment';
-import { ServiceCategory } from '../models/servicecategory';
+import { fabric } from 'fabric';
+import { Repos } from './service/repos.service';
 
 @Component({
   selector: 'app-business',
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.scss'],
-  animations: [  trigger('appear', [
-    state('initial', style({opacity: '0.1', top: '50px'})),
-    state('appeared', style({opacity: '1'})),
-    transition('initial <=> appeared', animate('1s')),
-  ])
-  ],
-  providers: [Service]
+  providers: [Repos]
 })
 
-export class ServiceComponent implements OnInit, AfterViewInit {
+export class ServiceComponent implements OnInit {
 
-  services: ServiceCategory[];
-  servicesUrl = environment.backendUrl + '/ServiceCategories';
-  scrollposition: ScrollLogicalPosition;
-  constructor(private busnessService: Service) {
+  canvas;
+  x: number;
+  y: number;
+  dt: number;
+  services: Service[] = [];
+  servicesUrl = environment.backendUrl + '/Services';
+  constructor(private repos: Repos) {
 
   }
-
-  app = 'initial';
-  ngAfterViewInit() {
-    setTimeout(_ => this.app = 'appeared', 200);
-  }
-
 
   ngOnInit() {
-    this.refreshServices();
+    this.getServices();
   }
 
-  refreshServices() {
-    this.busnessService.getServices(this.servicesUrl).subscribe(
-      (data: ServiceCategory[]) => {
+  getServices() {
+    this.repos.getServices(this.servicesUrl).subscribe(
+      (data: Service[]) => {
         this.services = data;
+        this.drawCanvas();
       },
       error => console.log(error)
     );
+  }
+
+  drawCanvas() {
+    this.canvas = new fabric.Canvas('canvas');
+    this.canvas.clear();
+    const text = new fabric.Text('Работы и услуги', {
+        fontSize: 30,
+        fontWeight: 'bold',
+        originX: 'center',
+        originY: 'center',
+        textAlign: 'center'
+      });
+    const circle = new fabric.Circle({
+         radius: this.canvas.width * 0.2,
+         fill: '#53d13d',
+         stroke: '#7e807c',
+         strokeWidth: 5,
+         originX: 'center',
+         originY: 'center',
+       });
+    const group = new fabric.Group([circle, text], {
+        top: this.canvas.height * 0.3,
+        left: this.canvas.width * 0.3,
+        selectable: false
+      });
+    this.canvas.add(group);
+    this.addCircles(this.canvas);
+    this.canvas.renderAll();
+  }
+
+  addCircles(canvas) {
+    // Perimetr Ellipse
+    const r = ( canvas.width + canvas.height) * 0.2;
+    const perimetr = 2 * Math.PI * r;
+    this.dt = 0;
+    let angle = 0;
+    let sin = 0;
+    let cos = 0;
+    let x = 0;
+    let y = 0;
+    const dx = 10;
+    const dy = canvas.height * 0.4;
+    for (const [index, serv] of this.services.entries()) {
+      if (index === 0) {
+        x = 0;
+        y = 0;
+      } else {
+        this.dt = this.dt + perimetr / this.services.length;
+        angle = this.dt / r;
+        switch (true) {
+          case (angle < Math.PI / 2):
+            sin = Math.sin(angle);
+            cos = Math.cos(angle);
+            y = -r * sin;
+            x = r - r * cos;
+            break;
+          case (angle > Math.PI / 2 && angle < Math.PI):
+            sin = Math.sin(Math.PI - angle);
+            cos = Math.cos(Math.PI - angle);
+            y = -r * sin;
+            x = r + r * cos;
+            break;
+          case (angle > Math.PI && angle < 3 / 2 * Math.PI):
+            sin = Math.sin(angle - Math.PI);
+            cos = Math.cos(angle - Math.PI);
+            y = r * sin;
+            x = r + r * cos;
+            break;
+          case (angle >  3 / 2 * Math.PI  && angle < 2 * Math.PI):
+            sin = Math.sin(angle - Math.PI);
+            cos = Math.cos(angle - Math.PI);
+            y = r * sin;
+            x = r + r * cos;
+            break;
+        }
+      }
+      const text = new fabric.Textbox(serv.name, {
+        fontSize: 15,
+        originX: 'center',
+        originY: 'center',
+        textAlign: 'center',
+        borderScaleFactor: 2
+      });
+      const circle = new fabric.Circle({
+         radius: canvas.height / 10,
+         fill: '#53d13d',
+         stroke: '#7e807c',
+         strokeWidth: 5,
+         originX: 'center',
+         originY: 'center',
+       });
+      const group = new fabric.Group([circle, text], {
+        top: dy + y,
+        left:  dx + x,
+        selectable: false
+      });
+      canvas.add(group);
+      canvas.renderAll();
+    }
+
   }
 }

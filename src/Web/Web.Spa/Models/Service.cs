@@ -10,10 +10,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-
-        [Required(ErrorMessage = "Category is not assigned")]
-        public string CategoryId { get; set; }
-
+        
         public string Name { get; set; }
         
     }
