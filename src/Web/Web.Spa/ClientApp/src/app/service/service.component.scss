@@ -4,9 +4,32 @@ body {
 
 .container-fluid {
     margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 h2 {
     color: #5e9104;
     text-align: center;
+    text-decoration: underline;
+}
+
+.prod {
+    background-color: #53d13d;
+    border: 3px solid grey;
+    border-radius: 20px;
+    margin: 50px;
+}
+
+.text {
+    font-weight: 500;
+    padding: 20px;
+    text-align: center;
+}
+
+hr {
+    border-top: 2px solid white;
+}
+
+.caption {
+    font-weight: 600;
 }

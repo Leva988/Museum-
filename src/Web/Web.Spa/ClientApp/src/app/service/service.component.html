@@ -3,10 +3,20 @@
     </app-header>
     <app-button backcolor='#5e9104' buttoncolor="#95e607"> </app-button>
     <div class="container-fluid">
-
         <h2>Выполняемые работы, оказываемые услуги</h2>
         <div class="row  d-flex justify-content-center">
             <canvas id="canvas" height="900px" width="900px"></canvas>
+        </div>
+        <h2>Виды выпускаемой продукции</h2>
+        <div class="row d-flex justify-content-around">
+            <div class="col-md-4 prod" *ngFor="let p of productions">
+                <p class="text">{{p.name}}</p>
+                <hr>
+                <div class="d-flex align-items-center justify-content-around" *ngFor="let i of p.items">
+                    <i> <p class="caption" [innerHTML]="i.value | async"></p></i>
+                    <img src="{{productionUrl}}/{{p.id}}/icon/{{i.key}}" height="100px">
+                </div>
+            </div>
         </div>
     </div>
 </body>

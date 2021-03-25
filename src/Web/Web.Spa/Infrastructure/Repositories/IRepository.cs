@@ -68,6 +68,26 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<string> AddVeteranPhotoAsync(Stream stream, string veteranId, string contentType);
         #endregion
 
+        #region Production
+        Task<IEnumerable<Production>> GetProductions();
+
+        Task<Production> GetProductionAsync(string id);
+
+        Task InsertProductionAsync(Production prod);
+
+        Task CreateOrUpdateProductionAsync(Production prod);
+
+        Task<bool> DeleteProductionAsync(string id);
+
+        Task<FileStreamResult> GetProductionIconAsync(string id, string itemId);
+
+        Task<string> GetProductionIconDescriptionAsync(string id, string itemId);
+
+        Task<string> AddProductionIconAsync(Stream stream, string id, string contentType, string filename);
+
+        Task DeleteProductionIconAsync(string id, string itemId);
+        #endregion
+
         #region RewardedEmployee
         Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesAsync();
 

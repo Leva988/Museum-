@@ -4,5 +4,5 @@ export class Achievement {
 
     public name: string;
 
-    public items: any;
+    public items: string[];
 }

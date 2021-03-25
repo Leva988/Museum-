@@ -41,8 +41,8 @@ export class AchievementsComponent implements OnInit {
           diploma.name = rew.name;
           diploma.items = [];
           rew.items.forEach(item => {
-            item = {key: item, value: this.getDescription(rew.id, item)};
-            diploma.items.push(item);
+            const i = {key: item, value: this.getDescription(rew.id, item)};
+            diploma.items.push(i);
           });
           this.diplomas.push(diploma);
        });

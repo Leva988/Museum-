@@ -171,10 +171,24 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                }
             );
 
-        public IMongoCollection<Structure> Structure =>
+        public IMongoCollection<Structure> Structures =>
          _database.GetCollection<Structure>("Structures");
+        
+        public IMongoCollection<Production> Productions =>
+         _database.GetCollection<Production>("Productions");
 
-        public IMongoCollection<SubStructure> SubStructure =>
+        public GridFSBucket ProductionIcons =>
+            new GridFSBucket(
+                _database,
+                new GridFSBucketOptions
+                {
+                    BucketName = "productiob-photos",
+                    ChunkSizeBytes = _deafultChunkSize,
+                }
+             );
+
+
+        public IMongoCollection<SubStructure> SubStructures =>
          _database.GetCollection<SubStructure>("SubStructures");
 
         public IMongoCollection<EconomyYear> EconomyYears =>

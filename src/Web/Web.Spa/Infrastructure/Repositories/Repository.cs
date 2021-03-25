@@ -809,6 +809,109 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
+        #region  Production
+        public async Task<IEnumerable<Production>> GetProductions() =>
+            await _context.Productions.Find(_ => true)
+                .SortBy(c => c.Id)
+                .ToListAsync();
+
+        public async Task InsertProductionAsync(Production prod) =>
+            await _context.Productions
+                .InsertOneAsync(prod);
+
+        public async Task CreateOrUpdateProductionAsync(Production prod) {
+            var filter = Builders<Production>.Filter.Eq(x => x.Id, prod.Id);
+            var update = Builders<Production>.Update
+                .Set(x => x.Name, prod.Name);        
+            await _context.Productions.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
+                {
+                    IsUpsert = true
+                });
+        }
+
+        public async Task<Production> GetProductionAsync(string id) =>
+            await _context.Productions
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteProductionAsync(string id)
+        {
+            var prod = await GetProductionAsync(id);
+            if (prod != null && prod.Items.Count() > 0) 
+            {
+                foreach (var i in prod.Items)
+                {
+                    await DeleteProductionIconAsync(id, i);
+                }
+            }         
+            var actionResult = await _context.Productions
+                .DeleteOneAsync(p => p.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<FileStreamResult> GetProductionIconAsync(string id, string itemId)
+        {
+            var info = await _context.ProductionIcons
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
+
+            var stream = new MemoryStream();
+            await _context.ProductionIcons.DownloadToStreamAsync(info.Id, stream);
+            stream.Position = 0;
+            var contentType = info.Metadata.GetValue("Content-Type").ToString();
+            return new FileStreamResult(stream, contentType);
+        }
+
+        public async Task<string> GetProductionIconDescriptionAsync(string id, string itemId)
+        {
+            var info = await _context.ProductionIcons
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
+            var name = info.Filename;
+            return name;
+        }
+
+        public async Task<string> AddProductionIconAsync(Stream stream, string id, string contentType, string filename)
+        {
+            var prod = await GetProductionAsync(id);
+            if (prod == null)
+            {
+                return null;
+            }
+            string extension = System.IO.Path.GetExtension(filename);
+            string name =  filename.Substring(0, filename.Length - extension.Length);
+            var itemId = await _context.ProductionIcons
+                .UploadFromStreamAsync(
+                    name,
+                    stream,
+                    new GridFSUploadOptions
+                    {
+                        Metadata = new BsonDocument
+                        {
+                            {"Content-Type", contentType}
+                        },
+                    }
+                );
+
+            var update = Builders<Production>.Update.AddToSet(x => x.Items, itemId.ToString());
+            await _context.Productions.UpdateOneAsync(x => x.Id == id, update);
+
+            return itemId.ToString();
+        }
+
+        public async Task DeleteProductionIconAsync(string id, string itemId)
+        {
+            var hist = await GetProductionAsync(id);
+            var items = hist.Items.Where(el => el != itemId);
+            var update = Builders<Production>.Update.Set(x => x.Items, items);
+            await _context.Productions.UpdateOneAsync(x => x.Id == id, update);
+            await _context.ProductionIcons.DeleteAsync(ObjectId.Parse(itemId));
+        }
+        #endregion
+
         #region HistoryMilestone
         public async Task<IEnumerable<HistoryMilestone>> GetHistoryMilestones() =>
             await _context.HistoryMileStones.Find(_ => true)
@@ -1144,22 +1247,22 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         #region Structure
         public async Task<IEnumerable<Structure>> GetStructuresAsync() =>
-            await _context.Structure
+            await _context.Structures
                 .Find(_ => true)
                 .SortBy(c => c.Id)
                 .ToListAsync();
 
         public async Task InsertStructureAsync(Structure structure) =>
-             await _context.Structure
+             await _context.Structures
                    .InsertOneAsync(structure);
 
         public async Task<Structure> GetStructureAsync(string id) =>
-            await _context.Structure
+            await _context.Structures
                 .Find(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
         public async Task UpdateStructureAsync(Structure structure) =>
-            await _context.Structure
+            await _context.Structures
                .ReplaceOneAsync(x => x.Id == structure.Id,
                structure,
                new ReplaceOptions
@@ -1169,7 +1272,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         public async Task<bool> DeleteStructureAsync(string id)
         {
-            var actionResult = await _context.Structure
+            var actionResult = await _context.Structures
                 .DeleteOneAsync(p => p.Id == id);
 
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
@@ -1179,28 +1282,28 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         #region SubStructure
         public async Task<IEnumerable<SubStructure>> GetSubStructuresAsync() =>
-            await _context.SubStructure
+            await _context.SubStructures
                 .Find(_ => true)
                 .SortBy(c => c.Id)
                 .ToListAsync();
 
         public async Task<IEnumerable<SubStructure>> GetSubStructuresByStructureId(string structureId) =>
-            await _context.SubStructure
+            await _context.SubStructures
                     .Find(sub => sub.StructureId == structureId)
                     .SortBy(s => s.Id)
                     .ToListAsync();
 
         public async Task InsertSubStructureAsync(SubStructure subStructure) =>
-             await _context.SubStructure
+             await _context.SubStructures
                    .InsertOneAsync(subStructure);
 
         public async Task<SubStructure> GetSubStructureAsync(string id) =>
-            await _context.SubStructure
+            await _context.SubStructures
                 .Find(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
         public async Task UpdateSubStructureAsync(SubStructure subStructure) =>
-            await _context.SubStructure
+            await _context.SubStructures
                .ReplaceOneAsync(x => x.Id == subStructure.Id,
                subStructure,
                new ReplaceOptions
@@ -1210,7 +1313,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         public async Task<bool> DeleteSubStructureAsync(string id)
         {
-            var actionResult = await _context.SubStructure
+            var actionResult = await _context.SubStructures
                 .DeleteOneAsync(p => p.Id == id);
 
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;

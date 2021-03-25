@@ -3,6 +3,11 @@ import { Service } from '../models/service';
 import { environment } from 'src/environments/environment';
 import { fabric } from 'fabric';
 import { Repos } from './service/repos.service';
+import { Production } from '../models/production';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { ProductionNew } from '../models/productionNew';
 
 @Component({
   selector: 'app-business',
@@ -18,23 +23,57 @@ export class ServiceComponent implements OnInit {
   y: number;
   dt: number;
   services: Service[] = [];
-  servicesUrl = environment.backendUrl + '/Services';
-  constructor(private repos: Repos) {
+  productions: ProductionNew[] = [];
+  productionUrl = environment.backendUrl + '/Production';
+  constructor(private repos: Repos, private http: HttpClient) {
 
   }
 
   ngOnInit() {
     this.getServices();
+    this.getProduction();
   }
 
   getServices() {
-    this.repos.getServices(this.servicesUrl).subscribe(
+    this.repos.getServices().subscribe(
       (data: Service[]) => {
         this.services = data;
         this.drawCanvas();
       },
       error => console.log(error)
     );
+  }
+
+  getProduction() {
+    this.repos.getProduction().subscribe(
+      (data: Production[]) => {
+        data.forEach( prod => {
+          const p: ProductionNew = new ProductionNew();
+          p.id = prod.id;
+          p.name = prod.name;
+          p.items = [];
+          prod.items.forEach(item => {
+            const icon = {key: item, value: this.getDescription(p.id, item)};
+            p.items.push(icon);
+          });
+          this.productions.push(p);
+         }
+        );
+      },
+      error => console.log(error)
+    );
+  }
+
+  getDescription(id: string, itemid: string): Observable<string> {
+    return this.http.get(this.productionUrl + '/' + id + '/iconDescription/' + itemid, {responseType: 'text'}).
+      pipe(map(data => {
+        let desc = data.toString();
+        const sub = desc.match(/\d+/g);
+        sub.forEach(s => {
+          desc = desc.replace(new RegExp(s) , '<sub>' + s + '</sub>');
+        });
+        return desc;
+      }));
   }
 
   drawCanvas() {
@@ -66,7 +105,7 @@ export class ServiceComponent implements OnInit {
   }
 
   addCircles(canvas) {
-    // Perimetr Ellipse
+    // Perimetr Circle
     const r = ( canvas.width + canvas.height) * 0.2;
     const perimetr = 2 * Math.PI * r;
     this.dt = 0;
