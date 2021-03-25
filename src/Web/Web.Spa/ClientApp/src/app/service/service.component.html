@@ -8,8 +8,8 @@
             <canvas id="canvas" height="900px" width="900px"></canvas>
         </div>
         <h2>Виды выпускаемой продукции</h2>
-        <div class="row d-flex justify-content-around">
-            <div class="col-md-4 prod" *ngFor="let p of productions">
+        <div class="row  justify-content-around">
+            <div class="col-md-4 prod h-50" *ngFor="let p of productions">
                 <p class="text">{{p.name}}</p>
                 <hr>
                 <div class="d-flex align-items-center justify-content-around" *ngFor="let i of p.items">

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ProductionNew } from '../models/productionNew';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-business',
@@ -69,9 +70,11 @@ export class ServiceComponent implements OnInit {
       pipe(map(data => {
         let desc = data.toString();
         const sub = desc.match(/\d+/g);
-        sub.forEach(s => {
-          desc = desc.replace(new RegExp(s) , '<sub>' + s + '</sub>');
-        });
+        if (!isNullOrUndefined(sub)) {
+          sub.forEach(s => {
+            desc = desc.replace(new RegExp(s) , '<sub>' + s + '</sub>');
+          });
+        }
         return desc;
       }));
   }
