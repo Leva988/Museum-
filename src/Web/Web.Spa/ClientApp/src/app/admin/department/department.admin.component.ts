@@ -243,7 +243,7 @@ export class DepartmentAdminComponent implements OnInit {
             () => {
                 this.modalColor = '#2fc900';
                 this.modalMessage = 'Фото добавлено';
-                this.photo = environment.backendUrl + '/Department/' + this.editID + '/Photo';
+                this.photo = environment.backendUrl + '/Departments/' + this.editID + '/Photo';
                 $('#photoMessage').show();
             },
             (err) => {
