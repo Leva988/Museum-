@@ -281,7 +281,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task DeleteDepartmentPhotoAsync(string id);
 
-        Task<string> AddDepartmentPhotoAsync(Stream stream, string employeeId, string contentType);
+        Task<string> AddDepartmentPhotoAsync(Stream stream, string id, string contentType);
         #endregion
 
         #region Structures
@@ -296,22 +296,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<bool> DeleteStructureAsync(string id);
         #endregion
-
-        #region SubStructures
-
-        Task<IEnumerable<SubStructure>> GetSubStructuresAsync();
-
-        Task<SubStructure> GetSubStructureAsync(string id);
-
-        Task<IEnumerable<SubStructure>> GetSubStructuresByStructureId(string structureId);
-
-        Task InsertSubStructureAsync(SubStructure subStructure);
-
-        Task UpdateSubStructureAsync(SubStructure subStructure);
-
-        Task<bool> DeleteSubStructureAsync(string id);
-        #endregion
-
+       
         #region EconomyYear
         Task<IEnumerable<EconomyYear>> GetEconomyYearsAsync();
 

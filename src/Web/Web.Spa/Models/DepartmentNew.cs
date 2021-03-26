@@ -12,8 +12,6 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public string Description { get; set; }
 
-        public string Color { get; set; }
-
         public IEnumerable<string> Sectors { get; set; }
 
     }

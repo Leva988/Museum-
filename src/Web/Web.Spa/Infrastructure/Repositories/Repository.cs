@@ -1162,8 +1162,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         public async Task<IEnumerable<Department>> GetAllDepartmentsAsync() =>
          await _context.Departments.Find(_ => true)
-             .SortBy(d => d.Id)
-             .ToListAsync();
+            .SortBy(x => x.Id)
+            .ToListAsync();
 
         public async Task<Department> GetDepartmentAsync(string id) =>
             await _context.Departments
@@ -1273,47 +1273,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<bool> DeleteStructureAsync(string id)
         {
             var actionResult = await _context.Structures
-                .DeleteOneAsync(p => p.Id == id);
-
-            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
-        }
-
-        #endregion
-
-        #region SubStructure
-        public async Task<IEnumerable<SubStructure>> GetSubStructuresAsync() =>
-            await _context.SubStructures
-                .Find(_ => true)
-                .SortBy(c => c.Id)
-                .ToListAsync();
-
-        public async Task<IEnumerable<SubStructure>> GetSubStructuresByStructureId(string structureId) =>
-            await _context.SubStructures
-                    .Find(sub => sub.StructureId == structureId)
-                    .SortBy(s => s.Id)
-                    .ToListAsync();
-
-        public async Task InsertSubStructureAsync(SubStructure subStructure) =>
-             await _context.SubStructures
-                   .InsertOneAsync(subStructure);
-
-        public async Task<SubStructure> GetSubStructureAsync(string id) =>
-            await _context.SubStructures
-                .Find(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
-        public async Task UpdateSubStructureAsync(SubStructure subStructure) =>
-            await _context.SubStructures
-               .ReplaceOneAsync(x => x.Id == subStructure.Id,
-               subStructure,
-               new ReplaceOptions
-               {
-                   IsUpsert = true,
-               });
-
-        public async Task<bool> DeleteSubStructureAsync(string id)
-        {
-            var actionResult = await _context.SubStructures
                 .DeleteOneAsync(p => p.Id == id);
 
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;

@@ -182,14 +182,10 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                 _database,
                 new GridFSBucketOptions
                 {
-                    BucketName = "productiob-photos",
+                    BucketName = "production-photos",
                     ChunkSizeBytes = _deafultChunkSize,
                 }
              );
-
-
-        public IMongoCollection<SubStructure> SubStructures =>
-         _database.GetCollection<SubStructure>("SubStructures");
 
         public IMongoCollection<EconomyYear> EconomyYears =>
           _database.GetCollection<EconomyYear>("EconomyYears");

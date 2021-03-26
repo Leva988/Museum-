@@ -15,8 +15,6 @@ import { isNullOrUndefined } from 'util';
 export class CompanyDepartmentsComponent implements OnInit {
   structures: Structure[] = [];
   departments: Department[] = [];
-  url = environment.backendUrl + '/Structure';
-  depUrl = environment.backendUrl + '/Departments';
   constructor(private http: HttpClient, private comService: CompanyService) {
   }
 
@@ -25,11 +23,11 @@ export class CompanyDepartmentsComponent implements OnInit {
   }
 
   refreshStructure() {
-    this.comService.getStruct(this.url).subscribe(
+    this.comService.getStruct().subscribe(
       (data: Structure[]) => {
          // tslint:disable-next-line: prefer-for-of
           this.structures = data.reverse();
-          this.comService.getPeople(this.depUrl).subscribe(
+          this.comService.getDepartments().subscribe(
             // tslint:disable-next-line: no-shadowed-variable
             (data: Department[]) => {
               data.forEach(d => {

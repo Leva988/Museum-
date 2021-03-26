@@ -1,6 +1,4 @@
 import { Department } from '../models/department';
-import { SubStructure } from '../models/substructure';
-
 export class Structure {
 
     public id: string;
@@ -9,5 +7,5 @@ export class Structure {
 
     public departments: Department[];
 
-    public substructures: SubStructure[];
+    public heads: string[];
 }

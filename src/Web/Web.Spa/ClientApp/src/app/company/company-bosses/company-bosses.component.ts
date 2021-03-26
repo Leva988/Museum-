@@ -22,7 +22,7 @@ export class CompanyBossesComponent implements OnInit {
   ngOnInit() {}
 
   getBosses() {
-    this.comService.getPeople(this.url).subscribe(
+    this.comService.getPeople().subscribe(
       (data: Employee[]) => {
          // tslint:disable-next-line: prefer-for-of
          for (let i = 0; i < data.length; i++) {

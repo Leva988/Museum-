@@ -29,14 +29,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             foreach (Structure structure in structures)
             {
                 var departments = await _repository.GetDepartmentsByStructureAsync(structure.Id);
-                var subs = await _repository.GetSubStructuresByStructureId(structure.Id);
-                structure.Departments = departments;
-                foreach (SubStructure sub in subs)
-                {
-                     var deps = await _repository.GetDepartmentsByStructureAsync(sub.Id);
-                     sub.Departments = deps;
-                }
-                structure.SubStructures = subs;
+                structure.Departments = departments;               
             }
             return Ok(structures);
         }
@@ -48,13 +41,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var item = await _repository.GetStructureAsync(id);
             var departments = await _repository.GetDepartmentsByStructureAsync(item.Id);
-            var subs = await _repository.GetSubStructuresByStructureId(item.Id);
-            foreach (SubStructure sub in subs)
-            {
-                var deps = await _repository.GetDepartmentsByStructureAsync(sub.Id);
-                sub.Departments = deps;
-             }
-            item.SubStructures = subs;
             item.Departments = departments;
             if (item == null)
             {
@@ -106,7 +92,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         private Structure MapStructure(StructureNew structNew) =>
         new Structure
         {
-            BossPosition = structNew.BossPosition
+            BossPosition = structNew.BossPosition,
+            Heads = structNew.Heads
         };
     }
 }

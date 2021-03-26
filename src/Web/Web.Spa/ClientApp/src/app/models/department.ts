@@ -10,8 +10,6 @@ export class Department {
 
     public description: string;
 
-    public color: string;
-
     public employeesNumber: number;
 
     public sectors: [];

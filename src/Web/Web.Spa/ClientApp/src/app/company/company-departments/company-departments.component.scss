@@ -1,80 +1,74 @@
 .main {
     background-color: #18b855;
-    color: black;
-    text-align: center;
+    color: white;
     border-radius: 20px;
     padding: 5px;
+    height: 30vh;
+    text-align: center;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    word-wrap: break-word;
+}
+
+.container {
+    margin-bottom: 150px;
 }
 
 .head {
-    color: black;
-    font-size: 10pt;
-    font-weight: 900;
-    text-align: center;
-    border-radius: 20px;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #d44646;
-    border: 3px solid #874444;
-}
-
-.container-fluid {
-    margin-bottom: 120px;
-}
-
-#structure0 {
-    width: 57%;
-}
-
-#structure1 {
-    width: 25%;
-}
-
-#staff {
-    width: 17%;
-}
-
-#last a {
-    font-size: 9pt;
-    font-weight: 800;
+    color: white;
+    font-size: 12pt;
     text-transform: uppercase;
-    color: black;
-}
-
-#subBoss {
-    color: black;
-    font-size: 9pt;
-    font-weight: 900;
+    font-weight: 600;
     text-align: center;
-    border-radius: 20px;
-    padding: 10px;
-    margin-top: 20px;
-    background-color: #eda26f;
-    border: 3px solid;
-}
-
-.district {
-    margin-top: 20px;
-    margin-left: 50px;
-    border: 2px solid;
-    font-weight: 700;
     border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-    font-size: 7pt;
-    hyphens: auto;
-    word-wrap: break-word;
-    text-transform: uppercase;
+    padding: 10px;
+    margin-top: 20px;
 }
 
-a {
-    color: #13490a;
-    text-transform: lowercase;
-    text-transform: capitalize;
+.subHead {
+    color: white;
+    font-size: 10pt;
+    font-weight: 500;
+    text-align: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 3px solid;
+}
+
+#head0 {
+    background-color: #fc7303;
+}
+
+#head0 .subHead {
+    background-color: #b30909;
+}
+
+#head1 .subHead {
+    background-color: #4fb7d1;
+}
+
+#structure0 .district {
+    border: 3px solid #fc7303;
+}
+
+#structure0 a {
+    color: #fc7303;
+}
+
+#head1 {
+    background-color: #6b1ec9;
+}
+
+#structure1 .district {
+    border: 3px solid #6b1ec9;
+}
+
+#structure1 a {
+    color: #6b1ec9;
 }
 
 .sector {
-    background-color: #18b855;
     padding: 5px;
     margin-top: 20px;
     border: 1px solid;
@@ -82,4 +76,36 @@ a {
     text-align: center;
     word-wrap: break-word;
     font-size: 6pt;
+}
+
+.district {
+    margin-top: 20px;
+    margin-left: 50px;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+    font-size: 8pt;
+    hyphens: auto;
+    word-wrap: break-word;
+    text-transform: uppercase;
+}
+
+.last {
+    color: white;
+    font-size: 14pt;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+    background-color: grey;
+}
+
+.last a {
+    font-size: 10pt;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: white;
 }

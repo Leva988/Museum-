@@ -153,7 +153,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 Name = depNew.Name,
                 ShortName = depNew.ShortName,
                 Sectors = depNew.Sectors,
-                Color = depNew.Color,
                 StructureId = depNew.StructureId,
                 Description = depNew.Description,
             };
