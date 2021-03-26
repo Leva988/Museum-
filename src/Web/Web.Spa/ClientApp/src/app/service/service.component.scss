@@ -10,7 +10,12 @@ body {
 h2 {
     color: #5e9104;
     text-align: center;
+    margin-top: 60px;
     text-decoration: underline;
+}
+
+#production {
+    margin-bottom: -20px;
 }
 
 .prod {
@@ -32,4 +37,9 @@ hr {
 
 .caption {
     font-weight: 600;
+}
+
+@font-face {
+    font-family: "20db";
+    src: local("20db"), url("/assets/fonts/20db.otf");
 }

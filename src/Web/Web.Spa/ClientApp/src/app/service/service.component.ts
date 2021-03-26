@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ProductionNew } from '../models/productionNew';
 import { isNullOrUndefined } from 'util';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-business',
@@ -82,8 +83,9 @@ export class ServiceComponent implements OnInit {
   drawCanvas() {
     this.canvas = new fabric.Canvas('canvas');
     this.canvas.clear();
-    const text = new fabric.Text('Работы и услуги', {
+    const text = new fabric.Text('English', {
         fontSize: 30,
+        fontFamily: 'Comic Sans',
         fontWeight: 'bold',
         originX: 'center',
         originY: 'center',
