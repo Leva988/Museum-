@@ -16,6 +16,7 @@ import { Gallery } from '../models/gallery';
 import { CorporateYear } from '../models/corporateyear';
 import { CorporateMonth } from '../models/corporatemonth';
 import { HistoryMilestone } from '../models/historymilestones';
+import { Department } from '../models/department';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -38,10 +39,6 @@ export class AdminComponent implements ComponentCanDeactivate  {
 
   canDeactivate(): boolean | Observable<boolean> {
      return confirm('Вы хотите покинуть страницу? Данные авторизации будут утеряны!');
-  }
-
-  getDepartments() {
-    return this.http.get(this.baseUrl + '/departments');
   }
 
   // Employee Panel
@@ -95,6 +92,60 @@ export class AdminComponent implements ComponentCanDeactivate  {
       });
     }
 
+  // Department Panel
+  getDepartments() {
+    return this.http.get(this.baseUrl + '/Departments');
+  }
+
+  getStructure() {
+    return this.http.get(this.baseUrl + '/Structure');
+  }
+
+  getDepartment(id: string) {
+      return  this.http.get(this.baseUrl + '/Departments' + '/' + id, {responseType: 'json'});
+  }
+
+  addDepartment(dep: Department) {
+      return this.http.post(this.baseUrl + '/Departments', dep,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateDepartment(id: string, dep: Department) {
+      delete dep.id;
+      return this.http.put(this.baseUrl + '/Departments' + '/' + id, dep,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteDepartment(id: string) {
+      return this.http.delete(this.baseUrl + '/Departments' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  getDepartmentPhoto(id: string) {
+      return  this.http.get(this.baseUrl + '/Departments' + '/' + id + '/Photo', {responseType: 'blob'});
+  }
+
+  addDepartmentPhoto(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/Departments/' + id + '/Photo', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
+  deleteDepartmentPhoto(id: string) {
+      return this.http.delete(this.baseUrl + '/Departments/' + id + '/Photo',
+      {
+        headers: this.authHeaders
+      });
+    }
   // Achievement Panel
   getAchievements() {
     return this.http.get(this.baseUrl + '/Achievements');
@@ -258,7 +309,7 @@ export class AdminComponent implements ComponentCanDeactivate  {
       }
 
   // Project panel
-   getProjects() {
+  getProjects() {
      return this.http.get(this.baseUrl + '/Projects');
    }
 
@@ -313,105 +364,103 @@ export class AdminComponent implements ComponentCanDeactivate  {
           return  this.http.get(this.baseUrl + '/GalleryCategories' + '/' + id, {responseType: 'json'});
       }
 
-      addGalleryCategory(cat: GalleryCategory) {
-          return this.http.post(this.baseUrl + '/GalleryCategories', cat,
-          {
-            headers: this.authHeaders
-          });
-        }
-
-      updateGalleryCategory(id: string, cat: GalleryCategory) {
-          delete cat.id;
-          return this.http.put(this.baseUrl + '/GalleryCategories' + '/' + id, cat,
-          {
-            headers: this.authHeaders
-          });
-        }
-
-      deleteGalleryCategory(id: string) {
-          return this.http.delete(this.baseUrl + '/GalleryCategories' + '/' + id,
-          {
-            headers: this.authHeaders
-          });
-        }
-
-      // Gallery Panel
-       getGalleries() {
-         return this.http.get(this.baseUrl + '/Galleries');
-       }
-
-       getGallery(id: string) {
-           return  this.http.get(this.baseUrl + '/Galleries' + '/' + id, {responseType: 'json'});
-       }
-
-       addGallery(gal: Gallery) {
-           return this.http.post(this.baseUrl + '/Galleries', gal,
-           {
-             headers: this.authHeaders
-           });
-         }
-
-       updateGallery(id: string, gal: Gallery) {
-           delete gal.id;
-           return this.http.put(this.baseUrl + '/Galleries' + '/' + id, gal,
-           {
-             headers: this.authHeaders
-           });
-         }
-
-       deleteGallery(id: string) {
-           return this.http.delete(this.baseUrl + '/Galleries' + '/' + id,
-           {
-           headers: this.authHeaders
-         });
-       }
-
-     addGalleryPhoto(id: string, file: File) {
-         const formData: FormData = new FormData();
-         formData.append('avatar', file, file.name);
-         return this.http.post(this.baseUrl + '/Galleries/' + id + '/item', formData,
-         {
-           headers: this.authHeaders
-         });
+    addGalleryCategory(cat: GalleryCategory) {
+        return this.http.post(this.baseUrl + '/GalleryCategories', cat,
+        {
+          headers: this.authHeaders
+        });
+      }
+    updateGalleryCategory(id: string, cat: GalleryCategory) {
+        delete cat.id;
+        return this.http.put(this.baseUrl + '/GalleryCategories' + '/' + id, cat,
+        {
+          headers: this.authHeaders
+        });
+      }
+    deleteGalleryCategory(id: string) {
+        return this.http.delete(this.baseUrl + '/GalleryCategories' + '/' + id,
+        {
+          headers: this.authHeaders
+        });
       }
 
-     deleteGalleryPhoto(id: string, itemId: string) {
-         return this.http.delete(this.baseUrl + '/Galleries/' + id + '/item/' + itemId,
-         {
-           headers: this.authHeaders
-         });
-       }
+   // Gallery Panel
+    getGalleries() {
+      return this.http.get(this.baseUrl + '/Galleries');
+    }
 
-      // CorporateYear Panel
-      getCorporateYears() {
-        return this.http.get(this.baseUrl + '/CorporateYears');
+    getGallery(id: string) {
+        return  this.http.get(this.baseUrl + '/Galleries' + '/' + id, {responseType: 'json'});
+    }
+
+    addGallery(gal: Gallery) {
+        return this.http.post(this.baseUrl + '/Galleries', gal,
+        {
+          headers: this.authHeaders
+        });
       }
 
-     getCorporateYearById(id: string) {
-          return  this.http.get(this.baseUrl + '/CorporateYears' + '/' + id, {responseType: 'json'});
+    updateGallery(id: string, gal: Gallery) {
+        delete gal.id;
+        return this.http.put(this.baseUrl + '/Galleries' + '/' + id, gal,
+        {
+          headers: this.authHeaders
+        });
       }
 
-      addCorporateYear(year: CorporateYear) {
-          return this.http.post(this.baseUrl + '/CorporateYears', year,
-          {
-            headers: this.authHeaders
-          });
-        }
+    deleteGallery(id: string) {
+        return this.http.delete(this.baseUrl + '/Galleries' + '/' + id,
+        {
+        headers: this.authHeaders
+      });
+    }
 
-      updateCorporateYear(id: string, year: CorporateYear) {
-          delete year.id;
-          return this.http.put(this.baseUrl + '/CorporateYears' + '/' + id, year,
-          {
-            headers: this.authHeaders
-          });
-        }
+  addGalleryPhoto(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/Galleries/' + id + '/item', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
 
-      deleteCorporateYear(id: string) {
-          return this.http.delete(this.baseUrl + '/CorporateYears' + '/' + id,
-          {
-            headers: this.authHeaders
-          });
-        }
+  deleteGalleryPhoto(id: string, itemId: string) {
+      return this.http.delete(this.baseUrl + '/Galleries/' + id + '/item/' + itemId,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+   // CorporateYear Panel
+   getCorporateYears() {
+     return this.http.get(this.baseUrl + '/CorporateYears');
+   }
+
+  getCorporateYearById(id: string) {
+       return  this.http.get(this.baseUrl + '/CorporateYears' + '/' + id, {responseType: 'json'});
+   }
+
+   addCorporateYear(year: CorporateYear) {
+       return this.http.post(this.baseUrl + '/CorporateYears', year,
+       {
+         headers: this.authHeaders
+       });
+     }
+
+   updateCorporateYear(id: string, year: CorporateYear) {
+       delete year.id;
+       return this.http.put(this.baseUrl + '/CorporateYears' + '/' + id, year,
+       {
+         headers: this.authHeaders
+       });
+     }
+
+   deleteCorporateYear(id: string) {
+       return this.http.delete(this.baseUrl + '/CorporateYears' + '/' + id,
+       {
+         headers: this.authHeaders
+       });
+     }
 
         // CorporateMonth Panel
   getMonths() {
