@@ -83,7 +83,7 @@ export class ServiceComponent implements OnInit {
   drawCanvas() {
     this.canvas = new fabric.Canvas('canvas');
     this.canvas.clear();
-    const text = new fabric.Text('English', {
+    const text = new fabric.Text('Работы и услуги', {
         fontSize: 30,
         fontFamily: 'Comic Sans',
         fontWeight: 'bold',
