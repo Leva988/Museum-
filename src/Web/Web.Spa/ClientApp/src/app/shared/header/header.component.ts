@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   el: HTMLElement;
   ngOnInit() {
-    this.goBack = this.active.snapshot.url.shift().path;
+    this.goBack = this.active.snapshot.url[0].path;
     const route = this.active.snapshot.url.pop().path;
     if (route === 'admin') {
       const admin = document.getElementById('admin');
