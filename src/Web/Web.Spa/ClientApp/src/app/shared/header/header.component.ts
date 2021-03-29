@@ -12,12 +12,13 @@ export class HeaderComponent implements OnInit {
   @Input() links: KeyValue<string, string>[];
   @Input() navbackcolor: string;
   @Input() buttoncolor: string;
+  goBack;
   constructor(private active: ActivatedRoute) {
   }
 
   el: HTMLElement;
   ngOnInit() {
-    // tslint:disable-next-line: prefer-for-of
+    this.goBack = this.active.snapshot.url.shift().path;
     const route = this.active.snapshot.url.pop().path;
     if (route === 'admin') {
       const admin = document.getElementById('admin');
@@ -33,7 +34,11 @@ export class HeaderComponent implements OnInit {
   }
 
   return() {
-    window.location.href = '/';
+    if (this.goBack === 'departments') {
+     window.location.href = '/company/0';
+    } else {
+     window.location.href = '/';
+    }
   }
 
 }
