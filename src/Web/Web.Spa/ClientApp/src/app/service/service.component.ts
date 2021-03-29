@@ -86,7 +86,7 @@ export class ServiceComponent implements OnInit {
     this.canvas.clear();
     const text = new fabric.Text('Работы и услуги', {
         fontSize: 30,
-        fontFamily: 'Comic Sans',
+        fontFamily: 'Times New Roman',
         fontWeight: 'bold',
         originX: 'center',
         originY: 'center',
@@ -159,9 +159,9 @@ export class ServiceComponent implements OnInit {
       const text = new fabric.Textbox(serv.name, {
         fontSize: 15,
         originX: 'center',
+        fontFamily: 'Times New Roman',
         originY: 'center',
-        textAlign: 'center',
-        borderScaleFactor: 2
+        textAlign: 'center'
       });
       const circle = new fabric.Circle({
          radius: canvas.height / 10,
@@ -174,7 +174,7 @@ export class ServiceComponent implements OnInit {
       const group = new fabric.Group([circle, text], {
         top: dy + y,
         left:  dx + x,
-        selectable: false
+        selectable: true
       });
       canvas.add(group);
       canvas.renderAll();
