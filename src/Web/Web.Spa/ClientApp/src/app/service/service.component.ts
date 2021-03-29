@@ -69,6 +69,7 @@ export class ServiceComponent implements OnInit {
   getDescription(id: string, itemid: string): Observable<string> {
     return this.http.get(this.productionUrl + '/' + id + '/iconDescription/' + itemid, {responseType: 'text'}).
       pipe(map(data => {
+        // Lowercase digits
         let desc = data.toString();
         const sub = desc.match(/\d+/g);
         if (!isNullOrUndefined(sub)) {

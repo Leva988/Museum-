@@ -12,7 +12,7 @@
             <div class="col-md-3 prod h-50" *ngFor="let p of productions">
                 <p class="text">{{p.name}}</p>
                 <hr>
-                <div class="d-flex align-items-center justify-content-around" *ngFor="let i of p.items">
+                <div class="row d-flex align-items-center justify-content-center" *ngFor="let i of p.items">
                     <i> <p class="caption" [innerHTML]="i.value | async"></p></i>
                     <img src="{{productionUrl}}/{{p.id}}/icon/{{i.key}}" height="100px">
                 </div>
