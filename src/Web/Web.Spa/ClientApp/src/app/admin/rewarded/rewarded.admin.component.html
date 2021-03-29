@@ -45,7 +45,7 @@
                             <button type="button" class="close" aria-label="Close" (click)="removeReward(editEmployee.rewards, i)">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <label for="rewardId">Введите название награды:</label>
+                            <label for="rewardId{{i}}">Введите название награды:</label>
                             <select class="form-control" name="rewardId{{i}}" [(ngModel)]="editEmployee.rewards[i].rewardId" #rewardId="ngModel" required>
                                 <option *ngFor='let r of rewards' value="{{r.key}}">{{r.value}}</option>
                             </select>

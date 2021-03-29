@@ -12,5 +12,5 @@ export class Department {
 
     public employeesNumber: number;
 
-    public sectors: string [];
+    public sectors: string[];
 }

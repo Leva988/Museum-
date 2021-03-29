@@ -9,6 +9,7 @@ import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
 import { NgForm } from '@angular/forms';
 import { Structure } from 'src/app/models/structure';
+import { Sector } from 'src/app/models/sector';
 
 declare var $: any;
 
@@ -21,6 +22,7 @@ export class DepartmentAdminComponent implements OnInit {
     editDepartment: Department = new Department();
     structures: Structure[] = [];
     departments: Department[] = [];
+    sectors: Sector[] = [];
     editID: string;
     isNewRecord: boolean;
     photo: any;
@@ -114,24 +116,31 @@ export class DepartmentAdminComponent implements OnInit {
 
     addDepartment() {
         this.editDepartment = new Department();
-        this.editDepartment.sectors = [];
+        this.sectors = [];
         this.modalTitle = 'Добавить отдел';
         this.isNewRecord = true;
     }
 
     updateDepartment(e) {
+        this.sectors = [];
         this.editID = e.rowData.id;
         this.editDepartment = e.rowData;
+        if (this.editDepartment.sectors.length !== 0) {
+            this.editDepartment.sectors.forEach( s =>
+                this.sectors.push({name: s})
+            );
+        }
         delete this.editDepartment.employeesNumber;
         this.modalTitle = 'Изменить отдел';
         this.isNewRecord = false;
     }
 
-    addSector(sectors: string[]) {
-       sectors.push('');
+    addSector(sectors: Sector[]) {
+        const newsect = new Sector();
+        sectors.push(newsect);
     }
 
-    removeSector(sectors: string[], index: number) {
+    removeSector(sectors: Sector[], index: number) {
         sectors.splice(index, 1);
     }
 
@@ -147,6 +156,11 @@ export class DepartmentAdminComponent implements OnInit {
 
     saveDepartment(form: NgForm) {
         if (form.valid) {
+            this.editDepartment.sectors = [];
+            this.sectors.forEach (s => {
+                this.editDepartment.sectors.push(s.name);
+             }
+            );
             if (this.isNewRecord) {
                 this.repository.addDepartment(this.editDepartment).subscribe(
                     () => {
