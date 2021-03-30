@@ -1,46 +1,45 @@
 <app-header title="Достижения" navbackcolor='linear-gradient(to bottom,#3c6626,#419415)' buttoncolor='#3c6626'>
 </app-header>
 <app-button backcolor='#3c6626' buttoncolor="#419415"> </app-button>
-<div class="container-fluid ">
+<div class="container-fluid">
     <h2 id="diploma" class="title">Дипломы, грамоты, награды</h2>
-    <div class="rewards" *ngFor="let d of diplomas" class="title">
+    <div class="rewards" *ngFor="let d of rewards" class="title">
         <h3>
             {{d.name}}
         </h3>
         <div class="row d-flex justify-content-around align-items-start">
             <div class="col-md-3 diploma align-items-center justify-content-around" *ngFor="let i of d.items; let index = index">
-                <img class="img-fluid " src="{{rewardsUrl}}/{{d.id}}/Image/{{i.key}}" (click)="diploma=d; active=index; photos=d.items" data-toggle="modal" data-target="#ModalImage">
-                <h5>{{i.value | async}}</h5>
+                <img class="img-fluid" src="{{rewardsUrl}}/{{d.id}}/Image/{{i}}" (click)="diploma=d; active=index; getModalDescription(d.id, d.items)" data-toggle="modal" data-target="#ModalImage">
             </div>
         </div>
     </div>
+</div>
 
-    <div id="ModalImage" class="modal fade">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content d-flex justify-content-center align-items-center">
-                <div id="achCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li *ngFor="let item of photos; let u = index" [attr.data-slide-to]="active" [ngClass]="{'active':  u === active }"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item" *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === active}">
-                            <div class="img-container">
-                                <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block mw-100 h-100 img-fluid">
-                            </div>
+<div id="ModalImage" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document" tabindex="-1">
+        <div class="modal-content">
+            <div id="achCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li *ngFor="let item of photos; let u = index" [attr.data-slide-to]="active" [ngClass]="{'active':  u === active }"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item" *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === active}">
+                        <div class="img-container">
+                            <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block w-100 h-100 img-fluid">
                             <div class="carousel-caption">
-                                <h5>{{photo.value | async}}</h5>
+                                <h5>{{photo.value}}</h5>
                             </div>
                         </div>
                     </div>
-                    <a *ngIf="diploma.items.length > 1" class="carousel-control-prev" href="#achCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon fontIcon"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a *ngIf="diploma.items.length > 1" class="carousel-control-next" href="#achCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon fontIcon"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
                 </div>
+                <a *ngIf="diploma.items.length > 1" class="carousel-control-prev" href="#achCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon fontIcon"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a *ngIf="diploma.items.length > 1" class="carousel-control-next" href="#achCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon fontIcon"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         </div>
     </div>

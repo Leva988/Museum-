@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Achievement } from '../models/achievement';
 import { HttpClient } from '@angular/common/http';
 import { AchievementNew } from '../models/achievementNew';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import { KeyValue } from '@angular/common';
 
@@ -20,41 +20,36 @@ export class AchievementsComponent implements OnInit {
   rewardsUrl = environment.backendUrl  + '/Achievements';
   rewards: Achievement[] = [];
   diplomas: AchievementNew[] = [];
-  diploma: AchievementNew = new AchievementNew();
+  diploma: Achievement = new Achievement();
   active: number;
-  photos: KeyValue<string, Observable<string>>[] = [];
+  photos: KeyValue<string, string>[] = [];
+  descriptions: string[] = [];
 
   constructor(private rewardservice: RewardService, private http: HttpClient) {
     this.diploma.items = [];
     this.refreshRewards();
-    $('#ModalImage').on('hidden.bs.modal', () => {
-      this.diploma = null;
-      this.diploma.items = [];
-      this.active = null;
-    });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    $(document).on('hide.bs.modal', '#ModalImage', () => {
+      this.photos = [];
+    });
+   }
   refreshRewards() {
     this.rewardservice.getRewards(this.rewardsUrl).subscribe(
       (data: Achievement[]) => {
         this.rewards = data;
-        this.rewards.forEach(rew => {
-          const diploma: AchievementNew = new AchievementNew();
-          diploma.id = rew.id;
-          diploma.name = rew.name;
-          diploma.items = [];
-          rew.items.forEach(item => {
-            const i = {key: item, value: this.getDescription(rew.id, item)};
-            diploma.items.push(i);
-          });
-          this.diplomas.push(diploma);
-       });
       }, error => console.log(error));
   }
 
-  getDescription(id: string, itemid: string): Observable<string> {
-    return this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + itemid, {responseType: 'text'}).
-      pipe(map(data => data.toString()));
+  getModalDescription(id: string, itemIds: string[]) {
+    for (const photo of itemIds) {
+      this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + photo, {responseType: 'text'}).subscribe(
+        (data: string) => {
+          this.photos.push({key: photo, value: data });
+        },
+        error => console.log(error));
+    }
   }
+
 }
