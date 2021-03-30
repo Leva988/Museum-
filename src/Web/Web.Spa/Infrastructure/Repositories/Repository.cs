@@ -475,15 +475,19 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                await _context.Projects
                      .InsertOneAsync(proj);
 
-        public async Task CreateOrUpdateProjectAsync(Project project) =>
-            await _context.Projects
-                .ReplaceOneAsync(x => x.Id == project.Id,
-                project, 
-                new ReplaceOptions
+        public async Task CreateOrUpdateProjectAsync(Project project) {
+            var filter = Builders<Project>.Filter.Eq(x => x.Id, project.Id);
+            var update = Builders<Project>.Update
+                .Set(x => x.Name, project.Name)
+                .Set(x => x.Description, project.Description);      
+            await _context.Projects.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
                 {
-                    IsUpsert = true,
+                    IsUpsert = true
                 });
-
+        }
         public async Task<Project> GetProjectAsync(string id) =>
             await _context.Projects
                 .Find(x => x.Id == id)
@@ -590,13 +594,19 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             await _context.Achievements
                 .InsertOneAsync(achievement);
 
-        public async Task CreateOrUpdateAchievementAsync(Achievement ach) =>
-            await _context.Achievements.ReplaceOneAsync(x => x.Id == ach.Id,
-                ach,
-                new ReplaceOptions 
+        public async Task CreateOrUpdateAchievementAsync(Achievement ach) {
+            var filter = Builders<Achievement>.Filter.Eq(x => x.Id, ach.Id);
+            var update = Builders<Achievement>.Update
+                .Set(x => x.Name, ach.Name);      
+            await _context.Achievements.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
                 {
-                    IsUpsert = true,
+                    IsUpsert = true
                 });
+        }
+
 
         public async Task<Achievement> GetAchievementAsync(string id) =>
             await _context.Achievements
