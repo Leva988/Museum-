@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { AchievementNew } from '../models/achievementNew';
 import { map } from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import { KeyValue } from '@angular/common';
 
 declare var $: any;
 
@@ -20,13 +21,16 @@ export class AchievementsComponent implements OnInit {
   rewards: Achievement[] = [];
   diplomas: AchievementNew[] = [];
   diploma: AchievementNew = new AchievementNew();
-  active: string;
+  active: number;
+  photos: KeyValue<string, Observable<string>>[] = [];
 
   constructor(private rewardservice: RewardService, private http: HttpClient) {
     this.diploma.items = [];
     this.refreshRewards();
     $('#ModalImage').on('hidden.bs.modal', () => {
-      this.diploma = new AchievementNew();
+      this.diploma = null;
+      this.diploma.items = [];
+      this.active = null;
     });
   }
 
@@ -52,10 +56,5 @@ export class AchievementsComponent implements OnInit {
   getDescription(id: string, itemid: string): Observable<string> {
     return this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + itemid, {responseType: 'text'}).
       pipe(map(data => data.toString()));
-  }
-
-  modal(diploma, i) {
-    this.diploma = diploma;
-    this.active = i;
   }
 }

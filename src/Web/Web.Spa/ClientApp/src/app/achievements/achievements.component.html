@@ -9,7 +9,7 @@
         </h3>
         <div class="row d-flex justify-content-around align-items-start">
             <div class="col-md-3 diploma align-items-center justify-content-around" *ngFor="let i of d.items; let index = index">
-                <img class="img-fluid " src="{{rewardsUrl}}/{{d.id}}/Image/{{i.key}}" (click)="modal(d, index)" data-toggle="modal" data-target="#ModalImage">
+                <img class="img-fluid " src="{{rewardsUrl}}/{{d.id}}/Image/{{i.key}}" (click)="diploma=d; active=index; photos=d.items" data-toggle="modal" data-target="#ModalImage">
                 <h5>{{i.value | async}}</h5>
             </div>
         </div>
@@ -20,12 +20,12 @@
             <div class="modal-content d-flex justify-content-center align-items-center">
                 <div id="achCarousel" class="carousel slide" data-interval="10000" data-ride="carousel">
                     <ol class="carousel-indicators">
-                        <li *ngFor="let item of diploma.items; let i = index" [attr.data-slide-to]="active" [ngClass]="{'active':  i === active }"></li>
+                        <li *ngFor="let item of photos; let u = index" [attr.data-slide-to]="active" [ngClass]="{'active':  u === active }"></li>
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item" *ngFor="let photo of diploma.items;let u = index;" [ngClass]="{'active':  u === active}">
+                        <div class="carousel-item" *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === active}">
                             <div class="img-container">
-                                <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block w-100 img-fluid">
+                                <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block mw-100 h-100 img-fluid">
                             </div>
                             <div class="carousel-caption">
                                 <h5>{{photo.value | async}}</h5>
