@@ -13,7 +13,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /* [Authorize] */
+    [Authorize] 
     public class RewardedEmployeesController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -74,7 +74,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/rewardedemployee
         [HttpPut("{id}")]
-        public async Task<ActionResult<Veteran>> Put(string id, [FromBody] RewardedEmployeeNew rewNew)
+        public async Task<ActionResult<RewardedEmployee>> Put(string id, [FromBody] RewardedEmployeeNew rewNew)
         {
             if (!ModelState.IsValid)
             {

@@ -27,9 +27,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Boss> Bosses =>
             _database.GetCollection<Boss>("Bosses");
 
-        public IMongoCollection<Veteran> Veterans =>
-             _database.GetCollection<Veteran>("Veterans");
-
         public IMongoCollection<RewardedEmployee> RewardedEmployees =>
              _database.GetCollection<RewardedEmployee>("RewardedEmployees");
 
@@ -65,16 +62,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                     ChunkSizeBytes = _deafultChunkSize,
                 }
             );
-
-        public GridFSBucket VeteranPhotos =>
-           new GridFSBucket(
-               _database,
-               new GridFSBucketOptions
-               {
-                   BucketName = "veteran-photos",
-                   ChunkSizeBytes = _deafultChunkSize,
-               }
-           );
         
         public GridFSBucket RewardedPhotos =>
            new GridFSBucket(
@@ -186,12 +173,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
                     ChunkSizeBytes = _deafultChunkSize,
                 }
              );
-
-        public IMongoCollection<EconomyYear> EconomyYears =>
-          _database.GetCollection<EconomyYear>("EconomyYears");
-
-        public IMongoCollection<EconomyMonth> EconomyMonths =>
-                  _database.GetCollection<EconomyMonth>("EconomyMonths");
 
         public IMongoCollection<HistoryMilestone> HistoryMileStones => 
                 _database.GetCollection<HistoryMilestone>("HistoryMileStones");

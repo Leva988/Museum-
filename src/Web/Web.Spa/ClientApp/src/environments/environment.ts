@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   proxyNeftUrl: '/newsneftby/category',
   proxyBelnUrl: '/newsbn/sitebeloil/ru/addUp/mediaCenter/news/getNews',
-  authTokenUrl: 'https://dev.it.beloil.by',
+  authTokenUrl: 'https://ias.it.beloil.by',
   backendUrl: 'https://localhost:5001/api'
 };
 

@@ -48,26 +48,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<string> AddBossPhotoAsync(Stream stream, string id, string contentType);
         #endregion
 
-        #region Veteran
-        Task<IEnumerable<Veteran>> GetVeteransAsync();
-
-        Task<Veteran> GetVeteranAsync(string id);     
-
-        Task InsertVeteranAsync(Veteran veteran);
-
-        Task InsertManyVeterans(IEnumerable<Veteran> veterans);
-
-        Task CreateOrUpdateVeteranAsync(Veteran veteran);
-
-        Task<bool> DeleteVeteranAsync(string id);
-
-        Task<FileStreamResult> GetVeteranPhotoAsync(string id);
-
-        Task DeleteVeteranPhotoAsync(string id);
-
-        Task<string> AddVeteranPhotoAsync(Stream stream, string veteranId, string contentType);
-        #endregion
-
         #region Production
         Task<IEnumerable<Production>> GetProductions();
 
@@ -297,33 +277,5 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<bool> DeleteStructureAsync(string id);
         #endregion
        
-        #region EconomyYear
-        Task<IEnumerable<EconomyYear>> GetEconomyYearsAsync();
-
-        Task<EconomyYear> GetEconomyYearAsync(string id);
-
-        Task<IEnumerable<EconomyYear>> GetEconomyYearsByDepartment(string depId);
-
-        Task InsertEconomyYearAsync(EconomyYear year);
-
-        Task UpdateEconomyYearAsync(EconomyYear year);
-
-        Task<bool> DeleteEconomyYearAsync(string id);
-        #endregion
-
-        #region EconomyMonth
-        Task<IEnumerable<EconomyMonth>> GetEconomyMonthsAsync();
-
-        Task<EconomyMonth> GetEconomyMonthAsync(string id);
-
-        Task<IEnumerable<EconomyMonth>> GetEconomyMonthsByDepartment(string depId);
-
-        Task InsertEconomyMonthAsync(EconomyMonth month);
-
-        Task UpdateEconomyMonthAsync(EconomyMonth month);
-
-        Task<bool> DeleteEconomyMonthAsync(string id);
-        #endregion
-
     }
 }

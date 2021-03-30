@@ -46,7 +46,6 @@ namespace Belorusneft.Museum.Web.Spa
                     Title = "Museum API",
                     Version = "v1"
                 });
-                /*
                 options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.ApiKey,
@@ -71,7 +70,7 @@ namespace Belorusneft.Museum.Web.Spa
                         },
                         new List<string>()
                     },
-                });*/
+                });
             });
            
 
@@ -81,7 +80,6 @@ namespace Belorusneft.Museum.Web.Spa
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
             var identityUrl = Configuration.GetValue<string>("IdentityUrl");
-            /*
             services
                 .AddAuthorization()
                 .AddAuthentication(options =>
@@ -93,10 +91,8 @@ namespace Belorusneft.Museum.Web.Spa
                 {
                     options.Authority = identityUrl;
                     options.RequireHttpsMetadata = false;
-                    options.Audience = "museum.sis";
+                    options.Audience = "museum.bgpz";
                 });
-
-            */
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -146,10 +142,8 @@ namespace Belorusneft.Museum.Web.Spa
             });
 
             app.UseMiddleware<ReverseProxyMiddleware>();
-            /*
             app.UseAuthentication();
             app.UseAuthorization();
-            */
             app.UseStatusCodePages();
             app.UseEndpoints(endpoints =>
             {

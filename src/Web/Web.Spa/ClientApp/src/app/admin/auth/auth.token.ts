@@ -17,9 +17,9 @@ export class AuthToken {
   authenticate(name: string, pass: string) {
       const body = new HttpParams()
         .set('grant_type', 'password')
-        .set('client_id', 'museum.sis.web')
+        .set('client_id', 'museum.bgpz.web')
         .set('client_secret', 'secret')
-        .set('scope', 'museum.sis')
+        .set('scope', 'museum.bgpz')
         .set('username', name.toString())
         .set('password', pass.toString());
       const head = new HttpHeaders();

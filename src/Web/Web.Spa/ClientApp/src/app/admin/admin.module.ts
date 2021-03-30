@@ -24,7 +24,7 @@ import { DepartmentAdminComponent } from './department/department.admin.componen
 
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
-  { path: 'main', component: AdminComponent, // canActivate: [AuthGuard], canDeactivate: [ExitGuard],
+  { path: 'main', component: AdminComponent, canActivate: [AuthGuard], canDeactivate: [ExitGuard],
     children: [
       { path: 'employees', component: EmployeeAdminComponent},
       { path: 'achievements', component: AchievementAdminComponent},
