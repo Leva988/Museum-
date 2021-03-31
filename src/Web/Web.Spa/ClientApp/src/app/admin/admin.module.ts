@@ -20,8 +20,8 @@ import { CorporateYearAdminComponent } from './corporate-year/corporate-year.adm
 import { CorporateMonthAdminComponent } from './corporate-month/corporate-month.admin.component';
 import { HistoryAdminComponent } from './history-milestones/history.admin.component';
 import { DepartmentAdminComponent } from './department/department.admin.component';
-import { JwtHelperService, JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
-import { CookieModule, CookieService } from 'ngx-cookie';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { CookieModule } from 'ngx-cookie';
 
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
@@ -45,11 +45,6 @@ const routing = RouterModule.forChild([
 @NgModule({
   imports: [CommonModule, FormsModule, routing, ReactiveFormsModule, AgGridModule.withComponents([ButtonRendererComponent]),
   JwtModule.forRoot({
-    config: {
-      tokenGetter: function  tokenGetter() {
-         return localStorage.getItem('token');
-      }
-    },
   }),
   CookieModule.forRoot()],
   declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, DepartmentAdminComponent,
