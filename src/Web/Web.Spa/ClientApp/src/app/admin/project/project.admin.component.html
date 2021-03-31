@@ -59,8 +59,8 @@
                     <div class="carousel-inner">
                         <div class="carousel-item" *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === 0}">
                             <input type="button" value="Удалить" (click)="deletePhoto(photo, u);" class="btn btn-danger btn-lg btn-block" />
-                            <div class="img-container">
-                                <img src="{{url}}/{{editID}}/item/{{photo}}" class="d-block w-100 img-fluid">
+                            <div class="img-container d-flex justify-content-center">
+                                <img src="{{url}}/{{editID}}/item/{{photo}}" class="d-block h-100 img-fluid">
                             </div>
                         </div>
                     </div>
