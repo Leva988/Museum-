@@ -8,6 +8,10 @@
     text-align: center;
 }
 
+.img {
+    margin-bottom: 20px;
+}
+
 .img:hover {
     cursor: pointer;
 }
@@ -77,6 +81,6 @@
 .img-container {
     height: auto;
     display: block;
-    height: 95vh;
+    height: 80vh;
     overflow: hidden;
 }
