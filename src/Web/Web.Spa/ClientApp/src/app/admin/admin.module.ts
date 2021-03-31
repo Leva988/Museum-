@@ -9,7 +9,6 @@ import { AuthGuard } from './auth/auth.guard';
 import { AuthToken } from './auth/auth.token';
 import { EmployeeAdminComponent } from './employee/employee.admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ExitGuard } from './auth/exit.admin.guard';
 import { ButtonRendererComponent } from './button-renderer.component';
 import { AchievementAdminComponent } from './achievement/achievement.admin.component';
 import { RewardedAdminComponent } from './rewarded/rewarded.admin.component';
@@ -21,10 +20,11 @@ import { CorporateYearAdminComponent } from './corporate-year/corporate-year.adm
 import { CorporateMonthAdminComponent } from './corporate-month/corporate-month.admin.component';
 import { HistoryAdminComponent } from './history-milestones/history.admin.component';
 import { DepartmentAdminComponent } from './department/department.admin.component';
+import { JwtHelperService, JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
 
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
-  { path: 'main', component: AdminComponent, canActivate: [AuthGuard], canDeactivate: [ExitGuard],
+  { path: 'main', component: AdminComponent, canActivate: [AuthGuard],
     children: [
       { path: 'employees', component: EmployeeAdminComponent},
       { path: 'achievements', component: AchievementAdminComponent},
@@ -40,12 +40,20 @@ const routing = RouterModule.forChild([
      ]},
       { path: '**', redirectTo: 'auth' }
 ]);
+
 @NgModule({
-  imports: [CommonModule, FormsModule, routing, ReactiveFormsModule, AgGridModule.withComponents([ButtonRendererComponent])],
+  imports: [CommonModule, FormsModule, routing, ReactiveFormsModule, AgGridModule.withComponents([ButtonRendererComponent]),
+  JwtModule.forRoot({
+    config: {
+      tokenGetter: function  tokenGetter() {
+         return localStorage.getItem('token');
+      }
+    },
+  })],
   declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, DepartmentAdminComponent,
      GalleryAdminComponent, RewardedAdminComponent, ButtonRendererComponent, RewardAdminComponent, HistoryAdminComponent,
      ProjectAdminComponent, GalleryCategoryAdminComponent, CorporateYearAdminComponent, CorporateMonthAdminComponent],
-  providers: [AuthGuard, AuthToken, ExitGuard]
+  providers: [AuthGuard, AuthToken, JwtHelperService]
 })
 export class AdminModule {
 

@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
-import { ComponentCanDeactivate } from './auth/exit.admin.guard';
 import { AuthToken } from './auth/auth.token';
 import { HttpClient,  HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Employee } from '../models/employee';
 import { Achievement } from '../models/achievement';
@@ -17,6 +15,7 @@ import { CorporateYear } from '../models/corporateyear';
 import { CorporateMonth } from '../models/corporatemonth';
 import { HistoryMilestone } from '../models/historymilestones';
 import { Department } from '../models/department';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -24,22 +23,21 @@ styleUrls: ['admin.component.scss'],
 providers: [AuthComponent]
 })
 
-export class AdminComponent implements ComponentCanDeactivate  {
+@Injectable()
+export class AdminComponent  {
    baseUrl: string;
    authHeaders: HttpHeaders;
-   constructor(private router: Router, private token: AuthToken, private http: HttpClient) {
+   constructor(private router: Router, private token: AuthToken, private http: HttpClient,  public jwtHelper: JwtHelperService) {
       this.baseUrl = environment.backendUrl;
-      this.authHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token.auth_token}`);
+      this.authHeaders = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     }
 
    logout() {
-     this.token.authentificated = false;
-     this.router.navigateByUrl('/');
+      if (confirm('Вы хотите покинуть страницу? Данные авторизации будут утеряны!')) {
+       localStorage.removeItem('token');
+       this.router.navigateByUrl('/');
+      }
     }
-
-  canDeactivate(): boolean | Observable<boolean> {
-     return confirm('Вы хотите покинуть страницу? Данные авторизации будут утеряны!');
-  }
 
   // Employee Panel
   getEmployees() {

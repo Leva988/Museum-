@@ -3,7 +3,7 @@
 <app-button backcolor='#3c6626' buttoncolor="#419415"> </app-button>
 <div class="container-fluid">
     <h2 id="diploma" class="title">Дипломы, грамоты, награды</h2>
-    <div class="rewards" *ngFor="let d of rewards" class="title">
+    <div class="rewards" *ngFor="let d of rewards | async" class="title">
         <h3>
             {{d.name}}
         </h3>
@@ -27,7 +27,7 @@
                         <div class="img-container d-flex justify-content-center">
                             <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block h-100 img-fluid">
                             <div class="carousel-caption">
-                                <h5>{{photo.value}}</h5>
+                                <h5>{{photo.value | async}}</h5>
                             </div>
                         </div>
                     </div>

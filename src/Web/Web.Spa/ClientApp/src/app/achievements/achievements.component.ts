@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Achievement } from '../models/achievement';
 import { HttpClient } from '@angular/common/http';
 import { KeyValue } from '@angular/common';
+import { Observable } from 'rxjs';
 
 declare var $: any;
 
@@ -15,10 +16,10 @@ declare var $: any;
 
 export class AchievementsComponent implements OnInit {
   rewardsUrl = environment.backendUrl  + '/Achievements';
-  rewards: Achievement[] = [];
+  rewards: Observable<Achievement[]>;
   diploma: Achievement = new Achievement();
   active: number;
-  photos: KeyValue<string, string>[] = [];
+  photos: KeyValue<string, Observable<string>>[] = [];
   descriptions: string[] = [];
 
   constructor(private rewardservice: RewardService, private http: HttpClient) {
@@ -32,19 +33,15 @@ export class AchievementsComponent implements OnInit {
     });
    }
   refreshRewards() {
-    this.rewardservice.getRewards(this.rewardsUrl).subscribe(
-      (data: Achievement[]) => {
-        this.rewards = data;
-      }, error => console.log(error));
+    this.rewards = this.rewardservice.getRewards(this.rewardsUrl);
   }
 
   getModalDescription(id: string, itemIds: string[]) {
     for (const photo of itemIds) {
-      this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + photo, {responseType: 'text'}).subscribe(
-        (data: string) => {
-          this.photos.push({key: photo, value: data });
-        },
-        error => console.log(error));
+       this.photos.push({
+             key: photo,
+             value: this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + photo, {responseType: 'text'}) 
+        });
     }
   }
 

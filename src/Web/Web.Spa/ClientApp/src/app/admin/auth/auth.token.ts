@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import {  HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
-export class AuthToken {
+export class AuthToken implements OnDestroy  {
     // tslint:disable: variable-name
     auth_Url: string;
     public auth_token: string;
-    authentificated = false;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
       this.auth_Url = environment.authTokenUrl;
     }
 
@@ -31,9 +31,17 @@ export class AuthToken {
         }).pipe(map((data: any) => {
             if (data) {
              this.auth_token = data.access_token;
-             this.authentificated = true;
+             localStorage.setItem('token', this.auth_token);
             }
         }));
+    }
+
+    public isAuthentificated(): boolean {
+      return !this.jwtHelper.isTokenExpired(localStorage.getItem('token'));
+    }
+
+    ngOnDestroy() {
+      localStorage.removeItem('token');
     }
 
 }
