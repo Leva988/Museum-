@@ -3,9 +3,6 @@ import { RewardService } from './rewards-service/rewards-service.service';
 import { environment } from 'src/environments/environment';
 import { Achievement } from '../models/achievement';
 import { HttpClient } from '@angular/common/http';
-import { AchievementNew } from '../models/achievementNew';
-import { map, take } from 'rxjs/operators';
-import {Observable} from 'rxjs';
 import { KeyValue } from '@angular/common';
 
 declare var $: any;
@@ -19,7 +16,6 @@ declare var $: any;
 export class AchievementsComponent implements OnInit {
   rewardsUrl = environment.backendUrl  + '/Achievements';
   rewards: Achievement[] = [];
-  diplomas: AchievementNew[] = [];
   diploma: Achievement = new Achievement();
   active: number;
   photos: KeyValue<string, string>[] = [];
