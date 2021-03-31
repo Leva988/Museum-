@@ -107,6 +107,7 @@ export class ServiceComponent implements OnInit {
       });
     this.canvas.add(group);
     this.addCircles(this.canvas);
+    fabric.Object.prototype.objectCaching = false;
     this.canvas.renderAll();
   }
 
@@ -120,8 +121,8 @@ export class ServiceComponent implements OnInit {
     let cos = 0;
     let x = 0;
     let y = 0;
-    const dx = 10;
-    const dy = canvas.height * 0.4;
+    const dx = canvas.width * 0.05;
+    const dy = canvas.height * 0.45;
     for (const [index, serv] of this.services.entries()) {
       if (index === 0) {
         x = 0;
@@ -164,7 +165,7 @@ export class ServiceComponent implements OnInit {
         textAlign: 'center'
       });
       const circle = new fabric.Circle({
-         radius: canvas.height / 10,
+         radius: canvas.height / 30,
          fill: '#53d13d',
          stroke: '#7e807c',
          strokeWidth: 5,
@@ -174,11 +175,26 @@ export class ServiceComponent implements OnInit {
       const group = new fabric.Group([circle, text], {
         top: dy + y,
         left:  dx + x,
-        selectable: true
+        name: 'circle',
+        selectable: false
       });
       canvas.add(group);
       canvas.renderAll();
     }
+    this.animateCircles(canvas);
+  }
 
+  animateCircles(canvas) {
+    const allObjects = canvas.getObjects();
+    allObjects.forEach(obj => {
+        if (obj.name === 'circle') {
+          obj._objects[0].animate('radius',  obj._objects[0].radius * 3,
+            {
+              onChange: canvas.renderAll.bind(canvas),
+              duration: 1000,
+              easing: fabric.util.ease.easeOutBounce
+            });
+        }
+    });
   }
 }
