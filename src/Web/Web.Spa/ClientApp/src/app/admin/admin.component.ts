@@ -15,7 +15,7 @@ import { CorporateYear } from '../models/corporateyear';
 import { CorporateMonth } from '../models/corporatemonth';
 import { HistoryMilestone } from '../models/historymilestones';
 import { Department } from '../models/department';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -27,14 +27,14 @@ providers: [AuthComponent]
 export class AdminComponent  {
    baseUrl: string;
    authHeaders: HttpHeaders;
-   constructor(private router: Router, private token: AuthToken, private http: HttpClient,  public jwtHelper: JwtHelperService) {
+   constructor(private router: Router, private token: AuthToken, private http: HttpClient, private cookie: CookieService) {
       this.baseUrl = environment.backendUrl;
       this.authHeaders = new HttpHeaders().set('Authorization', `Bearer ${localStorage.getItem('token')}`);
     }
 
    logout() {
       if (confirm('Вы хотите покинуть страницу? Данные авторизации будут утеряны!')) {
-       localStorage.removeItem('token');
+       this.cookie.remove('token');
        this.router.navigateByUrl('/');
       }
     }

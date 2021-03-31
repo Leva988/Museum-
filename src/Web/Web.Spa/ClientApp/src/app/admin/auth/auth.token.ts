@@ -3,6 +3,8 @@ import { environment } from 'src/environments/environment';
 import {  HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { CookieService } from 'ngx-cookie';
+import { isNullOrUndefined } from 'util';
 
 @Injectable()
 export class AuthToken implements OnDestroy  {
@@ -10,7 +12,7 @@ export class AuthToken implements OnDestroy  {
     auth_Url: string;
     public auth_token: string;
 
-    constructor(private http: HttpClient, public jwtHelper: JwtHelperService) {
+    constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private cookie: CookieService) {
       this.auth_Url = environment.authTokenUrl;
     }
 
@@ -31,17 +33,21 @@ export class AuthToken implements OnDestroy  {
         }).pipe(map((data: any) => {
             if (data) {
              this.auth_token = data.access_token;
-             localStorage.setItem('token', this.auth_token);
+             this.cookie.put('token', this.auth_token);
             }
         }));
     }
 
     public isAuthentificated(): boolean {
-      return !this.jwtHelper.isTokenExpired(localStorage.getItem('token'));
+      if (!isNullOrUndefined(this.cookie.get('token'))) {
+        return !this.jwtHelper.isTokenExpired(this.cookie.get('token'));
+      } else {
+      return false;
+      }
     }
 
     ngOnDestroy() {
-      localStorage.removeItem('token');
+      this.cookie.remove('token');
     }
 
 }

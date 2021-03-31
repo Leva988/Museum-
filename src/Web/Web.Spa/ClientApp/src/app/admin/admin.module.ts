@@ -21,6 +21,7 @@ import { CorporateMonthAdminComponent } from './corporate-month/corporate-month.
 import { HistoryAdminComponent } from './history-milestones/history.admin.component';
 import { DepartmentAdminComponent } from './department/department.admin.component';
 import { JwtHelperService, JwtModule, JwtModuleOptions } from '@auth0/angular-jwt';
+import { CookieModule, CookieService } from 'ngx-cookie';
 
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
@@ -49,7 +50,8 @@ const routing = RouterModule.forChild([
          return localStorage.getItem('token');
       }
     },
-  })],
+  }),
+  CookieModule.forRoot()],
   declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, DepartmentAdminComponent,
      GalleryAdminComponent, RewardedAdminComponent, ButtonRendererComponent, RewardAdminComponent, HistoryAdminComponent,
      ProjectAdminComponent, GalleryCategoryAdminComponent, CorporateYearAdminComponent, CorporateMonthAdminComponent],
