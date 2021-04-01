@@ -46,7 +46,7 @@ const routing = RouterModule.forChild([
   imports: [CommonModule, FormsModule, routing, ReactiveFormsModule, AgGridModule.withComponents([ButtonRendererComponent]),
   JwtModule.forRoot({
   }),
-  CookieModule.forRoot()],
+  CookieModule.forRoot(), ],
   declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, DepartmentAdminComponent,
      GalleryAdminComponent, RewardedAdminComponent, ButtonRendererComponent, RewardAdminComponent, HistoryAdminComponent,
      ProjectAdminComponent, GalleryCategoryAdminComponent, CorporateYearAdminComponent, CorporateMonthAdminComponent],

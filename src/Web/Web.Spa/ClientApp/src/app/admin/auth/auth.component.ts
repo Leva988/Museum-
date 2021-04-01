@@ -21,10 +21,9 @@ export class AuthComponent {
       }, error => {
         alert('Пользователь не найден');
         console.log(error);
-        this.errorMessage = 'Authentication Failed';
       });
     } else {
-      this.errorMessage = 'Form Data Invalid';
+      this.errorMessage = 'Введите верные данные';
       }
     }
 }
