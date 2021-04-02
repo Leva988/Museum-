@@ -71,7 +71,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //Post api/department
-        [HttpPost("Department")]
+        [HttpPost]
         
         public async Task<IActionResult> AddDepartment([FromBody] DepartmentNew depNew)
         {
@@ -84,20 +84,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = department.Id }, new { id = department.Id });
         }
-
-        [HttpPost]
-        
-        public async Task<IActionResult> AddManyDepartments([FromBody] IEnumerable<Department> departments)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.Values);
-            }
-            await _repository.AddManyDepartmentsAsync(departments);
-
-            return CreatedAtAction(nameof(Get), departments);
-        }
-
 
         // Put api/department
         [HttpPut("{id}")]

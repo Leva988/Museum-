@@ -10,6 +10,7 @@ import { isNullOrUndefined } from 'util';
 import { NgForm } from '@angular/forms';
 import { Structure } from 'src/app/models/structure';
 import { Sector } from 'src/app/models/sector';
+import { Substructure } from 'src/app/models/substructure';
 
 declare var $: any;
 
@@ -20,7 +21,7 @@ providers: [AdminComponent]
 })
 export class DepartmentAdminComponent implements OnInit {
     editDepartment: Department = new Department();
-    structures: Structure[] = [];
+    structures: Substructure[] = [];
     departments: Department[] = [];
     sectors: Sector[] = [];
     editID: string;
@@ -50,8 +51,8 @@ export class DepartmentAdminComponent implements OnInit {
         });
         this.getDepartments();
         // tslint:disable: deprecation
-        this.repository.getStructure().subscribe(
-            (data: Structure[]) => {
+        this.repository.getSubstructure().subscribe(
+            (data: Substructure[]) => {
                 this.structures = data;
             },
             error => console.log(error));
@@ -125,11 +126,15 @@ export class DepartmentAdminComponent implements OnInit {
         this.sectors = [];
         this.editID = e.rowData.id;
         this.editDepartment = e.rowData;
-        if (this.editDepartment.sectors.length !== 0) {
-            this.editDepartment.sectors.forEach( s =>
-                this.sectors.push({name: s})
-            );
-        }
+        this.repository.getDepartment(this.editID).subscribe(
+            (data: Department) => {
+                this.editDepartment = data;
+                if (!isNullOrUndefined(this.editDepartment.sectors)) {
+                    this.editDepartment.sectors.forEach( s =>
+                        this.sectors.push({name: s})
+                    );
+                }
+            });
         delete this.editDepartment.employeesNumber;
         this.modalTitle = 'Изменить отдел';
         this.isNewRecord = false;
@@ -166,7 +171,6 @@ export class DepartmentAdminComponent implements OnInit {
                     () => {
                         this.modalMessage = `Отдел добавлен`;
                         this.modalColor = '#2fc900';
-                        console.log(this.editDepartment);
                         $('#modalMessage').show();
                         this.getDepartments();
                     },
@@ -181,7 +185,6 @@ export class DepartmentAdminComponent implements OnInit {
                         () => {
                             this.modalColor = '#2fc900';
                             this.modalMessage = `Данные по отделу обновлены`;
-                            console.log(this.editDepartment);
                             $('#modalMessage').show();
                             this.getDepartments();
                         },

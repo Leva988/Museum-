@@ -96,8 +96,8 @@ export class AdminComponent  {
     return this.http.get(this.baseUrl + '/Departments');
   }
 
-  getStructure() {
-    return this.http.get(this.baseUrl + '/Structure');
+  getSubstructure() {
+    return this.http.get(this.baseUrl + '/SubStructure');
   }
 
   getDepartment(id: string) {

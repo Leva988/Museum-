@@ -26,14 +26,11 @@
                         <div [hidden]="shortName.valid" class="alert alert-danger">
                             Укороченное название не указана
                         </div>
-                        <label for="structure">Выберите начальника:</label>
-                        <select id="structure" class="form-control" type="text" name="structure" [(ngModel)]="editDepartment.structureId" #structure="ngModel" required>
-                            <option  *ngFor="let s of structures" value="{{s.id}}">{{s.bossPosition}}                           
+                        <label for="structure">Выберите номер столбца для вывода(для последнего ряда выбирать не нужно):</label>
+                        <select id="structure" class="form-control" type="text" name="structure" [(ngModel)]="editDepartment.structureId">
+                            <option  *ngFor="let s of structures" value="{{s.id}}">{{s.number}}                           
                             </option>
                         </select>
-                        <div [hidden]="structure.valid" class="alert alert-danger">
-                            Имя не указано
-                        </div>
                         <label for="description">Введите описание:</label>
                         <textarea id="description" class="form-control" type="text" name="description" [(ngModel)]="editDepartment.description" #description="ngModel"></textarea>
                     </div>
