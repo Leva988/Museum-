@@ -161,6 +161,10 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Structure> Structures =>
          _database.GetCollection<Structure>("Structures");
         
+        public IMongoCollection<SubStructure> SubStructures =>
+         _database.GetCollection<SubStructure>("SubStructures");
+
+
         public IMongoCollection<Production> Productions =>
          _database.GetCollection<Production>("Productions");
 

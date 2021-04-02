@@ -38,7 +38,6 @@ export class AuthToken implements OnDestroy  {
             .set('Content-Type', 'application/x-www-form-urlencoded')
         }).pipe(map((data: any) => {
             if (data) {
-             console.log(body);
              this.auth_token = data.access_token;
              this.cookie.put('token', this.auth_token);
              this.expireTime =  this.jwtHelper.getTokenExpirationDate(this.cookie.get('token')).getTime() - Date.now();

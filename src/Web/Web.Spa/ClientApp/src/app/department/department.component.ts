@@ -5,6 +5,7 @@ import { DepartmentService } from './department-service/department-service.servi
 import { environment } from 'src/environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Employee } from '../models/employee';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-department',
@@ -21,7 +22,6 @@ export class DepartmentComponent implements OnInit {
   description: string;
   employees: Employee[] = [];
   boss: Employee = new Employee();
-  number: number;
   id;
   projectTab: string;
   constructor( private route: ActivatedRoute, private depService: DepartmentService, private sanitizer: DomSanitizer) {    }
@@ -55,7 +55,6 @@ export class DepartmentComponent implements OnInit {
             } else {
               this.employees.push(data[i]);
             }
-            this.number = this.employees.length + 1;
           }
         },
          // tslint:disable: no-shadowed-variable

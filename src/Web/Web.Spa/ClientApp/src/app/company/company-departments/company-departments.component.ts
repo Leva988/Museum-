@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CompanyService } from '../companyservice/company-service.service';
-import { environment } from 'src/environments/environment';
 import { Structure } from 'src/app/models/structure';
 import { Department } from 'src/app/models/department';
 import { isNullOrUndefined } from 'util';
@@ -25,12 +24,10 @@ export class CompanyDepartmentsComponent implements OnInit {
   refreshStructure() {
     this.comService.getStruct().subscribe(
       (data: Structure[]) => {
-         // tslint:disable-next-line: prefer-for-of
           this.structures = data.reverse();
           this.comService.getDepartments().subscribe(
-            // tslint:disable-next-line: no-shadowed-variable
-            (data: Department[]) => {
-              data.forEach(d => {
+            (deps: Department[]) => {
+              deps.forEach(d => {
                 if (d.structureId === '' || isNullOrUndefined(d.structureId)) {
                    this.departments.push(d);
                 }
@@ -39,5 +36,14 @@ export class CompanyDepartmentsComponent implements OnInit {
         },
         // tslint:disable: no-shadowed-variable
         error => console.log(error));
+  }
+
+  bossClick(id) {
+    const name = document.getElementById('boss' + id);
+    if (name.style.display === 'none') {
+      name.style.display = 'block';
+    } else {
+      name.style.display = 'none';
+    }
   }
 }

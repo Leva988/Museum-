@@ -13,9 +13,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public string BossPosition { get; set; }
 
-        public IEnumerable<string> Heads { get; set; } 
-
-        public IEnumerable<Department> Departments { get; set; } 
+        public IEnumerable<SubStructure> SubStructures { get; set; } 
 
     }
 }

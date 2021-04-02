@@ -2,11 +2,8 @@
     background-color: #18b855;
     color: white;
     border-radius: 20px;
-    padding: 5px;
-    height: 30vh;
+    padding: 15px;
     text-align: center;
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
     word-wrap: break-word;
 }
 
@@ -14,63 +11,44 @@
     margin-bottom: 150px;
 }
 
-.head {
+.structure {
     color: white;
-    font-size: 12pt;
     text-transform: uppercase;
     font-weight: 600;
     text-align: center;
     border-radius: 10px;
     padding: 10px;
+    background-color: #b0332a;
     margin-top: 20px;
 }
 
 .subHead {
     color: white;
+    text-transform: uppercase;
+    font-weight: 600;
     font-size: 10pt;
-    font-weight: 500;
     text-align: center;
     border-radius: 10px;
     padding: 10px;
+    text-align: center;
+    word-wrap: break-word;
+    background-color: #590db5;
     margin-top: 20px;
-    border-radius: 3px solid;
 }
 
-#head0 {
-    background-color: #fc7303;
+.subHead p:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
-#head0 .subHead {
-    background-color: #b30909;
-}
-
-#head1 .subHead {
-    background-color: #4fb7d1;
-}
-
-#structure0 .district {
-    border: 3px solid #fc7303;
-}
-
-#structure0 a {
-    color: #fc7303;
-}
-
-#head1 {
-    background-color: #6b1ec9;
-}
-
-#structure1 .district {
-    border: 3px solid #6b1ec9;
-}
-
-#structure1 a {
-    color: #6b1ec9;
+.subHead .sector {
+    font-size: 8pt;
 }
 
 .sector {
     padding: 5px;
     margin-top: 20px;
+    text-transform: uppercase;
     border: 1px solid;
     border-radius: 10px;
     text-align: center;
@@ -78,34 +56,77 @@
     font-size: 6pt;
 }
 
-.district {
+#sub1 .department {
+    border-color: #46ab8e;
+}
+
+#sub1 a {
+    color: #46ab8e;
+}
+
+#sub2 .department {
+    border-color: #e6a263;
+}
+
+#sub2 a {
+    color: #e6a263;
+}
+
+#sub3 .department {
+    border-color: #3894ab;
+}
+
+#sub3 a {
+    color: #3894ab;
+}
+
+#sub4 .department {
+    border-color: #c9c006;
+}
+
+#sub4 a {
+    color: #c9c006;
+}
+
+#sub5 .department {
+    border-color: #23b50d;
+}
+
+#sub5 a {
+    color: #23b50d;
+}
+
+.department {
     margin-top: 20px;
     margin-left: 50px;
-    font-weight: 500;
     border-radius: 10px;
+    border: 3px solid;
     padding: 5px;
     text-align: center;
-    font-size: 8pt;
+    font-size: 7pt;
     hyphens: auto;
     word-wrap: break-word;
     text-transform: uppercase;
+}
+
+a {
+    font-weight: 600;
 }
 
 .last {
     color: white;
     font-size: 14pt;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 700;
     text-align: center;
     border-radius: 15px;
     padding: 10px;
-    margin: 10px;
     background-color: grey;
 }
 
 .last a {
     font-size: 10pt;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     color: white;
 }

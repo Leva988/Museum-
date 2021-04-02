@@ -6,7 +6,5 @@ namespace Belorusneft.Museum.Web.Spa.Models
     {
         public string BossPosition { get; set; }
 
-        public IEnumerable<string> Heads { get; set; }
-
     }
 }

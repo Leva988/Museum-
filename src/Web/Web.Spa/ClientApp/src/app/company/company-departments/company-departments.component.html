@@ -2,39 +2,43 @@
 <div class="row d-flex justify-content-center">
 
 </div>
+<div class="d-flex justify-content-center">
+    <h3 class="main col-md-6">Директор</h3>
+</div>
 <div class="container">
-    <div class="row d-flex align-items-center justify-content-start">
-        <div class="col-md-1 main w-25">
-            <h3>Директор</h3>
-        </div>
-        <div class="col-md-10">
-            <div class="row d-flex justify-content-start align-items-start" id="structure{{i}}" *ngFor="let s of structures; let i = index">
-                <div id="head{{i}}" class="head col-md-3 h-50">
-                    <p>{{s.bossPosition}}</p>
-                    <span *ngIf="s.heads !== null">
-                        <div  class="subHead" *ngFor="let h of s.heads">
-                            {{h}}
+    <div class="row">
+
+        <div *ngFor="let s of structures;let i = index" class="col-md-6">
+            <div class="d-flex justify-content-center">
+                <p class="structure"> {{s.bossPosition}} </p>
+            </div>
+            <div class="row d-flex justify-content-around">
+                <div id="sub{{sub.number}}" class="col-md-6" *ngFor="let sub of s.subStructures;">
+                    <div *ngIf="sub.bossPosition!=null" class="subHead" (click)="bossClick(sub.number)">
+                        <p>{{sub.bossPosition}}</p>
+                        <div id="boss{{sub.number}}" class="sector" style="display: none;">
+                            {{sub.bossName}}
                         </div>
-                    </span>
-                </div>
-                <div class="departments col-md-9">
-                    <div class="row d-flex justify-content-left align-items-center">
-                        <div class="district col-md-3" *ngFor="let d of s.departments">
+                    </div>
+                    <div *ngFor="let d of sub.departments;let i = index">
+                        <div class="department">
                             <a href="/departments/{{d.id}}">{{d.name}}</a>
-                            <span *ngIf="d.sectors !== null">
-                                <div class="sector" *ngFor="let s of d.sectors">
-                                    {{s}}
-                                </div>
-                            </span>
+                            <p class="sector" *ngFor="let sect of d.sectors">
+                                {{sect}}
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row d-flex justify-content-start align-items-center">
-                <div class="col-md-3" *ngFor="let dep of departments;">
-                    <div class="last">
-                        <a href="/departments/{{dep.id}} ">{{dep.name}}</a></div>
-                </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-around">
+        <div class="col-md-3" *ngFor="let d of departments">
+            <div class="department last ">
+                <a href="/departments/{{d.id}}">{{d.name}}</a>
+                <p class="sector" *ngFor="let sect of d.sectors">
+                    {{sect}}
+                </p>
             </div>
         </div>
     </div>
