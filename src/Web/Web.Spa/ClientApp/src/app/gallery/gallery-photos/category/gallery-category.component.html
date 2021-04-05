@@ -14,12 +14,11 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item" *ngFor="let img of imagesId; let i = index" [ngClass]="{'active': i == 0 }">
-                            <div class="img-container d-flex justify-content-center">
-                                <img src="{{galleryUrl}}/{{gallery.id}}/item/{{img}}" class="d-block carousel-img img-responsive">
-                            </div>
-                            <div class="carousel-caption">
-                            </div>
+                            <img src="{{galleryUrl}}/{{gallery.id}}/item/{{img}}" class="d-block w-100">
                         </div>
+                        <div class="carousel-caption">
+                        </div>
+
                     </div>
                     <a *ngIf="imagesId.length > 1" class="carousel-control-prev" href="#galleryCarousel" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon fontIcon"></span>

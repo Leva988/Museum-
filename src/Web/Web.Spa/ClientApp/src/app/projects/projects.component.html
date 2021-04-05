@@ -27,9 +27,7 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item" *ngFor="let img of project.items; let i = index" [ngClass]="{'active': i == 0 }">
-                                    <div class="img-container">
-                                        <img src="{{url}}/{{project.id}}/item/{{img}}" class="d-block carousel-img img-responsive">
-                                    </div>
+                                    <img src="{{url}}/{{project.id}}/item/{{img}}" class="d-block w-100">
                                 </div>
                             </div>
                             <a *ngIf="project.items.length > 1" class="carousel-control-prev" href="#projectCarousel" role="button" data-slide="prev">
