@@ -54,6 +54,7 @@ export class DepartmentComponent implements OnInit {
               this.boss = data[i];
             } else {
               this.employees.push(data[i]);
+              this.employees.sort((a, b) => a.name > b.name ? 1 : -1);
             }
           }
         },

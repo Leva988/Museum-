@@ -25,7 +25,7 @@
                 <div class="carousel-inner">
                     <div class="carousel-item" *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === active}">
                         <div class="img-container d-flex justify-content-center">
-                            <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block h-100 img-fluid">
+                            <img src="{{rewardsUrl}}/{{diploma.id}}/Image/{{photo.key}}" class="d-block carousel-img img-fluid">
                             <div class="carousel-caption">
                                 <h5>{{photo.value | async}}</h5>
                             </div>
