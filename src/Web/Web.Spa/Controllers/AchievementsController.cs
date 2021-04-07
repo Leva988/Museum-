@@ -12,7 +12,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    /* [Authorize] */
     public class AchievementsController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -80,29 +80,16 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //GET photo
-        [HttpGet("{id}/Image/{itemId}")]
+        [HttpGet("{id}/Image")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetPhoto(string id, string itemId)
+        public async Task<ActionResult> GetPhoto(string id)
         {
-            var item = await _repository.GetAchievementImageAsync(id, itemId);
+            var item = await _repository.GetAchievementImageAsync(id);
             if (item == null)
             {
                 return NotFound();
             }
             return item;
-        }
-
-        //GET desc
-        [HttpGet("{id}/itemDescription/{itemId}")]
-        [AllowAnonymous]
-        public async Task<ActionResult> GetItemDescription(string id, string itemId)
-        {
-            var item = await _repository.GetAchievemenItemDescriptionAsync(id, itemId);
-            if (item == null)
-            {
-                return NotFound();
-            }
-            return Ok(item);
         }
 
         //Post photo
@@ -111,7 +98,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
-            var Oid = await _repository.AddAchievementImageAsync(input, id, image.ContentType, image.FileName);
+            var Oid = await _repository.AddAchievementImageAsync(input, id, image.ContentType);
             if (Oid == null)
             {
                 return BadRequest();
@@ -120,11 +107,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         //Delete photo
-        [HttpDelete("{id}/Image/{itemId}")]
-        public async Task<ActionResult> DeletePhoto(string id, string itemId)
+        [HttpDelete("{id}/Image")]
+        public async Task<ActionResult> DeletePhoto(string id)
         {
 
-            await _repository.DeleteAchievementImageAsync(id, itemId);
+            await _repository.DeleteAchievementImageAsync(id);
             return Ok();
         }
 
@@ -132,7 +119,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             new Achievement
             {
                 Name = achievementNew.Name,
-                Items = new List<string>()
+                Year = achievementNew.Year,
+                CategoryId = achievementNew.CategoryId
             };
 
     }

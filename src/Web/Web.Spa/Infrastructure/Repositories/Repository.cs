@@ -77,7 +77,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
 
             return new FileStreamResult(stream, contentType);
-
         }
 
         public async Task<string> AddEmployeePhotoAsync(Stream stream, string employeeId, string contentType)
@@ -202,18 +201,24 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesAsync() =>
             await _context.RewardedEmployees
                 .Find(_ => true)
-                .SortBy(c => c.DateStart)
                 .ToListAsync();
 
-        public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesByRewardAsync(string rewardId) =>
-            await _context.RewardedEmployees
+        public async Task<IEnumerable<RewardedEmployee>> GetRewardedEmployeesByRewardAsync(string rewardId)
+        {
+            var emps =  await _context.RewardedEmployees
                 .Aggregate()
                 .Match(Builders<RewardedEmployee>.Filter.ElemMatch(r => r.Rewards, a => a.RewardId == rewardId))
-                .SortBy(c => c.DateEnd)
                 .ToListAsync();
+            foreach (RewardedEmployee emp in emps)
+            {
+               RewardWithYear rew =  emp.Rewards.Where(r => r.RewardId == rewardId).FirstOrDefault();
+               emp.DateReward = rew.DateReward;
+            }
+            return emps.OrderBy(e => e.DateReward);
+        }
        
         public async Task InsertRewardedEmployeeAsync(RewardedEmployee emp) =>
-                await _context.RewardedEmployees
+            await _context.RewardedEmployees
                       .InsertOneAsync(emp);
 
         public async Task InsertManyRewardedEmployees(IEnumerable<RewardedEmployee> emps) =>
@@ -499,6 +504,13 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<Achievement>> GetAchievementsAsync() =>
             await _context.Achievements
                 .Find(_ => true)
+                .SortBy(x => x.Year)
+                .ToListAsync();
+
+        public async Task<IEnumerable<Achievement>> GetAchievementsByCategory(string category) =>
+            await _context.Achievements
+                .Find(x => x.CategoryId == category)
+                .SortBy(x => x.Year)
                 .ToListAsync();
 
         public async Task InsertAchievementAsync(Achievement achievement) =>
@@ -508,7 +520,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task CreateOrUpdateAchievementAsync(Achievement ach) {
             var filter = Builders<Achievement>.Filter.Eq(x => x.Id, ach.Id);
             var update = Builders<Achievement>.Update
-                .Set(x => x.Name, ach.Name);      
+                .Set(x => x.Name, ach.Name)
+                .Set(x => x.Year, ach.Year);        
             await _context.Achievements.UpdateOneAsync(
                 filter,
                 update,
@@ -517,7 +530,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                     IsUpsert = true
                 });
         }
-
 
         public async Task<Achievement> GetAchievementAsync(string id) =>
             await _context.Achievements
@@ -531,66 +543,91 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
-        public async Task<FileStreamResult> GetAchievementImageAsync(string id, string itemId)
+
+        public async Task<FileStreamResult> GetAchievementImageAsync(string name)
         {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.AchievementImages
-                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .Find(filter)
                 .FirstAsync();
 
             var stream = new MemoryStream();
             await _context.AchievementImages.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
+
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
+
             return new FileStreamResult(stream, contentType);
-
         }
 
-        public async Task<string> GetAchievemenItemDescriptionAsync(string achId, string itemId)
+        public async Task<string> AddAchievementImageAsync(Stream stream, string achId, string contentType)
         {
-            var info = await _context.AchievementImages
-                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-            var name = info.Filename;
-            return name;
-        }
-
-        public async Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType, string filename)
-        {
-            var ach = await GetAchievementAsync(achievementId);
-            if (ach == null)
+            var emp = await GetAchievementAsync(achId);
+            if (emp == null)
             {
                 return null;
             }
-            string extension = System.IO.Path.GetExtension(filename);
-            string name =  filename.Substring(0, filename.Length - extension.Length);
+
             var itemId = await _context.AchievementImages
                 .UploadFromStreamAsync(
-                    name,
+                    achId,
                     stream,
                     new GridFSUploadOptions
                     {
                         Metadata = new BsonDocument
                         {
-                            {"Content-Type", contentType}
+                            {"Content-Type", contentType},
                         },
                     }
                 );
-
-            var update = Builders<Achievement>.Update.AddToSet(x => x.Items, itemId.ToString());
-            await _context.Achievements.UpdateOneAsync(x => x.Id == achievementId, update);
-
             return itemId.ToString();
         }
 
-        public async Task DeleteAchievementImageAsync(string id, string itemId)
+        public async Task DeleteAchievementImageAsync(string name)
         {
-            var hist = await GetAchievementAsync(id);
-            var items = hist.Items.Where(el => el != itemId);
-            var update = Builders<Achievement>.Update.Set(x => x.Items, items);
-            await _context.Achievements.UpdateOneAsync(x => x.Id == id, update);
-            await _context.AchievementImages.DeleteAsync(ObjectId.Parse(itemId));
-
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = _context.AchievementImages
+                .Find(filter)
+                .FirstOrDefault();
+            await _context.AchievementImages.DeleteAsync(info.Id);  
         }
+        #endregion
+
+        #region AchievementCategory
+        public async Task<IEnumerable<AchievementCategory>> GetAchievementCategoriesAsync() =>
+            await _context.AchievementCategories
+                .Find(_ => true)
+                .ToListAsync();
+
+        public async Task InsertAchievementCategoryAsync(AchievementCategory cat) =>
+            await _context.AchievementCategories
+                .InsertOneAsync(cat);
+
+        public async Task CreateOrUpdateAchievementCategoryAsync(AchievementCategory ach) {
+            var filter = Builders<AchievementCategory>.Filter.Eq(x => x.Id, ach.Id);
+            var update = Builders<AchievementCategory>.Update
+                .Set(x => x.Name, ach.Name);      
+            await _context.AchievementCategories.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
+                {
+                    IsUpsert = true
+                });
+        }
+
+        public async Task<AchievementCategory> GetAchievementCategoryAsync(string id) =>
+            await _context.AchievementCategories
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteAchievementCategoryAsync(string id)
+        {    
+            var actionResult = await _context.AchievementCategories
+                .DeleteOneAsync(p => p.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
         #endregion
 
         #region Gallery
@@ -730,7 +767,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
-        #region  Production
+        #region Production
         public async Task<IEnumerable<Production>> GetProductions() =>
             await _context.Productions.Find(_ => true)
                 .SortBy(c => c.Id)

@@ -126,7 +126,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task DeleteProjectImageAsync(string id, string itemId);
         #endregion
 
-        #region Services      
+        #region Services
 
         Task<IEnumerable<Service>> GetAllServicesAsync();
 
@@ -144,19 +144,31 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<Achievement> GetAchievementAsync(string id);
 
+        Task<IEnumerable<Achievement>> GetAchievementsByCategory(string category);
+
         Task CreateOrUpdateAchievementAsync(Achievement achievement);
 
         Task InsertAchievementAsync(Achievement achievement);
 
         Task<bool> DeleteAchievementAsync(string id);
         
-        Task<FileStreamResult> GetAchievementImageAsync(string id, string itemId);
+        Task<FileStreamResult> GetAchievementImageAsync(string achievementId);
 
-        Task<string> GetAchievemenItemDescriptionAsync(string id, string itemId);
+        Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType);
 
-        Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType,  string filename);
+        Task DeleteAchievementImageAsync(string achievementId);
+        #endregion
 
-        Task DeleteAchievementImageAsync(string id, string itemId);
+        #region AchievementCategories
+        Task<IEnumerable<AchievementCategory>> GetAchievementCategoriesAsync();
+
+        Task<AchievementCategory> GetAchievementCategoryAsync(string id);
+
+        Task CreateOrUpdateAchievementCategoryAsync(AchievementCategory cat);
+
+        Task InsertAchievementCategoryAsync(AchievementCategory cat);
+
+        Task<bool> DeleteAchievementCategoryAsync(string id);
         #endregion
 
         #region Gallery

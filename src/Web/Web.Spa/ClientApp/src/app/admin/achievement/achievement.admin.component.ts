@@ -7,6 +7,7 @@ import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
 import { Achievement } from 'src/app/models/achievement';
 import { NgForm } from '@angular/forms';
+import { AchievementCategory } from 'src/app/models/achievementcategory';
 
 declare var $: any;
 
@@ -20,9 +21,10 @@ export class AchievementAdminComponent implements OnInit {
     url = environment.backendUrl + '/Achievements';
     active: number;
     editAchievement: Achievement = new Achievement();
+    categories: AchievementCategory[] = [];
     editID: string;
     isNewRecord: boolean;
-    photos: KeyValue<string, string>[] = [];
+    photo: any;
     fileToUpload: File;
     modalMessage: string;
     modalTitle: string;
@@ -47,9 +49,15 @@ export class AchievementAdminComponent implements OnInit {
             $('#photoMessage').hide();
         });
         this.getAchievements();
+        this.repository.getAchievementCategories().subscribe(
+            (data: AchievementCategory[]) => {
+                this.categories = data;
+            }
+        );
         // tslint:disable: deprecation
         this.columnDefs = [
             { field: 'name', headerName: 'Достижение', sortable: true, filter: true, resizable: true },
+            { field: 'year', headerName: 'Дата достижения', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
@@ -109,8 +117,12 @@ export class AchievementAdminComponent implements OnInit {
 
     updateAchievement(e) {
         this.editID = e.rowData.id;
-        this.editAchievement = e.rowData;
-        this.modalTitle = 'Изменить достижение';
+        this.repository.getAchievement(this.editID).subscribe(
+            (data: Achievement) => {
+                this.editAchievement = data;
+            }, error => console.error(error)
+        );
+        this.modalTitle = 'Изменить награду';
         this.isNewRecord = false;
     }
 
@@ -119,6 +131,11 @@ export class AchievementAdminComponent implements OnInit {
             // tslint:disable: no-shadowed-variable
             (data: Achievement[]) => {
                 this.achievements = data;
+                this.achievements.forEach(ach => {
+                    const year = new Date(Date.parse(ach.year)).toLocaleDateString();
+                    ach.year = year;
+                   }
+                );
                 this.rowData = this.achievements;
               },
             error => console.log(error));
@@ -183,28 +200,34 @@ export class AchievementAdminComponent implements OnInit {
         }
      }
 
-    getPhoto(e) {
-        this.photos = [];
-        this.editID = e.rowData.id;
-        if (isNullOrUndefined(this.editID)) {
-            this.photos = [];
-          } else {
-             this.arrowsHandler(e.rowData.items);
-             e.rowData.items.forEach(item => {
-                 this.repository.getAchPhotoDescription(this.editID, item).subscribe(
-                     (data: string) => {
-                         const photo = { key: item, value: data};
-                         this.photos.push(photo);
-                     }, error => console.log(error));
-             });
-        }
-    }
-
     handleFileInput(files: FileList) {
         this.fileToUpload = files.item(0);
     }
 
-    savePhoto() {
+    getPhoto(e) {
+        this.editID = e.rowData.id;
+        if (isNullOrUndefined(this.editID)) {
+           this.photo = null;
+          } else {
+        this.repository.getAchievementImage(this.editID).subscribe(
+            (data: Blob) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(data);
+                reader.onload = () => {
+                    this.photo = reader.result;
+                };
+            },
+            error => {
+                console.log(error);
+                this.modalMessage = 'Фото отсутствует!';
+                this.modalColor = '#f20800';
+                $('#photoMessage').show();
+            });
+        }
+        this.photo = undefined;
+    }
+
+    addPhoto() {
         if (isNullOrUndefined(this.fileToUpload)) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
@@ -212,14 +235,9 @@ export class AchievementAdminComponent implements OnInit {
         } else {
             this.repository.addAchievementImage(this.editID, this.fileToUpload).subscribe(
                 (data: any) => {
-                    this.repository.getAchPhotoDescription(this.editID, data.id).subscribe(
-                        (desc: string) => {
-                            const photo = { key:  data.id, value: desc};
-                            this.photos.push(photo);
-                            this.arrowsHandler(this.photos);
-                        }, error => console.log(error));
                     this.modalColor = '#2fc900';
                     this.modalMessage = 'Фото добавлено';
+                    this.photo = environment.backendUrl + '/Achievements/' + this.editID + '/Image';
                     $('#photoMessage').show();
                 },
                 (err) => {
@@ -232,32 +250,20 @@ export class AchievementAdminComponent implements OnInit {
         }
     }
 
-    deletePhoto(photo, index) {
-        this.photos.splice(index, 1);
-        this.arrowsHandler(this.photos);
-        $('#achCarousel').carousel('next');
-        this.repository.deleteAchievementImage(this.editID, photo.key).subscribe(
+    deletePhoto() {
+        this.repository.deleteAchievementImage(this.editID).subscribe(
             () => {
-                this.modalColor = '#2fc900';
-                this.modalMessage = `Фото  удалено`;
-                $('#photoMessage').show();
+                 this.modalColor = '#2fc900';
+                 this.modalMessage = `Фото  удалено`;
+                 this.photo = null;
+                 $('#photoMessage').show();
              },
              error => {
                 console.log(error);
-                this.modalMessage = `Фото отсутствует`;
+                this.modalMessage = `Фото отсутствует!`;
                 this.modalColor = '#f20800';
                 $('#photoMessage').show();
                });
-    }
-
-    arrowsHandler(photos) {
-        if (photos.length <= 1) {
-            $('#prev').hide();
-            $('#next').hide();
-        } else {
-            $('#prev').show();
-            $('#next').show();
-        }
-    }
+     }
 
 }

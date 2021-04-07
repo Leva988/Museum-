@@ -4,5 +4,7 @@ export class Achievement {
 
     public name: string;
 
-    public items: string[];
+    public year: string;
+
+    public categoryId: string;
 }

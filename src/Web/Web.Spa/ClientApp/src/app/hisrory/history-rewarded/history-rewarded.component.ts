@@ -35,6 +35,7 @@ export class HistoryRewardedComponent implements OnInit {
                 const e = d.rewardedEmployees[j];
                 const datebirth = new Date(Date.parse(e.dateBirth));
                 const dateStart = new Date(Date.parse(e.dateStart));
+                const dateReward = new Date(Date.parse(e.dateReward));
                 let dateEnd;
                 if (isNullOrUndefined(e.dateEnd)) {
                   e.dateEnd = 'н.в.';
@@ -43,15 +44,12 @@ export class HistoryRewardedComponent implements OnInit {
                   const localdateEnd = dateEnd.getFullYear().toString();
                   e.dateEnd = localdateEnd;
                 }
-                const localbirthtdate = datebirth.toLocaleDateString(undefined);
+                const localbirthtdate = datebirth.toLocaleDateString();
                 const localdatestart = dateStart.getFullYear().toString();
+                const localdateReward = dateReward.getFullYear().toString();
                 e.dateBirth = localbirthtdate;
                 e.dateStart = localdatestart;
-                e.rewards.forEach(r => {
-                  const dateReward = new Date(Date.parse(r.dateReward));
-                  const localdateReward = dateReward.getFullYear().toString();
-                  r.dateReward = localdateReward;
-                });
+                e.dateReward = localdateReward;
               }
             }
           }

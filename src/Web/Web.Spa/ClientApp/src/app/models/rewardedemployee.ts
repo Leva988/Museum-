@@ -9,6 +9,8 @@ export class RewardedEmployee {
 
     public dateEnd: string;
 
+    public dateReward: string;
+
     public rewards: {
          rewardId: string;
          dateReward: string;

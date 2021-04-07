@@ -5,6 +5,7 @@ import { Achievement } from '../models/achievement';
 import { HttpClient } from '@angular/common/http';
 import { KeyValue } from '@angular/common';
 import { Observable } from 'rxjs';
+import { AchievementCategory } from '../models/achievementcategory';
 
 declare var $: any;
 
@@ -15,34 +16,24 @@ declare var $: any;
   providers: [RewardService] })
 
 export class AchievementsComponent implements OnInit {
-  rewardsUrl = environment.backendUrl  + '/Achievements';
-  rewards: Observable<Achievement[]>;
+  achUrl = environment.backendUrl  + '/Achievements';
+  categories: Observable<AchievementCategory[]>;
   diploma: Achievement = new Achievement();
   active: number;
-  photos: KeyValue<string, Observable<string>>[] = [];
-  descriptions: string[] = [];
+  achievements: Achievement[] = [];
 
   constructor(private rewardservice: RewardService, private http: HttpClient) {
-    this.diploma.items = [];
-    this.refreshRewards();
+    this.refreshAchievements();
   }
 
   ngOnInit() {
     $(document).on('hide.bs.modal', '#ModalImage', () => {
-      this.photos = [];
+      this.achievements = [];
+      this.active = null;
     });
    }
-  refreshRewards() {
-    this.rewards = this.rewardservice.getRewards(this.rewardsUrl);
-  }
 
-  getModalDescription(id: string, itemIds: string[]) {
-    for (const photo of itemIds) {
-       this.photos.push({
-             key: photo,
-             value: this.http.get(this.rewardsUrl + '/' + id + '/itemDescription/' + photo, {responseType: 'text'}) 
-        });
-    }
+   refreshAchievements() {
+    this.categories = this.rewardservice.getAchievementCategories();
   }
-
 }

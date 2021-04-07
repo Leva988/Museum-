@@ -102,6 +102,9 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<Achievement> Achievements =>
             _database.GetCollection<Achievement>("Achievements");
 
+        public IMongoCollection<AchievementCategory> AchievementCategories =>
+            _database.GetCollection<AchievementCategory>("AchievementCategories");
+
         public GridFSBucket AchievementImages =>
             new GridFSBucket(
                 _database,

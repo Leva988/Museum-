@@ -17,6 +17,7 @@ import { HistoryMilestone } from '../models/historymilestones';
 import { Department } from '../models/department';
 import { CookieService } from 'ngx-cookie';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AchievementCategory } from '../models/achievementcategory';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -154,6 +155,11 @@ export class AdminComponent  {
       return  this.http.get(this.baseUrl + '/Achievements' + '/' + id, {responseType: 'json'});
   }
 
+  getAchievementImage(id: string) {
+    return  this.http.get(this.baseUrl + '/Achievements' + '/' + id + '/Image', {responseType: 'blob'});
+}
+
+
   addAchievement(ach: Achievement) {
       return this.http.post(this.baseUrl + '/Achievements', ach,
       {
@@ -176,14 +182,6 @@ export class AdminComponent  {
       });
     }
 
-  getAchPhotoDescription(id: string, photoId: string) {
-    return this.http.get(this.baseUrl + '/Achievements' + '/' + id + '/itemDescription/' + photoId,
-    {
-      headers: this.authHeaders,
-      responseType: 'text'
-    });
-  }
-
   addAchievementImage(id: string, file: File) {
       const formData: FormData = new FormData();
       formData.append('avatar', file, file.name);
@@ -193,8 +191,40 @@ export class AdminComponent  {
       });
    }
 
-  deleteAchievementImage(id: string, photoId: string) {
-      return this.http.delete(this.baseUrl + '/Achievements' + '/' + id + '/Image/' + photoId,
+  deleteAchievementImage(id: string) {
+      return this.http.delete(this.baseUrl + '/Achievements' + '/' + id + '/Image',
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  // AchievementCategory Panel
+
+  getAchievementCategories() {
+    return this.http.get(this.baseUrl + '/AchievementCategories');
+  }
+
+  getAchievementCategory(id: string) {
+      return  this.http.get(this.baseUrl + '/AchievementCategories' + '/' + id, {responseType: 'json'});
+  }
+
+  addAchievementCategory(ach: AchievementCategory) {
+      return this.http.post(this.baseUrl + '/AchievementCategories', ach,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateAchievementCategory(id: string, ach: AchievementCategory) {
+      delete ach.id;
+      return this.http.put(this.baseUrl + '/AchievementCategories' + '/' + id, ach,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteAchievementCategory(id: string) {
+      return this.http.delete(this.baseUrl + '/AchievementCategories' + '/' + id,
       {
         headers: this.authHeaders
       });

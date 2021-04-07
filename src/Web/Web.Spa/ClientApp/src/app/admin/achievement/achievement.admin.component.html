@@ -20,6 +20,18 @@
                     <div [hidden]="name.valid" class="alert alert-danger">
                         Название не указано
                     </div>
+                    <label for="year">Введите дату достижения:</label>
+                    <input id="year" class="form-control" type="date" name="year" [ngModel]="editAchievement.year | date:'yyyy-MM-dd'" (ngModelChange)="editAchievement.year = $event" #year="ngModel" required/>
+                    <div [hidden]="year.valid" class="alert alert-danger">
+                        Дата не указана
+                    </div>
+                    <label for="category">Выберите категорию:</label>
+                    <select id="category" class="form-control" type="text" name="category" [(ngModel)]="editAchievement.categoryId" #category="ngModel" required>
+                        <option *ngFor='let c of categories' value="{{c.id}}">{{c.name}}</option>
+                    </select>
+                    <div [hidden]="category.valid" class="alert alert-danger">
+                        Категория не указана
+                    </div>
                     <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success" />
                     <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
@@ -30,52 +42,23 @@
     </div>
 </div>
 <div class="modal fade" id="modalPhoto" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div id="photoHeader" class="modal-header">
-                <h2 class="modal-title" id="photoTitle">Фото достижений</h2>
+                <h2 class="modal-title" id="photoTitle">Изображение достижения</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                  </button>
             </div>
             <div class="modal-body">
-                <div class="container-fluid">
-                    <div class="d-flex justify-content-center">
-                        <h4>Добавить ещё фото</h4>
-                    </div>
-                    <div class="d-flex justify-content-around">
-                        <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
-                        <input type="button" value="Добавить" (click)="savePhoto()" class="btn btn-success btn-block">
-                    </div>
-                    <hr>
-                    <h5 id="photoMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
-                </div>
-                <div id="achCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li *ngFor="let item of photos; let i = index" [attr.data-slide-to]="active" [ngClass]="{'active':  i === 0 }"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item" *ngFor="let photo of photos;let u = index;" [ngClass]="{'active':  u === 0}">
-                            <input type="button" value="Удалить" (click)="deletePhoto(photo, u);" class="btn btn-danger btn-lg btn-block" />
-                            <div class="img-container d-flex justify-content-center">
-                                <img src="{{url}}/{{editID}}/Image/{{photo.key}}" class="d-block h-100 img-fluid">
-                            </div>
-                            <div class="carousel-caption">
-                                <h5>{{photo.value}} </h5>
-                            </div>
-                        </div>
-                    </div>
-                    <a id="prev" class="carousel-control-prev" href="#achCarousel" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon fontIcon"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a id="next" class="carousel-control-next" href="#achCarousel" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon fontIcon"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
+                <img *ngIf="photo!==null" id="photo" class="img-fluid p-2" src="{{photo}}">
+                <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+                <h5 id="photoMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
             </div>
-
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()">Добавить</button>
+                <button type="button" class="btn btn-danger col-md-4" (click)="deletePhoto()">Удалить</button>
+            </div>
         </div>
     </div>
 </div>

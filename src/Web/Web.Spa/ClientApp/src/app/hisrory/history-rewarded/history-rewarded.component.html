@@ -10,7 +10,7 @@
                     <img class="img-fluid reward-photo" src="{{rewardsUrl}}/{{r.id}}/Photo" onerror="this.style.display='none'">
                 </div>
             </div>
-            <div class="col-md-9 row d-flex justify-content-left align-items-center">
+            <div class="col-md-9 row d-flex justify-content-left align-items-start">
                 <div class="col-md-4" *ngFor="let emp of r.rewardedEmployees">
                     <span class="card">
                         <img src="{{employeeUrl}}/{{emp.id}}/Photo" class="card-img-top" alt="..." >
@@ -20,9 +20,7 @@
                             <p>{{emp.position}}</p>
                             <p>Дата рождения: {{emp.dateBirth}}г. </p>
                             <p>Период работы c {{emp.dateStart}} - {{emp.dateEnd}} </p>
-                            <div *ngFor="let rew of emp.rewards" >
-                                 <p *ngIf="rew.rewardId === r.id">Год награждения: {{rew.dateReward}}</p>
-                            </div>
+                            <p>Год награждения: {{emp.dateReward}}</p>                           
                           </div>
                         </div>                 
                    </span>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
-    public class Achievement
+    public class AchievementCategory
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -13,9 +13,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public string Name { get; set; }
 
-        public DateTime Year { get; set;}
-
-        public string CategoryId { get; set; }
+        public IEnumerable<Achievement> Achievements { get; set;}
 
     }
 }

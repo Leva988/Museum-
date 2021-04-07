@@ -23,6 +23,8 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public DateTime? DateEnd { get; set; }
 
+        public DateTime? DateReward { get; set; }
+
         public IEnumerable<RewardWithYear> Rewards  { get; set; }
 
     }
