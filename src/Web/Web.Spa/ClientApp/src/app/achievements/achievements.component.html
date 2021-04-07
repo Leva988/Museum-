@@ -9,7 +9,7 @@
         </h3>
         <div class="row d-flex justify-content-around align-items-start">
             <div class="col-md-3 diploma align-items-center justify-content-around" *ngFor="let ach of c.achievements; let i = index">
-                <img class="img-fluid img" src="{{achUrl}}/{{ach.id}}/Image" (click)="achievement = ach;active=i;achievements = c.achievements" data-toggle="modal" data-target="#ModalImage">
+                <img class="img-fluid img" src="{{achUrl}}/{{ach.id}}/Image" (click)="active=i;achievements = c.achievements" data-toggle="modal" data-target="#ModalImage">
                 <h5>{{ach.name}}</h5>
             </div>
         </div>
