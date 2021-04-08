@@ -9,13 +9,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class CompanyComponent implements OnInit {
-id;
+
   constructor(private route: ActivatedRoute) {
-    this.id = this.route.snapshot.params.id;
-    if (this.id !== '0') {
-      window.location.href = '/notfound';
     }
-  }
 
   ngOnInit() {
 

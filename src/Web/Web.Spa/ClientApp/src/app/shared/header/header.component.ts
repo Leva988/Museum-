@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit {
 
   return() {
     if (this.goBack === 'departments') {
-     window.location.href = '/company/0';
+     window.location.href = '/company';
     } else {
      window.location.href = '/';
     }

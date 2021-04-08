@@ -19,9 +19,9 @@ import { BossComponent } from './hisrory/history-bosses/history-bosses.component
 
 const routes: Routes = [
    { path: '', component: MenuComponent },
-   { path: 'company/:id', component: CompanyComponent },
+   { path: 'company', component: CompanyComponent },
    { path: 'departments/:id', component: DepartmentComponent},
-   { path: 'company/:id/admin', component: CompanyComponent },
+   { path: 'company/admin', component: CompanyComponent },
    { path: 'achievements', component: AchievementsComponent},
    { path: 'service', component: ServiceComponent},
    { path: 'historymilestones', component: HistoryMilestonesComponent},
