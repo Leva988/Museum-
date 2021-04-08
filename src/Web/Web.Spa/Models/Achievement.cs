@@ -15,6 +15,8 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public DateTime Year { get; set;}
 
+        public string Category { get; set; }
+
         public string CategoryId { get; set; }
 
     }

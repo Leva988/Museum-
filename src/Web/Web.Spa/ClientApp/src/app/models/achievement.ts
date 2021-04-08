@@ -6,5 +6,7 @@ export class Achievement {
 
     public year: string;
 
+    public category: string;
+
     public categoryId: string;
 }

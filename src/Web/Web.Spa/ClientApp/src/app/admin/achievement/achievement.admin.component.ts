@@ -58,6 +58,7 @@ export class AchievementAdminComponent implements OnInit {
         this.columnDefs = [
             { field: 'name', headerName: 'Достижение', sortable: true, filter: true, resizable: true },
             { field: 'year', headerName: 'Дата достижения', sortable: true, filter: true, resizable: true },
+            { field: 'category', headerName: 'Категория', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
