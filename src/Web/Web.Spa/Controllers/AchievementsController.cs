@@ -34,6 +34,19 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok(achs);
         }
 
+        //Get api/all Achievements by Category
+        [HttpGet("Category/{categoryId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Achievement>>> GetByCayegory(string categoryId) {            
+            var achs = await _repository.GetAchievementsByCategory(categoryId);
+            foreach (Achievement ach in achs) {
+                var category = await _repository.GetAchievementCategoryAsync(categoryId);
+                ach.Category = category.Name;
+            }
+            return Ok(achs);
+        }
+
+
         //Get api/Achievements
         [HttpGet("{id}")]
         [AllowAnonymous]

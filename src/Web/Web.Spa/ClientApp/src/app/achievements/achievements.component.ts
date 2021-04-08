@@ -28,12 +28,19 @@ export class AchievementsComponent implements OnInit {
 
   ngOnInit() {
     $(document).on('hide.bs.modal', '#ModalImage', () => {
-      this.achievements = [];
       this.active = null;
     });
    }
 
    refreshAchievements() {
     this.categories = this.rewardservice.getAchievementCategories();
+  }
+
+  getByCategory(categoryId: string) {
+   this.rewardservice.getAchievementsByCategory(categoryId).subscribe(
+     (data: Achievement[]) => {
+       this.achievements = data;
+     }, error => console.log(error)
+   );
   }
 }
