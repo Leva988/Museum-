@@ -12,7 +12,6 @@ namespace Belorusneft.Museum.Web.Spa.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Name is not assigned")]
         public string Name { get; set; }
 
         public DateTime Date { get; set; }
@@ -20,6 +19,8 @@ namespace Belorusneft.Museum.Web.Spa.Models
         public string Category { get; set; }
 
         public string CategoryId { get; set; } 
+
+        public bool withDescription { get; set; }
 
         public IEnumerable<string> Items { get; set; }
     }

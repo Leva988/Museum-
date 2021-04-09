@@ -75,6 +75,17 @@ h3 {
     overflow-y: auto;
 }
 
+.check {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+#photoCheck {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
 #modalMessage,
 #photoMessage {
     margin: 10px;

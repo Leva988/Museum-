@@ -186,7 +186,9 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetGalleryItemAsync(string galleryId, string itemId);
 
-        Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType);
+        Task<string> GetGalleryItemDescriptionAsync(string galleryId, string itemId);
+
+        Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType, string filename);
 
         Task DeleteGalleryItemAsync(string galleryId, string itemId);
         #endregion

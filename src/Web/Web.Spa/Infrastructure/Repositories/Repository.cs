@@ -694,23 +694,34 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return new FileStreamResult(stream, contentType);
         }
 
-        public async Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType)
+        public async Task<string> GetGalleryItemDescriptionAsync(string galleryId, string itemId)
         {
-            var gallery = await GetGalleryAsync(galleryId);
-            if (gallery == null)
+            var info = await _context.GalleryContent
+                .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
+                .FirstAsync();
+            var name = info.Filename;
+            return name;
+        }
+
+
+        public async Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType, string filename)
+        {
+            var galelry = await GetGalleryAsync(galleryId);
+            if (galleryId == null)
             {
                 return null;
             }
-
+            string extension = System.IO.Path.GetExtension(filename);
+            string name =  filename.Substring(0, filename.Length - extension.Length);
             var itemId = await _context.GalleryContent
                 .UploadFromStreamAsync(
-                    galleryId,
+                    name,
                     stream,
                     new GridFSUploadOptions
                     {
                         Metadata = new BsonDocument
                         {
-                            {"Content-Type", contentType},
+                            {"Content-Type", contentType}
                         },
                     }
                 );

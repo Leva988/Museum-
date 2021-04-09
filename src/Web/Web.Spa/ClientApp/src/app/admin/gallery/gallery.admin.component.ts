@@ -20,10 +20,11 @@ export class GalleryAdminComponent implements OnInit {
     galleries: Gallery[] = [];
     categories: GalleryCategory[] = [];
     url = environment.backendUrl + '/Galleries';
-    active: number;
+    active = 0;
     editGallery: Gallery = new Gallery();
     editID: string;
     isNewRecord: boolean;
+    withDescription: boolean;
     photos: KeyValue<string, string>[] = [];
     fileToUpload: File;
     modalMessage: string;
@@ -46,6 +47,7 @@ export class GalleryAdminComponent implements OnInit {
         });
         $('#modalPhoto').on('hidden.bs.modal', () => {
             this.modalMessage = this.modalColor = this.modalTitle = null;
+            this.photos = [];
             $('#photoMessage').hide();
         });
         // tslint:disable: deprecation
@@ -203,9 +205,21 @@ export class GalleryAdminComponent implements OnInit {
      }
 
     getPhoto(e) {
-        this.photos = e.rowData.items;
+        this.photos = [];
         this.editID = e.rowData.id;
-        this.arrowsHandler(this.photos);
+        this.withDescription = e.rowData.withDescription;
+        if (isNullOrUndefined(this.editID)) {
+            this.photos = [];
+          } else {
+             this.arrowsHandler(e.rowData.items);
+             e.rowData.items.forEach(item => {
+                 this.repository.getGalleryItemDescription(this.editID, item).subscribe(
+                     (data: string) => {
+                         const photo = { key: item, value: data};
+                         this.photos.push(photo);
+                     }, error => console.log(error));
+             });
+        }
     }
 
     handleFileInput(files: FileList) {
@@ -222,7 +236,12 @@ export class GalleryAdminComponent implements OnInit {
                 (data: any) => {
                     this.modalColor = '#2fc900';
                     this.modalMessage = 'Фото добавлено';
-                    this.photos.push(data.id);
+                    this.repository.getGalleryItemDescription(this.editID, data.id).subscribe(
+                        (desc: string) => {
+                            const photo = { key:  data.id, value: desc};
+                            this.photos.push(photo);
+                            this.arrowsHandler(this.photos);
+                        }, error => console.log(error));
                     this.arrowsHandler(this.photos);
                     $('#photoMessage').show();
                 },
@@ -239,8 +258,8 @@ export class GalleryAdminComponent implements OnInit {
     deletePhoto(photo, index) {
         this.photos.splice(index, 1);
         this.arrowsHandler(this.photos);
-        $('#galCarousel').carousel('next');
-        this.repository.deleteGalleryPhoto(this.editID, photo).subscribe(
+        $('#galleryCarousel').carousel('next');
+        this.repository.deleteGalleryPhoto(this.editID, photo.key).subscribe(
             () => {
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;

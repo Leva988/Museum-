@@ -414,35 +414,35 @@ export class AdminComponent  {
       }
 
    // Gallery Panel
-    getGalleries() {
-      return this.http.get(this.baseUrl + '/Galleries');
-    }
+   getGalleries() {
+     return this.http.get(this.baseUrl + '/Galleries');
+   }
 
-    getGallery(id: string) {
-        return  this.http.get(this.baseUrl + '/Galleries' + '/' + id, {responseType: 'json'});
-    }
+   getGallery(id: string) {
+       return  this.http.get(this.baseUrl + '/Galleries' + '/' + id, {responseType: 'json'});
+   }
 
-    addGallery(gal: Gallery) {
-        return this.http.post(this.baseUrl + '/Galleries', gal,
-        {
-          headers: this.authHeaders
-        });
-      }
-
-    updateGallery(id: string, gal: Gallery) {
-        delete gal.id;
-        return this.http.put(this.baseUrl + '/Galleries' + '/' + id, gal,
-        {
-          headers: this.authHeaders
-        });
-      }
-
-    deleteGallery(id: string) {
-        return this.http.delete(this.baseUrl + '/Galleries' + '/' + id,
-        {
+  addGallery(gal: Gallery) {
+      return this.http.post(this.baseUrl + '/Galleries', gal,
+      {
         headers: this.authHeaders
       });
     }
+
+  updateGallery(id: string, gal: Gallery) {
+      delete gal.id;
+      return this.http.put(this.baseUrl + '/Galleries' + '/' + id, gal,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteGallery(id: string) {
+      return this.http.delete(this.baseUrl + '/Galleries' + '/' + id,
+      {
+      headers: this.authHeaders
+    });
+  }
 
   addGalleryPhoto(id: string, file: File) {
       const formData: FormData = new FormData();
@@ -452,6 +452,10 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
    }
+
+  getGalleryItemDescription(id: string, itemId: string) {
+      return this.http.get(this.baseUrl + '/Galleries/' + id + '/itemDescription/' + itemId, {responseType: 'text'});
+  }
 
   deleteGalleryPhoto(id: string, itemId: string) {
       return this.http.delete(this.baseUrl + '/Galleries/' + id + '/item/' + itemId,

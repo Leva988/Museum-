@@ -10,5 +10,7 @@ export class Gallery {
 
     public categoryId: string;
 
+    public withDescription: boolean;
+
     public items: string[];
 }

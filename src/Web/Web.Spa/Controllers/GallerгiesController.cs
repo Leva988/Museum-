@@ -86,6 +86,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 Date = galleryNew.Date,
                 Name = galleryNew.Name,
                 CategoryId = galleryNew.CategoryId,
+                withDescription = galleryNew.withDescription,
                 Items = new List<string>()
             };
 
@@ -113,13 +114,26 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return item;
         }
 
+        //GET description
+        [HttpGet("{id}/itemDescription/{itemId}")]
+        [AllowAnonymous]
+        public async Task<ActionResult> GetItemDescription(string id, string itemId)
+        {
+            var item = await _repository.GetGalleryItemDescriptionAsync(id, itemId);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            return Ok(item);
+        }
+
         //Post item
         [HttpPost("{galleryId}/item")]
         public async Task<ActionResult> Post(string galleryId,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;
-            var itemId = await _repository.AddGalleryItemAsync(input, galleryId, image.ContentType);
+            var itemId = await _repository.AddGalleryItemAsync(input, galleryId, image.ContentType, image.FileName);
            return CreatedAtAction(nameof(GetItem), new { id = itemId, }, new { id = itemId, });
         }
 
