@@ -411,6 +411,12 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         public async Task<bool> DeleteProjectAsync(string id)
         {
+            var project = await GetProjectAsync(id);
+            if (project != null && project.Items.Count() > 0) {
+                foreach (var item in project.Items) {
+                     await DeleteProjectImageAsync(id, item);
+                }
+            }           
             var actionResult = await _context.Projects
                 .DeleteOneAsync(p => p.Id == id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
@@ -432,7 +438,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         public async Task<string> AddProjectImageAsync(Stream stream, string projId, string contentType)
         {
-       var proj = await GetProjectAsync(projId);
+          var proj = await GetProjectAsync(projId);
             if (proj == null)
             {
                 return null;
@@ -1022,9 +1028,15 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
 
         public async Task<bool> DeleteCorporateMonthAsync(string id)
-        {           
+        {   
+            var month = await GetCorporateMonthAsync(id);
+            if (month != null && month.Items.Count() > 0) {
+                foreach (var item in month.Items) {
+                     await DeleteCorporateMonthPhotoAsync(id, item);
+                }
+            }              
             var actionResult = await _context.CorporateMonths
-                .DeleteOneAsync(p => p.Id == id);           
+                .DeleteOneAsync(p => p.Id == id);  
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
         
