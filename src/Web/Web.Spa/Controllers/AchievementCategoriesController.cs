@@ -90,7 +90,8 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         private AchievementCategory MapCategory(AchievementCategoryNew catNew) =>
             new AchievementCategory
             {
-                Name = catNew.Name
+                Name = catNew.Name,
+                Index = catNew.Index
             };
 
     }

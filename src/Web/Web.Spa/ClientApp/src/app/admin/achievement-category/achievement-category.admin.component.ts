@@ -37,6 +37,7 @@ export class AchievementCategoryAdminComponent implements OnInit {
         // tslint:disable: deprecation
         this.columnDefs = [
             { field: 'name', headerName: 'Название категории', sortable: true, filter: true, resizable: true },
+            { field: 'index', headerName: 'Номер', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',

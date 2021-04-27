@@ -7,4 +7,6 @@ export class AchievementCategory {
     public name: string;
 
     public achievements: Achievement[];
+
+    public index: number;
 }

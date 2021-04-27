@@ -6,5 +6,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
     {
         public string Name { get; set; }
 
+        public int Index {get; set; }
+
     }
 }

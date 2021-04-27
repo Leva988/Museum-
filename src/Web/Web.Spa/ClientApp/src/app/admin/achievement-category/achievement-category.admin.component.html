@@ -20,6 +20,11 @@
                     <div [hidden]="name.valid" class="alert alert-danger">
                         Название не указано
                     </div>
+                    <label for="index">Введите порядковый номер:</label>
+                    <input id="index" class="form-control col-md-3" name="index" type="number" [(ngModel)]="editCategory.index" #index="ngModel" required />
+                    <div [hidden]="index.valid" class="alert col-md-3 alert-danger">
+                        Номер не указан
+                    </div>
                     <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success">
                     <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />

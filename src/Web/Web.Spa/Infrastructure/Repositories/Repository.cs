@@ -603,6 +603,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<AchievementCategory>> GetAchievementCategoriesAsync() =>
             await _context.AchievementCategories
                 .Find(_ => true)
+                .SortBy(c => c.Index)
                 .ToListAsync();
 
         public async Task InsertAchievementCategoryAsync(AchievementCategory cat) =>
@@ -612,7 +613,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task CreateOrUpdateAchievementCategoryAsync(AchievementCategory ach) {
             var filter = Builders<AchievementCategory>.Filter.Eq(x => x.Id, ach.Id);
             var update = Builders<AchievementCategory>.Update
-                .Set(x => x.Name, ach.Name);      
+                .Set(x => x.Name, ach.Name)
+                .Set(x =>x.Index, ach.Index);      
             await _context.AchievementCategories.UpdateOneAsync(
                 filter,
                 update,

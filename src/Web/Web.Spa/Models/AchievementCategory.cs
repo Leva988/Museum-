@@ -15,5 +15,7 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public IEnumerable<Achievement> Achievements { get; set;}
 
+        public int Index { get; set;}
+
     }
 }
