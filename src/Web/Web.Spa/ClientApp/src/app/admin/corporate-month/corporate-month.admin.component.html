@@ -20,7 +20,7 @@
                     <div [hidden]="name.valid" class="alert alert-danger">
                         Название не указано
                     </div>
-                    <label for="description">Введите описание:</label>
+                    <label for="description">Введите описание(HTML-разметка, пункты списка li):</label>
                     <textarea id="description" class="form-control" type="text" name="description" [(ngModel)]="editMonth.description" #description="ngModel" required></textarea>
                     <div [hidden]="description.valid" class="alert alert-danger">
                         Описание события

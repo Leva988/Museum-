@@ -18,6 +18,7 @@ import { Department } from '../models/department';
 import { CookieService } from 'ngx-cookie';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AchievementCategory } from '../models/achievementcategory';
+import { Boss } from '../models/boss';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -592,6 +593,58 @@ export class AdminComponent  {
 
   deleteHistoryImage(id: string, photoId: string) {
       return this.http.delete(this.baseUrl + '/HistoryMilestones' + '/' + id + '/item/' + photoId,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  // Boss
+
+  getBosses() {
+    return this.http.get(this.baseUrl + '/Bosses');
+  }
+
+  getBoss(id: string) {
+      return  this.http.get(this.baseUrl + '/Bosses' + '/' + id, {responseType: 'json'});
+  }
+
+  addBoss(boss: Boss) {
+      return this.http.post(this.baseUrl + '/Bosses', boss,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateBoss(id: string, boss: Boss) {
+      delete boss.id;
+      return this.http.put(this.baseUrl + '/Bosses' + '/' + id, boss,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteBoss(id: string) {
+      return this.http.delete(this.baseUrl + '/Bosses' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  getBossPhoto(id: string) {
+      return  this.http.get(this.baseUrl + '/Bosses' + '/' + id + '/Photo', {responseType: 'blob'});
+  }
+
+  addBossPhoto(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/Bosses/' + id + '/Photo', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
+  deleteBossPhoto(id: string) {
+      return this.http.delete(this.baseUrl + '/Bosses/' + id + '/Photo',
       {
         headers: this.authHeaders
       });

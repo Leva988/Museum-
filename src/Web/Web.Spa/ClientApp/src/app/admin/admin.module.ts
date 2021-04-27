@@ -23,6 +23,7 @@ import { DepartmentAdminComponent } from './department/department.admin.componen
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { CookieModule } from 'ngx-cookie';
 import { AchievementCategoryAdminComponent } from './achievement-category/achievement-category.admin.component';
+import { BossAdminComponent } from './boss/boss.admin.component';
 
 const routing = RouterModule.forChild([
   { path: 'auth', component: AuthComponent },
@@ -39,7 +40,8 @@ const routing = RouterModule.forChild([
       { path: 'corporate-months', component: CorporateMonthAdminComponent },
       { path: 'history-milestones', component: HistoryAdminComponent },
       { path: 'departments', component: DepartmentAdminComponent },
-      { path: 'achievement-categories', component: AchievementCategoryAdminComponent }
+      { path: 'achievement-categories', component: AchievementCategoryAdminComponent },
+      { path: 'bosses', component: BossAdminComponent }
      ]},
       { path: '**', redirectTo: 'auth' }
 ]);
@@ -51,8 +53,8 @@ const routing = RouterModule.forChild([
   CookieModule.forRoot(), ],
   declarations: [AuthComponent, AdminComponent, EmployeeAdminComponent, AchievementAdminComponent, DepartmentAdminComponent,
      GalleryAdminComponent, RewardedAdminComponent, ButtonRendererComponent, RewardAdminComponent, HistoryAdminComponent,
-     ProjectAdminComponent, GalleryCategoryAdminComponent, CorporateYearAdminComponent, CorporateMonthAdminComponent, 
-     AchievementCategoryAdminComponent],
+     ProjectAdminComponent, GalleryCategoryAdminComponent, CorporateYearAdminComponent, CorporateMonthAdminComponent,
+     AchievementCategoryAdminComponent, BossAdminComponent],
   providers: [AuthGuard, AuthToken, JwtHelperService]
 })
 export class AdminModule {

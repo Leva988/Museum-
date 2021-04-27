@@ -1,0 +1,63 @@
+<div class="head p-3">
+    <h3>Таблица руководителей</h3>
+</div>
+<input id="add" data-toggle="modal" data-target="#addModal" type="button" class="btn btn-primary" value="Добавить руководителя" (click)="addBoss()" />
+<ag-grid-angular id="ag-grid" style="width: 100%; height: 100vh;" class="ag-theme-alpine-dark" [gridOptions]='gridOptions' [columnDefs]="columnDefs" [rowData]="rowData">
+</ag-grid-angular>
+<div class="modal fade" id="addModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="addHeader">
+                <h2 class="modal-title" id="title">{{modalTitle}}</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm" (ngSubmit)="saveBoss(form)" class="col-md-10 form-group">
+                    <label for="name">Введите ФИО:</label>
+                    <input id="name" class="form-control" name="name" type="text" [(ngModel)]="editBoss.name" #name="ngModel" required />
+                    <div [hidden]="name.valid" class="alert alert-danger">
+                        ФИО не указано
+                    </div>
+                    <label for="description">Введите описание(HTML-разметка):</label>
+                    <textarea id="description" class="form-control" type="text" name="description" [(ngModel)]="editBoss.description" #description="ngModel" required></textarea>
+                    <div [hidden]="description.valid" class="alert alert-danger">
+                        Описание не указано
+                    </div>
+                    <label for="dateStart">Введите дату начала работы:</label>
+                    <input id="dateStart" class="form-control" type="date" name="dateStart" [ngModel]="editBoss.dateStart | date:'yyyy-MM-dd'" (ngModelChange)="editBoss.dateStart = $event" #dateStart="ngModel" required/>
+                    <div [hidden]="dateStart.valid" class="alert alert-danger">
+                        Дата начала работы не указана
+                    </div>
+                    <label for="dateEnd">Введите дату завершения работы:</label>
+                    <input id="dateEnd" class="form-control" type="date" name="dateEnd" [ngModel]="editBoss.dateEnd | date:'yyyy-MM-dd'" (ngModelChange)="editBoss.dateEnd = $event" />
+                    <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
+                    <input type="submit" value="Сохранить" class="btn btn-success">
+                    <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPhoto" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div id="photoHeader" class="modal-header">
+                <h2 class="modal-title" id="photoTitle">Фото руководителя</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+                <img *ngIf="photo!==null" id="photo" class="img-fluid p-2" src="{{photo}}">
+                <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+                <h5 id="photoMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-success col-md-4" (click)="addPhoto()">Добавить</button>
+                <button type="button" class="btn btn-danger col-md-4" (click)="deletePhoto()">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -20,7 +20,7 @@
                     <div [hidden]="name.valid" class="alert alert-danger">
                         Название не указано
                     </div>
-                    <label for="description">Введите описание проекта:</label>
+                    <label for="description">Введите описание проекта(HTML-разметка):</label>
                     <textarea id="description" class="form-control" type="text" name="description" [(ngModel)]="editProject.description"></textarea>
                     <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success" />
