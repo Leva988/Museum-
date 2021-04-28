@@ -7,7 +7,7 @@
             <div class="col-md-5 card" *ngFor="let v of videos | async">
                 <div class="embed-responsive embed-responsive-16by9">
                     <video controls="controls" poster="{{videoUrl}}/{{v.id}}/Photo">
-                            <source src="/assets/images/BGPZ_2016_1080_23.98p.mpeg" type='video/mpeg; codecs="avc1.42E01E, mp4a.40.2 "'>                          
+                            <source src="{{v.url}}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>                          
                      </video>
                 </div>
                 <h5 class="card-title ">
