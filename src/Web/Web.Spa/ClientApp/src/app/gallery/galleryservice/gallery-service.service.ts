@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { GalleryVideo } from 'src/app/models/galleryvideo';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class GalleryService {
   galleryUrl = environment.backendUrl + '/Gallery';
   categoriesUrl = environment.backendUrl + '/GalleryCategories';
+  videosUrl = environment.backendUrl + '/GalleryVideos';
   constructor(private http: HttpClient ) {
       }
 
@@ -17,11 +20,11 @@ export class GalleryService {
       return this.http.get(this.categoriesUrl , { responseType: 'json'});
     }
 
-    getCategory(id: string) {
+  getCategory(id: string) {
       return this.http.get(this.categoriesUrl + '/' + id, { responseType: 'json'});
     }
 
-  getFile(url: string) {
-      return this.http.get(url , { responseType: 'blob'});
+  getVideos(): Observable<GalleryVideo[]> {
+      return this.http.get<GalleryVideo[]>(this.videosUrl, { responseType: 'json'});
     }
 }

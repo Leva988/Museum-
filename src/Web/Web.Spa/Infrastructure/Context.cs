@@ -184,5 +184,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<HistoryMilestone> HistoryMileStones => 
                 _database.GetCollection<HistoryMilestone>("HistoryMileStones");
 
+        public IMongoCollection<GalleryVideo> GalleryVideos  =>
+         _database.GetCollection<GalleryVideo>("GalleryVideos");
+
+        public GridFSBucket VideoPreviews =>
+            new GridFSBucket(
+                _database,
+                new GridFSBucketOptions
+                {
+                    BucketName = "video-previews",
+                    ChunkSizeBytes = _deafultChunkSize,
+                }
+             );
+
     }
 }

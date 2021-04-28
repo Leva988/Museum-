@@ -1,6 +1,8 @@
 import { Component,  OnInit } from '@angular/core';
 import { GalleryService } from '../galleryservice/gallery-service.service';
-import { KeyValue } from '@angular/common';
+import { Observable } from 'rxjs';
+import { GalleryVideo } from 'src/app/models/galleryvideo';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-gallery-video',
@@ -11,20 +13,18 @@ import { KeyValue } from '@angular/common';
 
 export class GalleryVideoComponent implements OnInit {
 
-  videoUrls: KeyValue<string, string>[] = [];
-  constructor() {
-    this.videoUrls = [
-      {
-        key: 'БГПЗ - История(1976-2016) полная версия',
-        value: '/BGPZ_2016_1080_23.98p.mp4'
-      },
-      {
-        key: 'БГПЗ - История(1976-2016)',
-        value: '/BGPZ_2016_1080_23.98p_SHORT.mp4'
-      }
-    ];
+  videos: Observable<GalleryVideo[]>;
+  videoUrl = environment.backendUrl + '/GalleryVideos';
+  constructor(private service: GalleryService) {
    }
 
   ngOnInit() {
+    this.getGalleryVideos();
   }
+
+  getGalleryVideos() {
+    this.videos = this.service.getVideos();
+  }
+
+
 }

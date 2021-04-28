@@ -3,18 +3,15 @@
     </app-header>
     <app-button backcolor="#029e1b" buttoncolor="#46f062"> </app-button>
     <div class="container-fluid videos">
-        <div class="d-flex justify-content-around align-items-center" *ngFor="let v of videoUrls">
-            <div class=" col-md-5 card">
+        <div class="row d-flex justify-content-around align-items-center">
+            <div class="col-md-5 card" *ngFor="let v of videos | async">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <div class="card-content">
-                        <video controls="controls" poster="/assets/images/history/history.png">
-                            <source src="{{v.value}}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2 "'>
-                            <a href="">Скачайте видео</a>.
+                    <video controls="controls" poster="{{videoUrl}}/{{v.id}}/Photo">
+                            <source src="/assets/images/BGPZ_2016_1080_23.98p.mpeg" type='video/mpeg; codecs="avc1.42E01E, mp4a.40.2 "'>                          
                      </video>
-                    </div>
                 </div>
                 <h5 class="card-title ">
-                    {{v.key}}
+                    {{v.name}}
                 </h5>
             </div>
 

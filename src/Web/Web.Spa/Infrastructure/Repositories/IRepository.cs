@@ -205,6 +205,24 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<bool> DeleteGalleryCategoryAsync(string catId);
         #endregion
 
+        #region Video
+        Task<IEnumerable<GalleryVideo>> GetGalleryVideosAsync();
+
+        Task<GalleryVideo> GetGalleryVideoAsync(string id);
+
+        Task InsertGalleryVideoAsync(GalleryVideo video);
+
+        Task CreateOrUpdateGalleryVideoAsync(GalleryVideo video);
+
+        Task<bool> DeleteGalleryVideoAsync(string id);
+
+        Task<FileStreamResult> GetGalleryVideoPreviewAsync(string id);
+
+        Task DeleteGalleryVideoPreviewAsync(string id);
+
+        Task<string> AddGalleryVideoPreviewAsync(Stream stream, string id, string contentType);
+        #endregion
+
         #region HistoryMilestones
         Task<IEnumerable<HistoryMilestone>> GetHistoryMilestones();
 
@@ -257,7 +275,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task<bool> DeleteCorporateYearAsync(string id);
         #endregion
 
-        #region Departments      
+        #region Departments
 
         Task<IEnumerable<Department>> GetAllDepartmentsAsync();
 

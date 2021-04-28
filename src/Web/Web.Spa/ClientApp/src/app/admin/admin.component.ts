@@ -19,6 +19,7 @@ import { CookieService } from 'ngx-cookie';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AchievementCategory } from '../models/achievementcategory';
 import { Boss } from '../models/boss';
+import { GalleryVideo } from '../models/galleryvideo';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -645,6 +646,54 @@ export class AdminComponent  {
 
   deleteBossPhoto(id: string) {
       return this.http.delete(this.baseUrl + '/Bosses/' + id + '/Photo',
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  // GalleryVideo
+
+  getGalleryVideos() {
+    return this.http.get(this.baseUrl + '/GalleryVideos');
+  }
+
+  addGalleryVideo(vioeo: GalleryVideo) {
+      return this.http.post(this.baseUrl + '/GalleryVideos', vioeo,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  updateGalleryVideo(id: string, video: GalleryVideo) {
+      delete video.id;
+      return this.http.put(this.baseUrl + '/GalleryVideos' + '/' + id, video,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  deleteGalleryVideo(id: string) {
+      return this.http.delete(this.baseUrl + '/GalleryVideos' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
+  getGalleryVideoPreview(id: string) {
+      return  this.http.get(this.baseUrl + '/GalleryVideos' + '/' + id + '/Photo', {responseType: 'blob'});
+  }
+
+  addGalleryVideoPreview(id: string, file: File) {
+      const formData: FormData = new FormData();
+      formData.append('avatar', file, file.name);
+      return this.http.post(this.baseUrl + '/GalleryVideos/' + id + '/Photo', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
+  deleteGalleryVideoPreview(id: string) {
+      return this.http.delete(this.baseUrl + '/GalleryVideos/' + id + '/Photo',
       {
         headers: this.authHeaders
       });

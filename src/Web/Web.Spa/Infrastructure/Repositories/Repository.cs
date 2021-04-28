@@ -786,6 +786,88 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         }
         #endregion
 
+        #region GalleryVideo
+        public async Task<IEnumerable<GalleryVideo>> GetGalleryVideosAsync() =>
+            await _context.GalleryVideos
+                .Find(_ => true)
+                .SortBy(c => c.Id)
+                .ToListAsync();
+        
+        public async Task InsertGalleryVideoAsync(GalleryVideo video) =>
+                await _context.GalleryVideos
+                      .InsertOneAsync(video);
+
+        public async Task CreateOrUpdateGalleryVideoAsync(GalleryVideo video) =>
+            await _context.GalleryVideos
+                .ReplaceOneAsync(x => x.Id == video.Id,
+                video,
+                new ReplaceOptions
+                {
+                    IsUpsert = true,
+                }
+            );
+
+        public async Task<GalleryVideo> GetGalleryVideoAsync(string id) =>
+            await _context.GalleryVideos
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteGalleryVideoAsync(string id)
+        {           
+            var actionResult = await _context.GalleryVideos
+                .DeleteOneAsync(b => b.Id == id); 
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<FileStreamResult> GetGalleryVideoPreviewAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = await _context.VideoPreviews
+                .Find(filter)
+                .FirstAsync();
+
+            var stream = new MemoryStream();
+            await _context.VideoPreviews.DownloadToStreamAsync(info.Id, stream);
+            stream.Position = 0;
+
+            var contentType = info.Metadata.GetValue("Content-Type").ToString();
+
+            return new FileStreamResult(stream, contentType);
+        }
+
+        public async Task<string> AddGalleryVideoPreviewAsync(Stream stream, string id, string contentType)
+        {
+            var emp = await GetGalleryVideoAsync(id);
+            if (emp == null)
+            {
+                return null;
+            }
+
+            var itemId = await _context.VideoPreviews
+                .UploadFromStreamAsync(
+                    id,
+                    stream,
+                    new GridFSUploadOptions
+                    {
+                        Metadata = new BsonDocument
+                        {
+                            {"Content-Type", contentType},
+                        },
+                    }
+                );
+            return itemId.ToString();
+        }
+
+        public async Task DeleteGalleryVideoPreviewAsync(string name)
+        {
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var info = _context.VideoPreviews
+                .Find(filter)
+                .FirstOrDefault();
+            await _context.EmployeePhotos.DeleteAsync(info.Id);
+        }
+        #endregion
+
         #region Production
         public async Task<IEnumerable<Production>> GetProductions() =>
             await _context.Productions.Find(_ => true)
