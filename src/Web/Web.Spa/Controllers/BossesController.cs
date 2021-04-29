@@ -43,7 +43,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/boss
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]BossNew bossnew)
+        public async Task<ActionResult> Post([FromBody]BossNew bossnew)
         {
             if (!ModelState.IsValid)
             {
@@ -57,7 +57,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/Employee
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> Put(string id, [FromBody]BossNew bossNew)
+        public async Task<ActionResult> Put(string id, [FromBody]BossNew bossNew)
         {
             if (!ModelState.IsValid)
             {

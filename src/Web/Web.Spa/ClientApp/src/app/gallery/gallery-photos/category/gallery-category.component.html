@@ -34,7 +34,7 @@
     </div>
 </div>
 <div class="row galleries d-flex justify-content-around">
-    <div class="col-md-2 " *ngFor="let g of galleries ">
+    <div class="col-md-2" *ngFor="let g of galleries ">
         <div class="card" data-toggle="modal" data-target="#Modal" (click)="gallery=g; getDescription(g.id, g.items);">
             <img class="img-fluid card-image" src="{{galleryUrl}}/{{g.id}}/item/{{g.items[0]}} " alt="... ">
             <p class="card-title ">{{g.name}}</p>

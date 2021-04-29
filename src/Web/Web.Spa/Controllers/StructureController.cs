@@ -63,7 +63,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/subStructures
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdateStructure([FromBody] StructureNew structNew)
+        public async Task<IActionResult> Post([FromBody] StructureNew structNew)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/subStructures
         [HttpPut("{id}")]
-        public async Task<ActionResult<Structure>> Put(string id, [FromBody] StructureNew structNew)
+        public async Task<ActionResult> Put(string id, [FromBody] StructureNew structNew)
         {
             if (!ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Delete api/subStructures
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteStructure(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (await _repository.DeleteStructureAsync(id))
             {

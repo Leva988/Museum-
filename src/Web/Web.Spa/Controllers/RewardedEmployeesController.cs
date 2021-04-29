@@ -74,7 +74,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/rewardedemployee
         [HttpPut("{id}")]
-        public async Task<ActionResult<RewardedEmployee>> Put(string id, [FromBody] RewardedEmployeeNew rewNew)
+        public async Task<ActionResult> Put(string id, [FromBody] RewardedEmployeeNew rewNew)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             rew.Id = id;
             await _repository.CreateOrUpdateRewardedEmployeeAsync(rew);
 
-            return Ok(rew);
+            return Ok();
         }
 
         // DELETE api/rewardedemployee

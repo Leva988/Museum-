@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class GalleryService {
   galleryUrl = environment.backendUrl + '/Gallery';
   categoriesUrl = environment.backendUrl + '/GalleryCategories';
+  videocategoriesUrl = environment.backendUrl + '/VideoCategories';
   videosUrl = environment.backendUrl + '/GalleryVideos';
   constructor(private http: HttpClient ) {
       }
@@ -20,11 +21,16 @@ export class GalleryService {
       return this.http.get(this.categoriesUrl , { responseType: 'json'});
     }
 
+  getVideoCategories() {
+    return this.http.get(this.videocategoriesUrl);
+  }
+
+  getVideoCategory(id: string) {
+    return this.http.get(this.videocategoriesUrl + '/' + id);
+  }
+
   getCategory(id: string) {
       return this.http.get(this.categoriesUrl + '/' + id, { responseType: 'json'});
     }
 
-  getVideos(): Observable<GalleryVideo[]> {
-      return this.http.get<GalleryVideo[]>(this.videosUrl, { responseType: 'json'});
-    }
 }

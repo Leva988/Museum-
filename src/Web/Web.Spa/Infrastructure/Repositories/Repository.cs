@@ -790,9 +790,15 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<IEnumerable<GalleryVideo>> GetGalleryVideosAsync() =>
             await _context.GalleryVideos
                 .Find(_ => true)
-                .SortBy(c => c.Id)
+                .SortBy(c => c.Date)
                 .ToListAsync();
-        
+
+        public async Task<IEnumerable<GalleryVideo>> GetVideosByCategoryAsync(string category) =>
+            await _context.GalleryVideos
+                .Find(x => x.CategoryId == category)
+                .SortBy(x => x.Date)
+                .ToListAsync();
+
         public async Task InsertGalleryVideoAsync(GalleryVideo video) =>
                 await _context.GalleryVideos
                       .InsertOneAsync(video);
@@ -865,6 +871,42 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                 .Find(filter)
                 .FirstOrDefault();
             await _context.EmployeePhotos.DeleteAsync(info.Id);
+        }
+        #endregion
+
+        #region VideoCategory
+        public async Task<IEnumerable<VideoCategory>> GetVideoCategoriesAsync() =>
+            await _context.VideoCategories.Find(_ => true)
+                .ToListAsync();
+
+        public async Task InsertVideoCategoryAsync(VideoCategory cat) =>
+            await _context.VideoCategories
+                .InsertOneAsync(cat);
+
+        public async Task CreateOrUpdateVideoCategoryAsync(VideoCategory cat) {
+            var filter = Builders<VideoCategory>.Filter.Eq(x => x.Id, cat.Id);
+            var update = Builders<VideoCategory>.Update
+                .Set(x => x.Name, cat.Name);
+            await _context.VideoCategories.UpdateOneAsync(
+                filter,
+                update,
+                new UpdateOptions()
+                {
+                    IsUpsert = true
+                });
+        }
+
+        public async Task<VideoCategory> GetVideoCategoryAsync(string id) =>
+            await _context.VideoCategories
+                .Find(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+        public async Task<bool> DeleteVideoCategoryAsync(string id)
+        {
+           var cat = await GetVideoCategoryAsync(id);
+           var actionResult = await _context.VideoCategories
+                .DeleteOneAsync(p => p.Id == id);
+            return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
         #endregion
 

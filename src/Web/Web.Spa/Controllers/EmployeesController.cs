@@ -102,7 +102,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/Employee
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> Put(string id, [FromBody]EmployeeNew empnew)
+        public async Task<ActionResult> Put(string id, [FromBody]EmployeeNew empnew)
         {
             if (!ModelState.IsValid)
             {

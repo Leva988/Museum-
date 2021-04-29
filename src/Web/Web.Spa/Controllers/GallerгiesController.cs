@@ -41,19 +41,19 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         public async Task<ActionResult> GetById(string id)
         {
             var item = await _repository.GetGalleryAsync(id);
-            var cat = await _repository.GetGalleryCategoryAsync(item.CategoryId);
-            item.Category = cat.Name;
             if (item == null)
             {
                 return NotFound();
             }
-
+            var cat = await _repository.GetGalleryCategoryAsync(item.CategoryId);
+            item.Category = cat.Name;
+          
             return Ok(item);
         }
     
         // POST api/Gallery
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdate([FromBody] GalleryNew galleryNew)
+        public async Task<IActionResult> Post([FromBody] GalleryNew galleryNew)
         {
             if (!ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post item
         [HttpPost("{galleryId}/item")]
-        public async Task<ActionResult> Post(string galleryId,[FromForm(Name = "avatar")] IFormFile image)
+        public async Task<ActionResult> PostItem(string galleryId,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

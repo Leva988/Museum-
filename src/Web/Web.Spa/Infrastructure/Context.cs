@@ -184,6 +184,9 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure
         public IMongoCollection<HistoryMilestone> HistoryMileStones => 
                 _database.GetCollection<HistoryMilestone>("HistoryMileStones");
 
+        public IMongoCollection<VideoCategory> VideoCategories  =>
+         _database.GetCollection<VideoCategory>("VideoCategories");
+
         public IMongoCollection<GalleryVideo> GalleryVideos  =>
          _database.GetCollection<GalleryVideo>("GalleryVideos");
 

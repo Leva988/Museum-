@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminComponent } from '../admin.component';
 import { ButtonRendererComponent } from '../button-renderer.component';
-import { KeyValue } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import {  GridOptions, GridReadyEvent } from 'ag-grid-community';
 import { isNullOrUndefined } from 'util';
-import { Achievement } from 'src/app/models/achievement';
 import { NgForm } from '@angular/forms';
-import { AchievementCategory } from 'src/app/models/achievementcategory';
 import { GalleryVideo } from 'src/app/models/galleryvideo';
+import { VideoCategory } from 'src/app/models/videocategory';
 
 declare var $: any;
 
@@ -19,6 +17,7 @@ providers: [AdminComponent]
 })
 export class GalleryVideoAdminComponent implements OnInit {
     videos: GalleryVideo[] = [];
+    categories: VideoCategory[] = [];
     url = environment.backendUrl + '/GalleryVideos';
     active: number;
     editVideo: GalleryVideo = new GalleryVideo();
@@ -48,11 +47,18 @@ export class GalleryVideoAdminComponent implements OnInit {
             this.modalMessage = this.modalColor = this.modalTitle = null;
             $('#photoMessage').hide();
         });
+        this.repository.getVideoCategories().subscribe(
+            (data: VideoCategory[]) => {
+                this.categories = data;
+            }, error => console.log(error)
+        );
         this.getVideos();
         // tslint:disable: deprecation
         this.columnDefs = [
             { field: 'name', headerName: 'Название', sortable: true, filter: true, resizable: true },
             { field: 'url', headerName: 'Ссылка', sortable: true, filter: true, resizable: true },
+            { field: 'category', headerName: 'Категория', sortable: true, filter: true, resizable: true },
+            { field: 'date', headerName: 'Дата видео', sortable: true, filter: true, resizable: true },
             {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
@@ -112,7 +118,11 @@ export class GalleryVideoAdminComponent implements OnInit {
 
     updateVideo(e) {
         this.editID = e.rowData.id;
-        this.editVideo = e.rowData;
+        this.repository.getGalleryVideo(this.editID).subscribe(
+            (data: GalleryVideo) => {
+                this. editVideo = data;
+            }, error => console.log(error)
+        );
         this.modalTitle = 'Изменить данные о видео';
         this.isNewRecord = false;
     }
@@ -120,6 +130,12 @@ export class GalleryVideoAdminComponent implements OnInit {
     getVideos() {
          this.repository.getGalleryVideos().subscribe(
             (data: GalleryVideo[]) => {
+                // tslint:disable: prefer-for-of
+                for (let j = 0; j < data.length; j++) {
+                    const e = data[j];
+                    const date = new Date(e.date).toLocaleDateString();
+                    e.date = date;
+                  }
                 this.videos = data;
                 this.rowData = this.videos;
               },

@@ -56,7 +56,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/reward
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdateReward([FromBody] RewardNew awardNew)
+        public async Task<IActionResult> Post([FromBody] RewardNew awardNew)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/reward
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> Put(string id, [FromBody] RewardNew awardNew)
+        public async Task<ActionResult> Put(string id, [FromBody] RewardNew awardNew)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Delete api/reward
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteReward(string id)
+        public async Task<ActionResult> Delete(string id)
         {
             if (await _repository.DeleteRewardAsync(id))
             {

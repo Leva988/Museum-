@@ -61,7 +61,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/year
         [HttpPut("{id}")]
-        public async Task<ActionResult<CorporateMonth>> Put(string id, [FromBody] CorporateYearNew corpNew)
+        public async Task<ActionResult> Put(string id, [FromBody] CorporateYearNew corpNew)
         {
             if (!ModelState.IsValid)
             {

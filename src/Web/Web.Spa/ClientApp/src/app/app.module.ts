@@ -30,6 +30,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { BelorusneftComponent } from './news/belorusneft/belorusneft.component';
 import { GalleryCategoryComponent } from './gallery/gallery-photos/category/gallery-category.component';
 import { BossComponent } from './hisrory/history-bosses/history-bosses.component';
+import { VideoCategoryComponent } from './gallery/gallery-videos/category/video-category.component';
 
 
 
@@ -56,6 +57,7 @@ import { BossComponent } from './hisrory/history-bosses/history-bosses.component
     NotfoundComponent,
     BelorusneftComponent,
     GalleryCategoryComponent,
+    VideoCategoryComponent,
     CorporateYearComponent,
     DepartmentComponent,
     BossComponent

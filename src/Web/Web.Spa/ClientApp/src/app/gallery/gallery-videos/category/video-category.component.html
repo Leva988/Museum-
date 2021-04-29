@@ -1,0 +1,15 @@
+<div class="row d-flex justify-content-around align-items-center">
+    <div class="col-md-5 card" *ngFor="let v of videos">
+        <div class="embed-responsive embed-responsive-16by9">
+            <video controls="controls" poster="{{videoUrl}}/{{v.id}}/Photo">
+                    <source src="{{v.url}}" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>                          
+             </video>
+        </div>
+        <div class="card-title">
+            <h5>{{v.name}}</h5>
+        </div>
+        <pre class="date"> <fa-icon [icon]="faVideo"></fa-icon>    {{v.date}} </pre>
+
+    </div>
+
+</div>

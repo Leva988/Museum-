@@ -8,4 +8,6 @@ export class GalleryVideo {
 
     public url: Url;
 
+    public date: string;
+
 }

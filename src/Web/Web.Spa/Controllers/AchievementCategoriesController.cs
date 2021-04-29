@@ -12,7 +12,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /* [Authorize]*/
+    [Authorize]
     public class AchievementCategoriesController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -25,7 +25,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         //Get api/all AchievementCategory
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<AchievementCategory>>> Get() {
+        public async Task<ActionResult> Get() {
             var categories =  await _repository.GetAchievementCategoriesAsync();
             foreach (AchievementCategory cat in categories) {
                 var achs = await _repository.GetAchievementsByCategory(cat.Id);
@@ -37,7 +37,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         //Get api/AchievementCategory
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Achievement>> GetById(string id)
+        public async Task<ActionResult> GetById(string id)
         {
             var cat = await _repository.GetAchievementCategoryAsync(id);
             var achs = await _repository.GetAchievementsByCategory(cat.Id);
@@ -47,7 +47,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/AchievementCategory
         [HttpPost]
-        public async Task<ActionResult<AchievementCategory>> Post([FromBody] AchievementCategoryNew catNew)
+        public async Task<ActionResult> Post([FromBody] AchievementCategoryNew catNew)
         {
             if (!ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/AchievementCategory
         [HttpPut("{id}")]
-        public async Task<ActionResult<Achievement>> Put(string id, [FromBody] AchievementCategoryNew catNew)
+        public async Task<ActionResult> Put(string id, [FromBody] AchievementCategoryNew catNew)
         {
             if (!ModelState.IsValid)
             {

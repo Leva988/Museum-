@@ -25,8 +25,14 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
          //Get api/all videos
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult> Get() => 
-            Ok(await _repository.GetGalleryVideosAsync());
+        public async Task<ActionResult> Get() {
+           var videos = await _repository.GetGalleryVideosAsync();
+            foreach (GalleryVideo vid in videos) {
+                var category = await _repository.GetVideoCategoryAsync(vid.CategoryId);
+                vid.Category = category.Name;
+            }
+            return Ok(videos);
+        }
         
 
         //Get api/videos
@@ -39,12 +45,15 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             {
                 return NotFound();
             }
+            var cat = await _repository.GetVideoCategoryAsync(video.CategoryId);
+            video.Category = cat.Name;
+          
             return Ok(video);
         }
 
         // POST api/videos
         [HttpPost]
-        public async Task<IActionResult> PostMany([FromBody]GalleryVideoNew videoNew)
+        public async Task<IActionResult> Post([FromBody]GalleryVideoNew videoNew)
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +67,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/videos
         [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> Put(string id, [FromBody]GalleryVideoNew videoNew)
+        public async Task<ActionResult> Put(string id, [FromBody]GalleryVideoNew videoNew)
         {
             if (!ModelState.IsValid)
             {
@@ -122,7 +131,9 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             new GalleryVideo
             {
                 Name = videoNew.Name,
-                Url = videoNew.Url
+                Url = videoNew.Url,
+                Date = videoNew.Date,
+                CategoryId = videoNew.CategoryId
             };
 
 

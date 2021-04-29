@@ -48,7 +48,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/Milestone
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdate([FromBody] HistoryMilestoneNew mileNew)
+        public async Task<IActionResult> Post([FromBody] HistoryMilestoneNew mileNew)
         {
             if (!ModelState.IsValid)
             {
@@ -122,7 +122,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post item
         [HttpPost("{id}/item")]
-        public async Task<ActionResult> Post(string id,[FromForm(Name = "avatar")] IFormFile image)
+        public async Task<ActionResult> PostItem(string id,[FromForm(Name = "avatar")] IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

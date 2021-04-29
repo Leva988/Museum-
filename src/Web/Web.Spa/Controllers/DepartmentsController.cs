@@ -26,7 +26,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         //Get api/departments 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Department>>> Get()
+        public async Task<ActionResult> Get()
         {
             var items = await _repository.GetAllDepartmentsAsync();
             if (items == null)
@@ -73,7 +73,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         //Post api/department
         [HttpPost]
         
-        public async Task<IActionResult> AddDepartment([FromBody] DepartmentNew depNew)
+        public async Task<IActionResult> Post([FromBody] DepartmentNew depNew)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/department
         [HttpPut("{id}")]
-        public async Task<ActionResult<Service>> Put(string id, [FromBody] DepartmentNew depnew)
+        public async Task<ActionResult> Put(string id, [FromBody] DepartmentNew depnew)
         {
             if (!ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // DELETE api/department
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDepartment(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (await _repository.DeleteDepartmentAsync(id))
             {

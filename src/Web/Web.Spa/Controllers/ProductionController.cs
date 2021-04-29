@@ -48,7 +48,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/Production
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdate([FromBody] ProductionNew prodNew)
+        public async Task<IActionResult> Post([FromBody] ProductionNew prodNew)
         {
             if (!ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         //Post item
         [HttpPost("{id}/icon")]
-        public async Task<ActionResult> Post(string id, IFormFile image)
+        public async Task<ActionResult> PostIcon(string id, IFormFile image)
         {
             var stream = image.OpenReadStream();
             var input = new StreamReader(stream).BaseStream;

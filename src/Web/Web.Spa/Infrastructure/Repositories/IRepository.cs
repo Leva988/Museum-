@@ -210,6 +210,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<GalleryVideo> GetGalleryVideoAsync(string id);
 
+        Task<IEnumerable<GalleryVideo>> GetVideosByCategoryAsync(string catId);
+
         Task InsertGalleryVideoAsync(GalleryVideo video);
 
         Task CreateOrUpdateGalleryVideoAsync(GalleryVideo video);
@@ -221,6 +223,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task DeleteGalleryVideoPreviewAsync(string id);
 
         Task<string> AddGalleryVideoPreviewAsync(Stream stream, string id, string contentType);
+        #endregion
+
+        #region VideoCategory
+        Task<IEnumerable<VideoCategory>> GetVideoCategoriesAsync();
+
+        Task<VideoCategory> GetVideoCategoryAsync(string catId);
+
+        Task InsertVideoCategoryAsync(VideoCategory cat);
+
+        Task CreateOrUpdateVideoCategoryAsync(VideoCategory cat);
+
+        Task<bool> DeleteVideoCategoryAsync(string catId);
         #endregion
 
         #region HistoryMilestones

@@ -45,7 +45,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddServices([FromBody] ServiceNew servicenew)
+        public async Task<IActionResult> Post([FromBody] ServiceNew servicenew)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/service
         [HttpPut("{id}")]
-        public async Task<ActionResult<Service>> Put(string id, [FromBody] ServiceNew servicenew)
+        public async Task<ActionResult> Put(string id, [FromBody] ServiceNew servicenew)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // DELETE api/service
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteService(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (await _repository.DeleteServiceAsync(id))
             {

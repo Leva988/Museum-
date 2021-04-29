@@ -19,7 +19,18 @@ export class GalleryCategoryComponent implements OnInit {
 
   faphoto = faPhotoVideo;
   gallery: Gallery = new Gallery();
-  @Input() galleries: Gallery[] = [];
+  // tslint:disable-next-line: variable-name
+  _galleries: Gallery[] = [];
+  @Input() set galleries(galleries: Gallery[]) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < galleries.length; i++) {
+      const d = galleries[i];
+      const date = new Date(Date.parse(d.date));
+      const local = date.toLocaleDateString(undefined);
+      d.date = local;
+    }
+    this._galleries = galleries;
+  } get galleries() { return this._galleries; }
   photos: KeyValue<string, string>[] = [];
   galleryUrl = environment.backendUrl + '/Galleries';
   active = 0;

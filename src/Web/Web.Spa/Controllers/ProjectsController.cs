@@ -47,7 +47,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // POST api/project
         [HttpPost]
-        public async Task<IActionResult> CreateorUpdate([FromBody]ProjectNew projNew)
+        public async Task<IActionResult> Post([FromBody]ProjectNew projNew)
         {
             if (!ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
 
         // Put api/Project
         [HttpPut("{id}")]
-        public async Task<ActionResult<Project>> Put(string id, [FromBody]ProjectNew projnew)
+        public async Task<ActionResult> Put(string id, [FromBody]ProjectNew projnew)
         {
             if (!ModelState.IsValid)
             {

@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
       {key: '/historybosses', value: 'Наши руководители'},
     ];
     this.gallery = [
-      { key: '/galleryvideos', value: 'Видео'},
+      { key: '/galleryvideos/category/all', value: 'Видео'},
       { key: '/galleryphotos/category/all', value: 'Фото'}
     ];
   }

@@ -25,6 +25,18 @@
                     <div [hidden]="url.valid" class="alert alert-danger">
                         Ссылка не указана
                     </div>
+                    <label for="date">Введите дату:</label>
+                    <input id="date" class="form-control" type="date" name="date" [ngModel]="editVideo.date | date:'yyyy-MM-dd'" (ngModelChange)="editVideo.date = $event" #date="ngModel" required />
+                    <div [hidden]="date.valid" class="alert alert-danger">
+                        Дата не указана
+                    </div>
+                    <label for="category">Выберите категорию:</label>
+                    <select id="category" class="form-control" type="text" name="category" [(ngModel)]="editVideo.categoryId" #category="ngModel" required>
+                        <option *ngFor='let c of categories' value="{{c.id}}">{{c.name}}</option>
+                    </select>
+                    <div [hidden]="category.valid" class="alert alert-danger">
+                        Категория не указана
+                    </div>
                     <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success" />
                     <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />

@@ -20,6 +20,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { AchievementCategory } from '../models/achievementcategory';
 import { Boss } from '../models/boss';
 import { GalleryVideo } from '../models/galleryvideo';
+import { VideoCategory } from '../models/videocategory';
 
 @Component({
 templateUrl: 'admin.component.html',
@@ -657,6 +658,10 @@ export class AdminComponent  {
     return this.http.get(this.baseUrl + '/GalleryVideos');
   }
 
+  getGalleryVideo(id: string) {
+    return this.http.get(this.baseUrl + '/GalleryVideos/' + id);
+  }
+
   addGalleryVideo(vioeo: GalleryVideo) {
       return this.http.post(this.baseUrl + '/GalleryVideos', vioeo,
       {
@@ -698,4 +703,34 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
+
+  // VideoCategory
+  getVideoCategories() {
+      return this.http.get(this.baseUrl + '/VideoCategories');
+  }
+
+  getVideoCategoryById(id: string) {
+    return  this.http.get(this.baseUrl + '/VideoCategories' + '/' + id, {responseType: 'json'});
+  }
+
+  addVideoCategory(cat: VideoCategory) {
+    return this.http.post(this.baseUrl + '/VideoCategories', cat,
+    {
+      headers: this.authHeaders
+    });
+  }
+  updateVideoCategory(id: string, cat: VideoCategory) {
+    delete cat.id;
+    return this.http.put(this.baseUrl + '/VideoCategories' + '/' + id, cat,
+    {
+      headers: this.authHeaders
+    });
+  }
+  deleteVideoCategory(id: string) {
+    return this.http.delete(this.baseUrl + '/VideoCategories' + '/' + id,
+    {
+      headers: this.authHeaders
+    });
+  }
+
 }
