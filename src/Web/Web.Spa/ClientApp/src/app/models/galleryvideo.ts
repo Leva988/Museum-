@@ -10,4 +10,6 @@ export class GalleryVideo {
 
     public date: string;
 
+    public categoryId: string;
+
 }
