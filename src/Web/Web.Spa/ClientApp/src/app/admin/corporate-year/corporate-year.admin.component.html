@@ -20,6 +20,9 @@
                     <div [hidden]="year.valid" class="alert alert-danger">
                         Год не указан
                     </div>
+                    <div [hidden]="editYear.year > 0 || editYear.year === undefined" class="alert alert-danger">
+                        Год не может быть меньше нуля
+                    </div>
                     <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success">
                     <input type="button" value="Отмена" (click)="cancel()" data-dismiss="modal" class="btn btn-danger" />

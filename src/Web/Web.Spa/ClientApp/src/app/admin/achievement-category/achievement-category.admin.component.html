@@ -22,8 +22,11 @@
                     </div>
                     <label for="index">Введите порядковый номер:</label>
                     <input id="index" class="form-control col-md-3" name="index" type="number" [(ngModel)]="editCategory.index" #index="ngModel" required />
-                    <div [hidden]="index.valid" class="alert col-md-3 alert-danger">
+                    <div [hidden]="index.valid" class="alert  alert-danger">
                         Номер не указан
+                    </div>
+                    <div [hidden]="editCategory.index > 0 || editCategory.index === undefined" class="alert  alert-danger">
+                        Номер не может быть меньше 1
                     </div>
                     <h5 id="modalMessage" class="alert alert-info" role="alert" [style.color]="modalColor">{{modalMessage}}</h5>
                     <input type="submit" value="Сохранить" class="btn btn-success">

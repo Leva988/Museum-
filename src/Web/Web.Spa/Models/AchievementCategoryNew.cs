@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
@@ -6,7 +8,10 @@ namespace Belorusneft.Museum.Web.Spa.Models
     {
         public string Name { get; set; }
 
-        public int Index {get; set; }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Индекс < 0")]
+
+        public int Index { get; set; }
 
     }
 }

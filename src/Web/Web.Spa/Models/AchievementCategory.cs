@@ -2,6 +2,9 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Belorusneft.Museum.Web.Spa.Models
 {
@@ -15,7 +18,9 @@ namespace Belorusneft.Museum.Web.Spa.Models
 
         public IEnumerable<Achievement> Achievements { get; set;}
 
-        public int Index { get; set;}
+        [Range(0, int.MaxValue, ErrorMessage = "Индекс < 0")]
+
+        public int Index { get; set; }
 
     }
 }
