@@ -133,8 +133,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{projectId}/item/{itemId}")]
         public async Task<ActionResult> DeletePhoto(string projectId, string itemId)
         {
-            await _repository.DeleteProjectImageAsync(projectId, itemId);        
-            return Ok();
+            var res = await _repository.DeleteProjectImageAsync(projectId, itemId);
+            if(res)
+            {
+                return Ok();
+            }
+            return NotFound();         
         }
 
         private Project MapProject(ProjectNew projectNew) =>
@@ -142,7 +146,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
               {
                   Name = projectNew.Name,
                   Description = projectNew.Description,
-                   Items = new List<string>()
+                  Items = new List<string>()
               };
     }
 }

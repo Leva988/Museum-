@@ -53,6 +53,18 @@ export class GalleryCategoryAdminComponent implements OnInit {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
+                onClick: this.deleteAllGalleries.bind(this),
+                    label: 'Удалить все галереи',
+                    class: 'btn btn-danger',
+                    modal: '',
+                    maxWidth: 100
+                   },
+                resizable: true
+               },
+              {
+                headerName: '',
+                cellRenderer: 'buttonRenderer',
+                cellRendererParams: {
                 onClick: this.deleteCategory.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
@@ -160,5 +172,18 @@ export class GalleryCategoryAdminComponent implements OnInit {
                    });
         }
      }
+
+    private deleteAllGalleries(e) {
+        if (confirm('Удалить все галереи данной категории?')) {
+            const deleteId = e.rowData.id;
+            this.repository.deleteGalleriesByCategory(deleteId).subscribe(
+                () => {
+                    this.getCategories();
+                 },
+                 error => {
+                    console.log(error);
+                   });
+        }
+    }
 
 }

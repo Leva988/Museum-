@@ -158,8 +158,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Photo")]
         public async Task<ActionResult> DeletePhoto(string id)
         {
-            await _repository.DeleteEmployeePhotoAsync(id);         
-            return Ok();
+            var res = await _repository.DeleteEmployeePhotoAsync(id);
+            if (res)
+            {
+                return Ok();
+            }
+            return NotFound();
         }
 
         private Employee MapEmployee(EmployeeNew employeeNew) =>

@@ -256,11 +256,11 @@ export class GalleryAdminComponent implements OnInit {
     }
 
     deletePhoto(photo, index) {
-        this.photos.splice(index, 1);
-        this.arrowsHandler(this.photos);
-        $('#galleryCarousel').carousel('next');
         this.repository.deleteGalleryPhoto(this.editID, photo.key).subscribe(
             () => {
+                this.photos.splice(index, 1);
+                this.arrowsHandler(this.photos);
+                $('#galleryCarousel').carousel('next');
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;
                 $('#photoMessage').show();

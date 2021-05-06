@@ -7,12 +7,13 @@ using System.IO;
 using Belorusneft.Museum.Web.Spa.Infrastructure.Repositories;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace Belorusneft.Museum.Web.Spa.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    /* [Authorize] */
+    [Authorize]
     public class AchievementsController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -27,9 +28,13 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Achievement>>> Get() {            
             var achs = await _repository.GetAchievementsAsync();
-            foreach (Achievement ach in achs) {
-                var category = await _repository.GetAchievementCategoryAsync(ach.CategoryId);
-                ach.Category = category.Name;
+            if (achs.Count() != 0)
+            {
+                foreach (Achievement ach in achs)
+                {
+                    var category = await _repository.GetAchievementCategoryAsync(ach.CategoryId);
+                    ach.Category = category.Name;
+                }
             }
             return Ok(achs);
         }
@@ -39,9 +44,13 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Achievement>>> GetByCayegory(string categoryId) {            
             var achs = await _repository.GetAchievementsByCategory(categoryId);
-            foreach (Achievement ach in achs) {
-                var category = await _repository.GetAchievementCategoryAsync(categoryId);
-                ach.Category = category.Name;
+            if (achs.Count() != 0)
+            {
+                foreach (Achievement ach in achs)
+                {
+                    var category = await _repository.GetAchievementCategoryAsync(categoryId);
+                    ach.Category = category.Name;
+                }
             }
             return Ok(achs);
         }
@@ -53,8 +62,11 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         public async Task<ActionResult<Achievement>> GetById(string id)
         {
             var item = await _repository.GetAchievementAsync(id);
-            var category = await _repository.GetAchievementCategoryAsync(item.CategoryId);
-            item.Category = category.Name;
+            if (item!=null)
+            {
+                var category = await _repository.GetAchievementCategoryAsync(item.CategoryId);
+                item.Category = category.Name;
+            }
             return Ok(item);
         }
 
@@ -131,9 +143,25 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Image")]
         public async Task<ActionResult> DeletePhoto(string id)
         {
+            var res = await _repository.DeleteAchievementImageAsync(id);
+            if(res)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
 
-            await _repository.DeleteAchievementImageAsync(id);
-            return Ok();
+
+        // DELETE api/Achievements
+        [HttpDelete("Category/{id}")]
+        public async Task<IActionResult> DeleteAchs(string id)
+        {
+           var response = await _repository.DeleteAchievementsByCategory(id);
+           if (response)
+            {
+              return  Ok();
+            }
+            return NotFound();            
         }
 
         private Achievement MapAchievement(AchievementNew achievementNew) =>

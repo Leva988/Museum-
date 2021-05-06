@@ -124,6 +124,18 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             return Ok();
         }
 
+        // DELETE api/Months
+        [HttpDelete("Year/{id}")]
+        public async Task<IActionResult> DeleteMonths(string id)
+        {
+            var response = await _repository.DeleteCorporateMonthsByYear(id);
+            if (response)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
         private CorporateMonth MapCorporate(CorporateMonthNew corporate) =>
              new CorporateMonth
              {

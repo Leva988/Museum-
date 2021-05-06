@@ -53,6 +53,17 @@ export class VideoCategoryAdminComponent implements OnInit {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
+                onClick: this.deleteAllVideos.bind(this),
+                    label: 'Удалить все видео',
+                    class: 'btn btn-danger',
+                    modal: ''
+                   },
+                resizable: true
+               },
+              {
+                headerName: '',
+                cellRenderer: 'buttonRenderer',
+                cellRendererParams: {
                 onClick: this.deleteCategory.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
@@ -159,6 +170,19 @@ export class VideoCategoryAdminComponent implements OnInit {
                     console.log(error);
                    });
         }
-     }
+    }
+
+    deleteAllVideos(e) {
+        if (confirm('Удалить информацию о всех видео этой категории?')) {
+            const deleteId = e.rowData.id;
+            this.repository.deleteGalleryVideosByCategory(deleteId).subscribe(
+                () => {
+                    this.getCategories();
+                 },
+                 error => {
+                    console.log(error);
+                   });
+        }
+    }
 
 }

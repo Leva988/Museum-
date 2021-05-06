@@ -59,7 +59,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<bool> DeleteEmployeeAsync(string id)
         {           
             var actionResult = await _context.Employees
-                .DeleteOneAsync(b => b.Id == id); 
+                .DeleteOneAsync(b => b.Id == id);
+            await DeleteEmployeePhotoAsync(id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
@@ -68,8 +69,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.EmployeePhotos
                 .Find(filter)
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.EmployeePhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -102,14 +106,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteEmployeePhotoAsync(string name)
+        public async Task<bool> DeleteEmployeePhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = _context.EmployeePhotos
                 .Find(filter)
                 .FirstOrDefault();
-            await _context.EmployeePhotos.DeleteAsync(info.Id);  
-
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.EmployeePhotos.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 
@@ -142,7 +150,8 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<bool> DeleteBossAsync(string id)
         {           
             var actionResult = await _context.Bosses
-                .DeleteOneAsync(b => b.Id == id); 
+                .DeleteOneAsync(b => b.Id == id);
+            await DeleteBossPhotoAsync(id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
@@ -151,8 +160,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.BossPhotos
                 .Find(filter)
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if(info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.BossPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -160,7 +172,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
 
             return new FileStreamResult(stream, contentType);
-
         }
 
         public async Task<string> AddBossPhotoAsync(Stream stream, string id, string contentType)
@@ -186,14 +197,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteBossPhotoAsync(string name)
+        public async Task<bool> DeleteBossPhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = _context.BossPhotos
                 .Find(filter)
                 .FirstOrDefault();
-            await _context.BossPhotos.DeleteAsync(info.Id);  
-
+            if(info == null)
+            {
+                return false;
+            }
+            await _context.BossPhotos.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
        
@@ -244,6 +259,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var actionResult = await _context.RewardedEmployees
                 .DeleteOneAsync(b => b.Id == id);
+            await DeleteRewardedEmployeePhotoAsync(id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
@@ -252,8 +268,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.RewardedPhotos
                 .Find(filter)
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.RewardedPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -261,7 +280,6 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var contentType = info.Metadata.GetValue("Content-Type").ToString();
 
             return new FileStreamResult(stream, contentType);
-
         }
 
         public async Task<string> AddRewardedEmployeePhotoAsync(Stream stream, string id, string contentType)
@@ -287,14 +305,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteRewardedEmployeePhotoAsync(string name)
+        public async Task<bool> DeleteRewardedEmployeePhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = _context.RewardedPhotos
                 .Find(filter)
                 .FirstOrDefault();
+            if (info == null)
+            {
+                return false;
+            }
             await _context.RewardedPhotos.DeleteAsync(info.Id);
-
+            return true;
         }
         #endregion
 
@@ -326,6 +348,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var actionResult = await _context.Rewards
                 .DeleteOneAsync(p => p.Id == id);
+            await DeleteRewardPhotoAsync(id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
@@ -335,8 +358,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.RewardPhotos
                 .Find(filter)
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.RewardPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -369,13 +395,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteRewardPhotoAsync(string name)
+        public async Task<bool> DeleteRewardPhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = _context.RewardPhotos
                 .Find(filter)
                 .FirstOrDefault();
-            await _context.RewardPhotos.DeleteAsync(info.Id);  
+            if(info == null)
+            {
+                return false;
+            }            
+            await _context.RewardPhotos.DeleteAsync(info.Id);
+            return true;
         }
 
         #endregion
@@ -426,8 +457,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var info = await _context.ProjectPhotos
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if(info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.ProjectPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -463,13 +497,27 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteProjectImageAsync(string id, string itemId)
+        public async Task<bool> DeleteProjectImageAsync(string id, string itemId)
         {
             var proj = await GetProjectAsync(id);
-            var items = proj.Items.Where(el => el != itemId);
-            var update = Builders<Project>.Update.Set(x => x.Items, items);
-            await _context.Projects.UpdateOneAsync(x => x.Id == id, update);
-            await _context.ProjectPhotos.DeleteAsync(ObjectId.Parse(itemId));       
+            if (proj != null)
+            {
+                var items = proj.Items.Where(el => el != itemId);
+                var update = Builders<Project>.Update.Set(x => x.Items, items);
+                await _context.Projects.UpdateOneAsync(x => x.Id == id, update);
+            }
+            // Checking GridFS
+            var Oid = ObjectId.Parse(itemId);
+            var filter = Builders<GridFSFileInfo>.Filter.Eq("_id", Oid);
+            var info = _context.ProjectPhotos
+                .Find(filter)
+                .FirstOrDefault();
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.ProjectPhotos.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 
@@ -546,7 +594,22 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {    
             var actionResult = await _context.Achievements
                 .DeleteOneAsync(p => p.Id == id);
+            await DeleteAchievementImageAsync(id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<bool> DeleteAchievementsByCategory(string id)
+        {
+            var achs = await GetAchievementsByCategory(id);
+            if (achs.Count() != 0)
+            {
+                foreach (Achievement ach in achs)
+                {
+                   await DeleteAchievementAsync(ach.Id);
+                }
+                return true;
+            }
+            return false;           
         }
 
 
@@ -555,7 +618,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.AchievementImages
                 .Find(filter)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
 
             var stream = new MemoryStream();
             await _context.AchievementImages.DownloadToStreamAsync(info.Id, stream);
@@ -589,13 +656,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteAchievementImageAsync(string name)
+        public async Task<bool> DeleteAchievementImageAsync(string name)
         {
-            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
+            var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);            
             var info = _context.AchievementImages
                 .Find(filter)
                 .FirstOrDefault();
-            await _context.AchievementImages.DeleteAsync(info.Id);  
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.AchievementImages.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 
@@ -688,12 +760,29 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
 
+        public async Task<bool> DeleteGalleriesByCategory(string id)
+        {
+            var gals = await GetGalleriesByCategoryAsync(id);
+            if (gals.Count() != 0)
+            {
+                foreach (Gallery gal in gals)
+                {
+                    await DeleteGalleryAsync(gal.Id);
+                }
+                return true;
+            }
+            return false;
+        }
+
         public async Task<FileStreamResult> GetGalleryItemAsync(string galleryId, string itemId)
         {
             var info = await _context.GalleryContent
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.GalleryContent.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -706,7 +795,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var info = await _context.GalleryContent
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var name = info.Filename;
             return name;
         }
@@ -740,13 +833,28 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteGalleryItemAsync(string galleryId, string itemId)
+        public async Task<bool> DeleteGalleryItemAsync(string galleryId, string itemId)
         {
+            // Checking Gallery Items
             var gall = await GetGalleryAsync(galleryId);
-            var items = gall.Items.Where(el => el != itemId);
-            var update = Builders<Gallery>.Update.Set(x => x.Items, items);
-            await _context.Galleries.UpdateOneAsync(x => x.Id == galleryId, update);
-            await _context.GalleryContent.DeleteAsync(ObjectId.Parse(itemId));
+            if (gall != null)
+            {
+                var items = gall.Items.Where(el => el != itemId);
+                var update = Builders<Gallery>.Update.Set(x => x.Items, items);
+                await _context.Galleries.UpdateOneAsync(x => x.Id == galleryId, update);
+            }
+            // Checking GridFS
+            var Oid = ObjectId.Parse(itemId);
+            var filter = Builders<GridFSFileInfo>.Filter.Eq("_id", Oid);
+            var info = _context.GalleryContent
+                .Find(filter)
+                .FirstOrDefault();
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.GalleryContent.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 
@@ -821,8 +929,23 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         public async Task<bool> DeleteGalleryVideoAsync(string id)
         {           
             var actionResult = await _context.GalleryVideos
-                .DeleteOneAsync(b => b.Id == id); 
+                .DeleteOneAsync(b => b.Id == id);
+            await DeleteGalleryVideoPreviewAsync(id);
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
+        }
+
+        public async Task<bool> DeleteVideosByCategoryAsync(string id)
+        {
+            var videos = await GetVideosByCategoryAsync(id);
+            if (videos.Count() != 0)
+            {
+                foreach (GalleryVideo vid in videos)
+                {
+                    await DeleteGalleryVideoAsync(vid.Id);
+                }
+                return true;
+            }
+            return false;
         }
 
         public async Task<FileStreamResult> GetGalleryVideoPreviewAsync(string name)
@@ -830,7 +953,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.VideoPreviews
                 .Find(filter)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
 
             var stream = new MemoryStream();
             await _context.VideoPreviews.DownloadToStreamAsync(info.Id, stream);
@@ -864,13 +991,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteGalleryVideoPreviewAsync(string name)
+        public async Task<bool> DeleteGalleryVideoPreviewAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = _context.VideoPreviews
                 .Find(filter)
                 .FirstOrDefault();
-            await _context.EmployeePhotos.DeleteAsync(info.Id);
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.VideoPreviews.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 
@@ -957,8 +1089,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var info = await _context.ProductionIcons
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.ProductionIcons.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -970,7 +1105,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var info = await _context.ProductionIcons
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var name = info.Filename;
             return name;
         }
@@ -1003,13 +1142,27 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteProductionIconAsync(string id, string itemId)
+        public async Task<bool> DeleteProductionIconAsync(string id, string itemId)
         {
-            var hist = await GetProductionAsync(id);
-            var items = hist.Items.Where(el => el != itemId);
-            var update = Builders<Production>.Update.Set(x => x.Items, items);
-            await _context.Productions.UpdateOneAsync(x => x.Id == id, update);
-            await _context.ProductionIcons.DeleteAsync(ObjectId.Parse(itemId));
+            // Production Items
+            var prod = await GetProductionAsync(id);
+            if (prod != null)
+            {
+                var items = prod.Items.Where(el => el != itemId);
+                var update = Builders<Production>.Update.Set(x => x.Items, items);
+                await _context.Productions.UpdateOneAsync(x => x.Id == id, update);
+            }
+            // GridFS
+            var filter = Builders<GridFSFileInfo>.Filter.Eq("_id", ObjectId.Parse(itemId));
+            var info = _context.ProductionIcons
+                .Find(filter)
+                .FirstOrDefault();
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.ProductionIcons.DeleteAsync(info.Id);
+            return true;        
         }
         #endregion
 
@@ -1062,8 +1215,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var info = await _context.HistoryPhotos
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.HistoryPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -1075,7 +1231,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         {
             var info = await _context.HistoryPhotos
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var name = info.Filename;
             return name;
         }
@@ -1108,13 +1268,27 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteHistoryItemAsync(string histId, string itemId)
+        public async Task<bool> DeleteHistoryItemAsync(string histId, string itemId)
         {
+            // HistoryItems
             var hist = await GetHistoryMilestoneAsync(histId);
-            var items = hist.Items.Where(el => el != itemId);
-            var update = Builders<HistoryMilestone>.Update.Set(x => x.Items, items);
-            await _context.HistoryMileStones.UpdateOneAsync(x => x.Id == histId, update);
-            await _context.HistoryPhotos.DeleteAsync(ObjectId.Parse(itemId));
+            if (histId != null)
+            {
+                var items = hist.Items.Where(el => el != itemId);
+                var update = Builders<HistoryMilestone>.Update.Set(x => x.Items, items);
+                await _context.HistoryMileStones.UpdateOneAsync(x => x.Id == histId, update);
+            } 
+            // GridFS
+            var filter = Builders<GridFSFileInfo>.Filter.Eq("_id", ObjectId.Parse(itemId));
+            var info = _context.HistoryPhotos
+                .Find(filter)
+                .FirstOrDefault();
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.HistoryPhotos.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 
@@ -1165,13 +1339,30 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
                 .DeleteOneAsync(p => p.Id == id);  
             return actionResult.IsAcknowledged && actionResult.DeletedCount > 0;
         }
-        
+
+        public async Task<bool> DeleteCorporateMonthsByYear(string id)
+        {
+            var months = await GetCorporateMonthsByYearAsync(id);
+            if (months.Count() != 0)
+            {
+                foreach (CorporateMonth month in months)
+                {
+                    await DeleteCorporateMonthAsync(month.Id);
+                }
+                return true;
+            }
+            return false;
+        }
+
         public async Task<FileStreamResult> GetCorporateMonthPhotoAsync(string id, string itemId)
         {
            var info = await _context.CorporateMonthPhotos
                 .Find(new BsonDocument("_id", ObjectId.Parse(itemId)))
-                .FirstAsync();
-
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
             var stream = new MemoryStream();
             await _context.CorporateMonthPhotos.DownloadToStreamAsync(info.Id, stream);
             stream.Position = 0;
@@ -1206,13 +1397,24 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteCorporateMonthPhotoAsync(string id, string itemId)
+        public async Task<bool> DeleteCorporateMonthPhotoAsync(string id, string itemId)
         {
+            // Check Items
             var cat = await GetCorporateMonthAsync(id);
             var items = cat.Items.Where(el => el != itemId);
             var update = Builders<CorporateMonth>.Update.Set(x => x.Items, items);
             await _context.CorporateMonths.UpdateOneAsync(x => x.Id == id, update);
-            await _context.CorporateMonthPhotos.DeleteAsync(ObjectId.Parse(itemId));
+            // Check GridFs
+            var filter = Builders<GridFSFileInfo>.Filter.Eq("_id", ObjectId.Parse(itemId));
+            var info = _context.CorporateMonthPhotos
+                .Find(filter)
+                .FirstOrDefault();
+            if (info == null)
+            {
+                return false;
+            }
+            await _context.CorporateMonthPhotos.DeleteAsync(info.Id);
+            return true;
         }
         #endregion
 

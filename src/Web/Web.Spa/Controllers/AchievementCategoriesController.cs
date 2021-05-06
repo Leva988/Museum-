@@ -7,6 +7,7 @@ using System.IO;
 using Belorusneft.Museum.Web.Spa.Infrastructure.Repositories;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace Belorusneft.Museum.Web.Spa.Controllers
 {
@@ -86,6 +87,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
             }
             return NotFound();
         }
+
 
         private AchievementCategory MapCategory(AchievementCategoryNew catNew) =>
             new AchievementCategory

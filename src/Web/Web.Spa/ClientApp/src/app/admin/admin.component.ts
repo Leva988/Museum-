@@ -44,7 +44,7 @@ export class AdminComponent  {
       }
     }
 
-  // Employee Panel
+  //#region Employees
   getEmployees() {
     return this.http.get(this.baseUrl + '/employees');
   }
@@ -94,8 +94,9 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
+  //#endregion
 
-  // Department Panel
+  //#region Departments
   getDepartments() {
     return this.http.get(this.baseUrl + '/Departments');
   }
@@ -149,7 +150,9 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
-  // Achievement Panel
+  //#endregion
+
+  //#region Achievements
   getAchievements() {
     return this.http.get(this.baseUrl + '/Achievements');
   }
@@ -201,8 +204,15 @@ export class AdminComponent  {
       });
     }
 
-  // AchievementCategory Panel
+  deleteAchievementsByCategory(id: string) {
+      return this.http.delete(this.baseUrl + '/Achievements/Category' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+  //#endregion
 
+  //#region AchievementCategory
   getAchievementCategories() {
     return this.http.get(this.baseUrl + '/AchievementCategories');
   }
@@ -227,14 +237,14 @@ export class AdminComponent  {
     }
 
   deleteAchievementCategory(id: string) {
-      return this.http.delete(this.baseUrl + '/AchievementCategories' + '/' + id,
+     return this.http.delete(this.baseUrl + '/AchievementCategories' + '/' + id,
       {
         headers: this.authHeaders
       });
     }
+  //#endregion
 
-  // Rewarded Employees Panel
-
+  //#region RewardedEmployees
   getRewardedEmployees() {
     return this.http.get(this.baseUrl + '/RewardedEmployees');
   }
@@ -288,8 +298,9 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
+  //#endregion
 
-    // Rewards Panel
+  //#region Rewards
     getRewards() {
       return this.http.get(this.baseUrl + '/Rewards');
     }
@@ -339,8 +350,9 @@ export class AdminComponent  {
           headers: this.authHeaders
         });
       }
+  //#endregion
 
-  // Project panel
+  //#region Projects
   getProjects() {
      return this.http.get(this.baseUrl + '/Projects');
    }
@@ -386,42 +398,46 @@ export class AdminComponent  {
          headers: this.authHeaders
        });
      }
+    //#endregion
 
-    // GalleryCategory Panel
-    getGalleryCategories() {
-        return this.http.get(this.baseUrl + '/GalleryCategories');
-      }
+  //#region GalleryCategories
+  getGalleryCategories() {
+       return this.http.get(this.baseUrl + '/GalleryCategories');
+     }
 
-    getGalleryCategoryById(id: string) {
-          return  this.http.get(this.baseUrl + '/GalleryCategories' + '/' + id, {responseType: 'json'});
-      }
+  getGalleryCategoryById(id: string) {
+         return  this.http.get(this.baseUrl + '/GalleryCategories' + '/' + id, {responseType: 'json'});
+     }
 
-    addGalleryCategory(cat: GalleryCategory) {
-        return this.http.post(this.baseUrl + '/GalleryCategories', cat,
-        {
-          headers: this.authHeaders
-        });
-      }
-    updateGalleryCategory(id: string, cat: GalleryCategory) {
-        delete cat.id;
-        return this.http.put(this.baseUrl + '/GalleryCategories' + '/' + id, cat,
-        {
-          headers: this.authHeaders
-        });
-      }
-    deleteGalleryCategory(id: string) {
-        return this.http.delete(this.baseUrl + '/GalleryCategories' + '/' + id,
-        {
-          headers: this.authHeaders
-        });
-      }
+  addGalleryCategory(cat: GalleryCategory) {
+       return this.http.post(this.baseUrl + '/GalleryCategories', cat,
+       {
+         headers: this.authHeaders
+       });
+   }
 
-   // Gallery Panel
-   getGalleries() {
+  updateGalleryCategory(id: string, cat: GalleryCategory) {
+       delete cat.id;
+       return this.http.put(this.baseUrl + '/GalleryCategories' + '/' + id, cat,
+       {
+         headers: this.authHeaders
+       });
+     }
+
+  deleteGalleryCategory(id: string) {
+       return this.http.delete(this.baseUrl + '/GalleryCategories' + '/' + id,
+       {
+         headers: this.authHeaders
+       });
+    }
+  //#endregion
+
+  //#region Galleries
+  getGalleries() {
      return this.http.get(this.baseUrl + '/Galleries');
    }
 
-   getGallery(id: string) {
+  getGallery(id: string) {
        return  this.http.get(this.baseUrl + '/Galleries' + '/' + id, {responseType: 'json'});
    }
 
@@ -467,8 +483,16 @@ export class AdminComponent  {
       });
     }
 
-   // CorporateYear Panel
-   getCorporateYears() {
+  deleteGalleriesByCategory(id: string) {
+      return this.http.delete(this.baseUrl + '/Galleries/Category' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+  //#endregion
+
+  //#region CorporateYears
+  getCorporateYears() {
      return this.http.get(this.baseUrl + '/CorporateYears');
    }
 
@@ -497,8 +521,9 @@ export class AdminComponent  {
          headers: this.authHeaders
        });
      }
+  //#endregion
 
-        // CorporateMonth Panel
+  //#region CorporateMonths
   getMonths() {
      return this.http.get(this.baseUrl + '/CorporateMonths');
    }
@@ -529,6 +554,13 @@ export class AdminComponent  {
        });
      }
 
+  deleteCorporateMontsByYear(id: string) {
+    return this.http.delete(this.baseUrl + '/CorporateMonths/Year' + '/' + id,
+    {
+      headers: this.authHeaders
+    });
+  }
+
   addCorporatePhoto(id: string, file: File) {
        const formData: FormData = new FormData();
        formData.append('avatar', file, file.name);
@@ -544,8 +576,9 @@ export class AdminComponent  {
          headers: this.authHeaders
        });
   }
+  //#endregion
 
-  // Achievement Panel
+  //#region HistoryMilestone
   getHistoryMilestones() {
     return this.http.get(this.baseUrl + '/HistoryMilestones');
   }
@@ -599,9 +632,9 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
+  //#endregion
 
-  // Boss
-
+  //#region Bosses
   getBosses() {
     return this.http.get(this.baseUrl + '/Bosses');
   }
@@ -651,9 +684,9 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
+  //#endregion
 
-  // GalleryVideo
-
+  //#region GalleryVideos
   getGalleryVideos() {
     return this.http.get(this.baseUrl + '/GalleryVideos');
   }
@@ -684,6 +717,13 @@ export class AdminComponent  {
       });
     }
 
+   deleteGalleryVideosByCategory(id: string) {
+      return this.http.delete(this.baseUrl + '/GalleryVideos/Category' + '/' + id,
+      {
+        headers: this.authHeaders
+      });
+    }
+
   getGalleryVideoPreview(id: string) {
       return  this.http.get(this.baseUrl + '/GalleryVideos' + '/' + id + '/Photo', {responseType: 'blob'});
   }
@@ -703,8 +743,9 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
     }
+  //#endregion
 
-  // VideoCategory
+  //#region VideoCategories
   getVideoCategories() {
       return this.http.get(this.baseUrl + '/VideoCategories');
   }
@@ -726,11 +767,13 @@ export class AdminComponent  {
       headers: this.authHeaders
     });
   }
+
   deleteVideoCategory(id: string) {
     return this.http.delete(this.baseUrl + '/VideoCategories' + '/' + id,
     {
       headers: this.authHeaders
     });
   }
+  //#endregion
 
 }

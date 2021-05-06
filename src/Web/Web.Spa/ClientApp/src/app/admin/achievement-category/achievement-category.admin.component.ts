@@ -54,6 +54,17 @@ export class AchievementCategoryAdminComponent implements OnInit {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
+                onClick: this.deleteAllAchievements.bind(this),
+                    label: 'Удалить все достижения',
+                    class: 'btn btn-danger',
+                    modal: ''
+                   },
+                resizable: true
+               },
+              {
+                headerName: '',
+                cellRenderer: 'buttonRenderer',
+                cellRendererParams: {
                 onClick: this.deleteCategory.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
@@ -74,7 +85,7 @@ export class AchievementCategoryAdminComponent implements OnInit {
             paginationPageSize: 18,
             rowSelection: 'single',
             onGridReady: (ev: GridReadyEvent) => {
-                ev.api.sizeColumnsToFit();
+                ev.columnApi.autoSizeAllColumns();
             }
            };
 
@@ -160,5 +171,18 @@ export class AchievementCategoryAdminComponent implements OnInit {
                    });
         }
      }
+
+    private deleteAllAchievements(e) {
+        if (confirm('Удалить все достижения данной категории?')) {
+            const deleteId = e.rowData.id;
+            this.repository.deleteAchievementsByCategory(deleteId).subscribe(
+                () => {
+                    this.getCategories();
+                 },
+                 error => {
+                    console.log(error);
+                   });
+        }
+    }
 
 }

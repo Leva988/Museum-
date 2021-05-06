@@ -53,6 +53,17 @@ export class CorporateYearAdminComponent implements OnInit {
                 headerName: '',
                 cellRenderer: 'buttonRenderer',
                 cellRendererParams: {
+                onClick: this.deleteAllMonths.bind(this),
+                    label: 'Удалить все месяцы',
+                    class: 'btn btn-danger',
+                    modal: ''
+                   },
+                resizable: true
+               },
+              {
+                headerName: '',
+                cellRenderer: 'buttonRenderer',
+                cellRendererParams: {
                 onClick: this.deleteYear.bind(this),
                     label: 'Удалить',
                     class: 'btn btn-danger',
@@ -152,6 +163,19 @@ export class CorporateYearAdminComponent implements OnInit {
         if (confirm('Удалить данный год?')) {
             const deleteId = e.rowData.id;
             this.repository.deleteCorporateYear(deleteId).subscribe(
+                () => {
+                    this.getYears();
+                 },
+                 error => {
+                    console.log(error);
+                   });
+        }
+     }
+
+     private deleteAllMonths(e) {
+        if (confirm(`Удалить все месяцы ${e.rowData.year} года?`)) {
+            const deleteId = e.rowData.id;
+            this.repository.deleteCorporateMontsByYear(deleteId).subscribe(
                 () => {
                     this.getYears();
                  },

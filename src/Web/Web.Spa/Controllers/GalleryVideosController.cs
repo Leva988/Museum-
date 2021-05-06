@@ -123,8 +123,24 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Photo")]
         public async Task<ActionResult> DeletePhoto(string id)
         {
-            await _repository.DeleteGalleryVideoPreviewAsync(id);         
-            return Ok();
+            var res =  await _repository.DeleteGalleryVideoPreviewAsync(id);
+            if (res)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        // DELETE api/Videos
+        [HttpDelete("Category/{id}")]
+        public async Task<IActionResult> DeleteVideos(string id)
+        {
+            var response = await _repository.DeleteVideosByCategoryAsync(id);
+            if (response)
+            {
+                return Ok();
+            }
+            return NotFound();
         }
 
         private GalleryVideo MapVideo(GalleryVideoNew videoNew) =>

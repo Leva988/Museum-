@@ -25,7 +25,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetEmployeePhotoAsync(string id);
 
-        Task DeleteEmployeePhotoAsync(string id);
+        Task<bool> DeleteEmployeePhotoAsync(string id);
 
         Task<string> AddEmployeePhotoAsync(Stream stream, string employeeId, string contentType);
         #endregion
@@ -43,7 +43,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetBossPhotoAsync(string id);
 
-        Task DeleteBossPhotoAsync(string id);
+        Task<bool> DeleteBossPhotoAsync(string id);
 
         Task<string> AddBossPhotoAsync(Stream stream, string id, string contentType);
         #endregion
@@ -65,7 +65,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<string> AddProductionIconAsync(Stream stream, string id, string contentType, string filename);
 
-        Task DeleteProductionIconAsync(string id, string itemId);
+        Task<bool> DeleteProductionIconAsync(string id, string itemId);
         #endregion
 
         #region RewardedEmployee
@@ -85,7 +85,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetRewardedEmployeePhotoAsync(string id);
 
-        Task DeleteRewardedEmployeePhotoAsync(string id);
+        Task<bool> DeleteRewardedEmployeePhotoAsync(string id);
 
         Task<string> AddRewardedEmployeePhotoAsync(Stream stream, string id, string contentType);
         #endregion
@@ -103,7 +103,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetRewardPhotoAsync(string id);
 
-        Task DeleteRewardPhotoAsync(string id);
+        Task<bool> DeleteRewardPhotoAsync(string id);
 
         Task<string> AddRewardPhotoAsync(Stream stream, string employeeId, string contentType);
         #endregion      
@@ -123,7 +123,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<string> AddProjectImageAsync(Stream stream, string id, string contentType);
 
-        Task DeleteProjectImageAsync(string id, string itemId);
+        Task<bool> DeleteProjectImageAsync(string id, string itemId);
         #endregion
 
         #region Services
@@ -151,12 +151,14 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
         Task InsertAchievementAsync(Achievement achievement);
 
         Task<bool> DeleteAchievementAsync(string id);
-        
+
+        Task<bool> DeleteAchievementsByCategory(string id);
+
         Task<FileStreamResult> GetAchievementImageAsync(string achievementId);
 
         Task<string> AddAchievementImageAsync(Stream stream, string achievementId, string contentType);
 
-        Task DeleteAchievementImageAsync(string achievementId);
+        Task<bool> DeleteAchievementImageAsync(string achievementId);
         #endregion
 
         #region AchievementCategories
@@ -184,13 +186,15 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<bool> DeleteGalleryAsync(string galleryId);
 
+        Task<bool> DeleteGalleriesByCategory(string id);
+
         Task<FileStreamResult> GetGalleryItemAsync(string galleryId, string itemId);
 
         Task<string> GetGalleryItemDescriptionAsync(string galleryId, string itemId);
 
         Task<string> AddGalleryItemAsync(Stream stream, string galleryId, string contentType, string filename);
 
-        Task DeleteGalleryItemAsync(string galleryId, string itemId);
+        Task<bool> DeleteGalleryItemAsync(string galleryId, string itemId);
         #endregion
 
         #region GalleryCategory
@@ -218,9 +222,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<bool> DeleteGalleryVideoAsync(string id);
 
+        Task<bool> DeleteVideosByCategoryAsync(string id);
+
         Task<FileStreamResult> GetGalleryVideoPreviewAsync(string id);
 
-        Task DeleteGalleryVideoPreviewAsync(string id);
+        Task<bool> DeleteGalleryVideoPreviewAsync(string id);
 
         Task<string> AddGalleryVideoPreviewAsync(Stream stream, string id, string contentType);
         #endregion
@@ -254,7 +260,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<string> AddHistoryItemAsync(Stream stream, string id, string contentType, string filename);
 
-        Task DeleteHistoryItemAsync(string id, string itemId);
+        Task<bool> DeleteHistoryItemAsync(string id, string itemId);
         #endregion
 
         #region CorporateMonth
@@ -270,11 +276,13 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<bool> DeleteCorporateMonthAsync(string id);
 
+        Task<bool> DeleteCorporateMonthsByYear(string id);
+
         Task<FileStreamResult> GetCorporateMonthPhotoAsync(string id, string itemId);
 
         Task<string> AddCorporateMonthPhotoAsync(Stream stream, string socialcategoryId, string contentType);
 
-        Task DeleteCorporateMonthPhotoAsync(string id, string itemId);
+        Task<bool> DeleteCorporateMonthPhotoAsync(string id, string itemId);
         #endregion
 
         #region CorporateYear

@@ -134,8 +134,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/item/{itemId}")]
         public async Task<ActionResult> DeleteItem(string id, string itemId)
         {
-            await _repository.DeleteHistoryItemAsync(id, itemId);
-            return Ok();
+            var res =  await _repository.DeleteHistoryItemAsync(id, itemId);
+            if (res)
+            {
+                return Ok();
+            }
+            return NotFound();
         }
     }
 }
