@@ -85,7 +85,7 @@ export class AchievementCategoryAdminComponent implements OnInit {
             paginationPageSize: 18,
             rowSelection: 'single',
             onGridReady: (ev: GridReadyEvent) => {
-                ev.columnApi.autoSizeAllColumns();
+                ev.api.sizeColumnsToFit();
             }
            };
 
