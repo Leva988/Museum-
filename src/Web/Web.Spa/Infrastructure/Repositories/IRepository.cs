@@ -315,7 +315,7 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
 
         Task<FileStreamResult> GetDepartmentPhotoAsync(string id);
 
-        Task DeleteDepartmentPhotoAsync(string id);
+        Task<bool> DeleteDepartmentPhotoAsync(string id);
 
         Task<string> AddDepartmentPhotoAsync(Stream stream, string id, string contentType);
         #endregion

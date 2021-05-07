@@ -245,11 +245,12 @@ export class HistoryAdminComponent implements OnInit {
     }
 
     deletePhoto(photo, index) {
-        this.photos.splice(index, 1);
-        this.arrowsHandler(this.photos);
-        $('#histCarousel').carousel('next');
         this.repository.deleteHistoryImage(this.editID, photo.key).subscribe(
             () => {
+                this.photos.splice(index, 1);
+                this.arrowsHandler(this.photos);
+                this.getMilestones();
+                $('#histCarousel').carousel('next');
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;
                 $('#photoMessage').show();

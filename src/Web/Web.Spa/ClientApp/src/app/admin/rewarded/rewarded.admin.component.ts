@@ -173,8 +173,10 @@ export class RewardedAdminComponent implements OnInit {
 
     saveEmployee(form: NgForm) {
         if (form.valid) {
-            if (this.editEmployee.dateEnd.toString() === '' || isNullOrUndefined(this.editEmployee.dateEnd)) {
-                delete this.editEmployee.dateEnd;
+            if (isNullOrUndefined(this.editEmployee.dateEnd)) {
+               this.editEmployee.dateEnd = null;
+            } else if (this.editEmployee.dateEnd.toString() === '') {
+                this.editEmployee.dateEnd = null;
             }
             if (this.isNewRecord) {
                 this.repository.addRewardedEmployee(this.editEmployee).subscribe(
@@ -289,10 +291,11 @@ export class RewardedAdminComponent implements OnInit {
                  this.modalColor = '#2fc900';
                  this.modalMessage = `Фото  удалено`;
                  this.photo = null;
+                 $('photomessage').show();
              },
              error => {
                 console.log(error);
-                this.modalMessage = `Фото отсутствует`;
+                this.modalMessage = `Фото отсутствует!`;
                 this.modalColor = '#f20800';
                 $('photoMessage').show();
                });

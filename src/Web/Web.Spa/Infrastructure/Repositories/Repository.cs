@@ -1511,7 +1511,11 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = await _context.DepartmentPhotos
                 .Find(filter)
-                .FirstAsync();
+                .FirstOrDefaultAsync();
+            if (info == null)
+            {
+                return null;
+            }
 
             var stream = new MemoryStream();
             await _context.DepartmentPhotos.DownloadToStreamAsync(info.Id, stream);
@@ -1546,13 +1550,18 @@ namespace Belorusneft.Museum.Web.Spa.Infrastructure.Repositories
             return itemId.ToString();
         }
 
-        public async Task DeleteDepartmentPhotoAsync(string name)
+        public async Task<bool> DeleteDepartmentPhotoAsync(string name)
         {
             var filter = Builders<GridFSFileInfo>.Filter.Eq(info => info.Filename, name);
             var info = _context.DepartmentPhotos
                 .Find(filter)
                 .FirstOrDefault();
+            if(info == null)
+            {
+                return false;
+            }
             await _context.DepartmentPhotos.DeleteAsync(info.Id);
+            return true;
 
         }
         #endregion

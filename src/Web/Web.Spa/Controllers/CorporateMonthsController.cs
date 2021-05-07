@@ -120,8 +120,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(string id, string photoId)
         {
-            await _repository.DeleteCorporateMonthPhotoAsync(id, photoId);
-            return Ok();
+            var res = await _repository.DeleteCorporateMonthPhotoAsync(id, photoId);
+            if(res)
+            {
+                return Ok();
+            }
+            return NotFound();
         }
 
         // DELETE api/Months

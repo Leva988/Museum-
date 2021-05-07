@@ -126,8 +126,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Photo")]
         public async Task<ActionResult> DeletePhoto(string id)
         {
-            await _repository.DeleteRewardPhotoAsync(id);         
-            return Ok();
+            var res = await _repository.DeleteRewardPhotoAsync(id);
+            if (res)
+            {
+               return Ok();
+            }
+            return NotFound();           
         }
 
         private Reward MapReward(RewardNew awardNew) =>

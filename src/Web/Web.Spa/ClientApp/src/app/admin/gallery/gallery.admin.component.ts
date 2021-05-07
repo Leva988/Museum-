@@ -260,6 +260,7 @@ export class GalleryAdminComponent implements OnInit {
             () => {
                 this.photos.splice(index, 1);
                 this.arrowsHandler(this.photos);
+                this.getGalleries();
                 $('#galleryCarousel').carousel('next');
                 this.modalColor = '#2fc900';
                 this.modalMessage = `Фото  удалено`;

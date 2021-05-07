@@ -112,8 +112,12 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpDelete("{id}/Photo")]
         public async Task<ActionResult> DeletePhoto(string id)
         {
-            await _repository.DeleteBossPhotoAsync(id);         
-            return Ok();
+            var res = await _repository.DeleteBossPhotoAsync(id); 
+            if(res)
+            {
+               return Ok();
+            }
+            return NotFound();
         }
 
         private Boss MapBoss(BossNew bossNew) =>
