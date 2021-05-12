@@ -131,10 +131,28 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpPost("{galleryId}/item")]
         public async Task<ActionResult> PostItem(string galleryId,[FromForm(Name = "avatar")] IFormFile image)
         {
-            var stream = image.OpenReadStream();
-            var input = new StreamReader(stream).BaseStream;
+            var input = new StreamReader(image.OpenReadStream()).BaseStream;
             var itemId = await _repository.AddGalleryItemAsync(input, galleryId, image.ContentType, image.FileName);
-           return CreatedAtAction(nameof(GetItem), new { id = itemId, }, new { id = itemId, });
+            await input.DisposeAsync();
+            return CreatedAtAction(nameof(GetItem), new { id = itemId, }, new { id = itemId, });
+        }
+
+        [HttpPost("{id}/items")]
+        public async Task<ActionResult> PostPhotos(string id, [FromForm(Name = "avatar")] IFormFileCollection images)
+        {
+            List<string> oids = new List<string>();
+            foreach (var img in images)
+            {
+                var input = new StreamReader(img.OpenReadStream()).BaseStream;
+                var Oid = await _repository.AddGalleryItemAsync(input, id, img.ContentType, img.FileName);
+                await input.DisposeAsync();
+                if (Oid == null)
+                {
+                    return BadRequest();
+                }
+                oids.Add(Oid);
+            }
+            return CreatedAtAction(nameof(GetItem), new { id = id, }, new { images = oids });
         }
 
         //Delete item
@@ -147,7 +165,7 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                 return Ok();
             }
             return NotFound();
-        }
+        }      
 
         // DELETE api/Galleries
         [HttpDelete("Category/{id}")]

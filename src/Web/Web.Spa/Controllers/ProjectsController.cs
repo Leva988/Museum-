@@ -103,31 +103,34 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
         [HttpPost("{id}/Image")]
         public async Task<ActionResult> PostPhoto(string id,[FromForm(Name = "avatar")] IFormFile image)
         {
-            var stream = image.OpenReadStream();
-            var input = new StreamReader(stream).BaseStream;
+            var input = new StreamReader(image.OpenReadStream()).BaseStream;
             var Oid = await _repository.AddProjectImageAsync(input, id, image.ContentType);
             if (Oid == null)
             {
                 return BadRequest();
             }
+            await input.DisposeAsync();
             return CreatedAtAction(nameof(GetImage), new { id = Oid, }, new { id = Oid, });
         }
 
-        /*
+        
         [HttpPost("{id}/Images")]
-        public async Task<ActionResult> PostPhotos(string id, IFormFileCollection images)
+        public async Task<ActionResult> PostPhotos(string id, [FromForm(Name = "avatar")]  IFormFileCollection images)
         {
-            foreach(var img in images) {
-               var stream = img.OpenReadStream();
-               var input = new StreamReader(stream).BaseStream;
-               var Oid = await _repository.AddProjectImageAsync(input, id, img.ContentType);
-               if (Oid == null)
-               {
-                   return BadRequest();
-               }               
-               return CreatedAtAction(nameof(GetImage), new { id = Oid, }, new { id = Oid });
-            }      
-        }*/
+            List<string> oids = new List<string>();
+            foreach (var img in images)
+            {
+                var input = new StreamReader(img.OpenReadStream()).BaseStream;
+                var Oid = await _repository.AddProjectImageAsync(input, id, img.ContentType);
+                await input.DisposeAsync();
+                if (Oid == null)
+                {
+                    return BadRequest();
+                }           
+                oids.Add(Oid);
+            }
+            return CreatedAtAction(nameof(GetImage), new { id = id, }, new { images = oids });
+        }
 
         //Delete photo
         [HttpDelete("{projectId}/item/{itemId}")]
@@ -148,5 +151,6 @@ namespace Belorusneft.Museum.Web.Spa.Controllers
                   Description = projectNew.Description,
                   Items = new List<string>()
               };
+
     }
 }

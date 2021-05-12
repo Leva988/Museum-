@@ -22,7 +22,7 @@ export class ProjectAdminComponent implements OnInit {
     editID: string;
     isNewRecord: boolean;
     photos: string[] = [];
-    fileToUpload: File;
+    filesToUpload: FileList;
     modalMessage: string;
     modalTitle: string;
     messageTitle: string;
@@ -184,27 +184,36 @@ export class ProjectAdminComponent implements OnInit {
      }
 
     handleFileInput(files: FileList) {
-        this.fileToUpload = files.item(0);
+        this.filesToUpload = files;
     }
 
     getPhoto(e) {
        this.editID = e.rowData.id;
-       this.arrowsHandler(e.rowData.items);
-       this.photos = e.rowData.items;
+       this.repository.getProject(this.editID).subscribe(
+           (data: Project) => {
+               this.editProject = data;
+               this.arrowsHandler( this.editProject.items);
+               this.photos =  this.editProject.items;
+           }
+       );
     }
 
     savePhoto() {
-        if (isNullOrUndefined(this.fileToUpload)) {
+        if (this.filesToUpload.length === 0) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
             $('#photoMessage').show();
+        } else if (this.allFilesSize() > 200000000 || this.filesToUpload.length > 30) {
+            this.modalMessage = 'Общее количество файлов не должно превышать 30,и их суммарный размер должен быть < 200MB!';
+            this.modalColor = '#f20800';
+            $('#photoMessage').show();
         } else {
-            this.repository.addProjectImage(this.editID, this.fileToUpload).subscribe(
+            this.repository.addManyProjectImages(this.editID, this.filesToUpload).subscribe(
                 (data: any) => {
-                   this.photos.push(data.id);
+                   this.photos = this.photos.concat(data.images);
                    this.arrowsHandler(this.photos);
                    this.modalColor = '#2fc900';
-                   this.modalMessage = 'Фото добавлено';
+                   this.modalMessage = 'Фото добавлены';
                    $('#photoMessage').show();
                 },
                 (err) => {
@@ -243,6 +252,15 @@ export class ProjectAdminComponent implements OnInit {
             $('#prev').show();
             $('#next').show();
         }
+    }
+
+    allFilesSize(): number {
+        let sum = 0;
+        // tslint:disable: prefer-for-of
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+            sum += this.filesToUpload[i].size;
+        }
+        return sum;
     }
 
 }

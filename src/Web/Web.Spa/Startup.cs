@@ -13,6 +13,8 @@ using Belorusneft.Museum.Web.Spa.Infrastructure.Middlewares;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace Belorusneft.Museum.Web.Spa
 {
@@ -38,7 +40,10 @@ namespace Belorusneft.Museum.Web.Spa
                 );
 
             services.AddCors();
-
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.Limits.MaxRequestBodySize = 200000000; 
+            });
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

@@ -392,6 +392,18 @@ export class AdminComponent  {
        });
     }
 
+    addManyProjectImages(id: string, files: FileList) {
+      const formData: FormData = new FormData();
+      // tslint:disable: prefer-for-of
+      for (let i = 0; i < files.length; i++) {
+        formData.append('avatar', files[i], files[i].name);
+      }
+      return this.http.post(this.baseUrl + '/Projects/' + id + '/Images', formData,
+      {
+        headers: this.authHeaders
+      });
+   }
+
    deleteProjectImage(id: string, photoId: string) {
        return this.http.delete(this.baseUrl + '/Projects' + '/' + id + '/item/' + photoId,
        {
@@ -471,6 +483,18 @@ export class AdminComponent  {
         headers: this.authHeaders
       });
    }
+
+  addManyGalleryPhotos(id: string, files: FileList) {
+    const formData: FormData = new FormData();
+    // tslint:disable: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
+      formData.append('avatar', files[i], files[i].name);
+    }
+    return this.http.post(this.baseUrl + '/Galleries/' + id + '/items', formData,
+    {
+      headers: this.authHeaders
+    });
+  }
 
   getGalleryItemDescription(id: string, itemId: string) {
       return this.http.get(this.baseUrl + '/Galleries/' + id + '/itemDescription/' + itemId, {responseType: 'text'});

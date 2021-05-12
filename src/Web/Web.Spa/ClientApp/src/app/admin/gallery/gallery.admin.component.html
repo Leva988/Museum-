@@ -60,10 +60,10 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="d-flex justify-content-center">
-                        <h4>Добавить ещё фото</h4>
+                        <h4>Добавить ещё фото(можно несколько)</h4>
                     </div>
                     <div class="d-flex justify-content-around">
-                        <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" required />
+                        <input #fileInput id="file" class="form-control-file" type="file" name="file" (change)="handleFileInput($event.target.files)" multiple required />
                         <input type="button" value="Добавить" (click)="savePhoto()" class="btn btn-success btn-block">
                     </div>
                     <hr>

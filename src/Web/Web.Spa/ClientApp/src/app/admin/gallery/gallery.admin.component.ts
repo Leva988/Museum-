@@ -26,7 +26,7 @@ export class GalleryAdminComponent implements OnInit {
     isNewRecord: boolean;
     withDescription: boolean;
     photos: KeyValue<string, string>[] = [];
-    fileToUpload: File;
+    filesToUpload: FileList;
     modalMessage: string;
     modalTitle: string;
     messageTitle: string;
@@ -223,25 +223,31 @@ export class GalleryAdminComponent implements OnInit {
     }
 
     handleFileInput(files: FileList) {
-        this.fileToUpload = files.item(0);
+        this.filesToUpload = files;
     }
 
     savePhoto() {
-        if (isNullOrUndefined(this.fileToUpload)) {
+        if (isNullOrUndefined(this.filesToUpload)) {
             this.modalMessage = 'Прикрепите файл!';
             this.modalColor = '#f20800';
             $('#photoMessage').show();
+        } else if (this.allFilesSize() > 200000000 || this.filesToUpload.length > 30) {
+            this.modalMessage = 'Общее количество файлов не должно превышать 30,и их суммарный размер должен быть < 200MB!';
+            this.modalColor = '#f20800';
+            $('#photoMessage').show();
         } else {
-            this.repository.addGalleryPhoto(this.editID, this.fileToUpload).subscribe(
+            this.repository.addManyGalleryPhotos(this.editID, this.filesToUpload).subscribe(
                 (data: any) => {
                     this.modalColor = '#2fc900';
-                    this.modalMessage = 'Фото добавлено';
-                    this.repository.getGalleryItemDescription(this.editID, data.id).subscribe(
-                        (desc: string) => {
-                            const photo = { key:  data.id, value: desc};
-                            this.photos.push(photo);
-                            this.arrowsHandler(this.photos);
-                        }, error => console.log(error));
+                    this.modalMessage = 'Фото добавлены';
+                    data.images.forEach(img => {
+                        this.repository.getGalleryItemDescription(this.editID, img).subscribe(
+                            (desc: string) => {
+                                const photo = { key: img, value: desc};
+                                this.photos.push(photo);
+                                this.arrowsHandler(this.photos);
+                            }, error => console.log(error));
+                    });
                     this.arrowsHandler(this.photos);
                     $('#photoMessage').show();
                 },
@@ -282,6 +288,15 @@ export class GalleryAdminComponent implements OnInit {
             $('#prev').show();
             $('#next').show();
         }
+    }
+
+    allFilesSize(): number {
+        let sum = 0;
+        // tslint:disable: prefer-for-of
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+            sum += this.filesToUpload[i].size;
+        }
+        return sum;
     }
 
 }
